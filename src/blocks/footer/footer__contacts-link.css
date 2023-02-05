@@ -1,0 +1,13 @@
+.footer__contacts-link {
+  text-decoration: none;
+  color: var(--main-text);
+  font-size: 16px;
+  font-weight: 800;
+  font-style: normal;
+  line-height: 1.5;
+  transition: all 0.3;
+}
+
+.footer__contacts-link:hover {
+  opacity: 0.8;
+}

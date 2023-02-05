@@ -1,0 +1,19 @@
+@keyframes openPhoto {
+  from {
+    display: none;
+    scale: 0;
+  }
+  10% {
+    display: flex;
+    scale: 0;
+  }
+  to {
+    display: flex;
+    scale: 1;
+  }
+}
+
+.popup__container_opened {
+  scale: 1;
+  animation: openPhoto 0.5s ease-in-out 1;
+}

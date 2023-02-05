@@ -1,0 +1,4 @@
+.price__toggle-btn_state_opened {
+  rotate: 45deg;
+  transition: all 0.4s ease-in-out;
+}

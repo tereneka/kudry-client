@@ -1,0 +1,16 @@
+.price__table-caption-container {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 20px auto;
+}
+
+.price__table:first-of-type .price__table-caption-container {
+  margin-top: 0;
+}
+
+@media screen and (min-width: 1024px) {
+  .price__table-caption-container {
+    width: 60%;
+  }
+}

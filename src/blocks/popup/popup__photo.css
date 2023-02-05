@@ -1,0 +1,21 @@
+.popup__photo {
+  object-fit: cover;
+  object-position: center;
+  box-shadow: 0 0 10px 2px var(--accent-soft), 0 0 10px 8px var(--accent-bright);
+  border-radius: 16px;
+  cursor: auto;
+}
+
+@media (orientation: landscape) {
+  .popup__photo {
+    width: 80vmin;
+    height: 80vmin;
+  }
+}
+
+@media (orientation: portrait) {
+  .popup__photo {
+    width: 90vmin;
+    height: 60vmax;
+  }
+}

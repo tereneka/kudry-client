@@ -1,0 +1,5 @@
+.cards__wrapper_fullwidth {
+  width: 80%;
+  margin: auto;
+  justify-content: space-around;
+}
