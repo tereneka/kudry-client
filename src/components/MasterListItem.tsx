@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { isError } from 'util';
 import { useGetPhotoQuery } from '../slices/apiSlise'
+import { setIsLoadingState } from '../slices/LoadingState';
+import { useAppDispatch } from '../store';
 import { Master } from '../types'
 
 interface Props {
@@ -7,7 +10,15 @@ interface Props {
 }
 
 export default function MasterListItem({ master }: Props) {
-    const { data: masterPhoto } = useGetPhotoQuery(master.photoLink);
+    const { data: masterPhoto, isLoading, isError } = useGetPhotoQuery(master.photoLink);
+
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(setIsLoadingState({
+            isLoading, isError, key: 'masterPhoto'
+        }))
+    }, [isLoading, isError])
 
     return (
         <div className="cards__item">

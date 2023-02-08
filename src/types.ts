@@ -1,3 +1,8 @@
+interface LoadingState {
+    isLoading?: boolean;
+    isError?: boolean;
+}
+
 interface Master {
     id: string;
     categoryIdList: string[];
@@ -10,8 +15,7 @@ interface Master {
     photoLink: string
 }
 
-
-export type { Master }
+export type { LoadingState, Master }
 
 // export interface Category {
 //     id: number;

@@ -3,7 +3,6 @@ import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { ref, getDownloadURL, listAll } from "firebase/storage";
 import { db, storage } from "../db/firebaseConfig";
 import { Master } from "../types";
-import { setStatus, setErrorMessage } from "./NotificationSlice";
 
 export const apiSlice = createApi({
     reducerPath: "api",
@@ -24,16 +23,6 @@ export const apiSlice = createApi({
                     return { error };
                 }
             },
-            // async onQueryStarted(id, { dispatch, queryFulfilled }) {
-            //     dispatch(setStatus({ status: 'loading', key: 'masters' }))
-            //     try {
-            //         const { data } = await queryFulfilled
-            //         dispatch(setStatus({ status: 'idle', key: 'masters' }))
-            //     } catch (err) {
-            //         dispatch(setStatus({ status: 'failed', key: 'masters' }))
-            //         dispatch(setErrorMessage(`Ошибка: ${err}`))
-            //     }
-            // },
             providesTags: ["Master"],
         }),
 

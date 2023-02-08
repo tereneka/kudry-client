@@ -1,12 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import notificationReducer from './slices/NotificationSlice'
+import loadingStateReducer from './slices/LoadingState'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { apiSlice } from './slices/apiSlise';
 
 export const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
-        notification: notificationReducer
+        loadingState: loadingStateReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(apiSlice.middleware),
