@@ -12,51 +12,43 @@ import {
   doc,
   setDoc,
   getDocs,
+  orderBy,
+  query,
 } from 'firebase/firestore';
 import { getStorage, ref, listAll } from "firebase/storage";
 import { categores, masters, services, subCategores } from './initialDbData';
+import { Provider } from 'react-redux';
+import { store } from './store';
+import { db, storage } from './db/firebaseConfig';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyA6pW53wJLEcxCovwvqzgbQtCn1gzZuGcM",
-  authDomain: "kudry-e905c.firebaseapp.com",
-  projectId: "kudry-e905c",
-  storageBucket: "kudry-e905c.appspot.com",
-  messagingSenderId: "869626329614",
-  appId: "1:869626329614:web:59eaa85182391bf64a1a5f",
-  measurementId: "G-8R2L321C50"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
-
-const storageRef = ref(storage, 'works');
+// const storageRef = ref(storage, 'works');
 
 // listAll(storageRef).then(res => {
 //   res.items.forEach(i => console.log(i.fullPath))
 // })
 
-let index: number = 10;
-function add() {
-  if (index < services.length) {
-    addDoc(collection(db, 'services'), services[index])
-      .then(() => {
-        index += 1
-        add()
-      })
-  }
-}
+// let index: number = 10;
+// function add() {
+//   if (index < services.length) {
+//     addDoc(collection(db, 'services'), services[index])
+//       .then(() => {
+//         index += 1
+//         add()
+//       })
+//   }
+// }
 // add()
 // getDocs(collection(db, 'categores')).then(docs => docs.forEach(doc => console.log(doc.id, doc.data())))
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
 
