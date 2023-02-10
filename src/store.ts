@@ -1,12 +1,14 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import loadingStateReducer from './slices/LoadingState'
+import contentReducer from './features/main/content/ContentSlice'
+import priceReducer from './features/main/price/PriceSlice'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import { apiSlice } from './slices/apiSlise';
+import { apiSlice } from './features/api/apiSlise';
 
 export const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
-        loadingState: loadingStateReducer
+        contentState: contentReducer,
+        priceState: priceReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(apiSlice.middleware),

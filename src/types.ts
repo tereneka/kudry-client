@@ -4,41 +4,45 @@ interface LoadingState {
 }
 
 interface Master {
-    id: string;
+    id?: string;
     categoryIdList: string[];
     name: string;
     profession: string;
     weekends: number[];
     disabledDates: string[];
+    photoLink: string;
     available: boolean;
     index: number;
-    photoLink: string
+
 }
 
-export type { LoadingState, Master }
+interface Category {
+    id: string;
+    name: string;
+    hasSubCategores: boolean;
+    index: number;
+}
 
-// export interface Category {
-//     id: number;
-//     name: string,
-//     available: boolean,
-//     hasGenders: boolean,
-// }
-// export interface SubCategory {
-//     id: number,
-//     name: string,
-//     categoryId: number,
-//     gender?: string | null,
-//     available: boolean,
-// }
-// export interface Service {
-//     id: number,
-//     name: string,
-//     price: number,
-//     categoryId: number,
-//     gender?: string | null,
-//     subCategoryId?: number | null,
-//     available: boolean,
-// }
+interface SubCategory {
+    id: string;
+    categoryId: string;
+    name: string;
+    index: number;
+}
+
+interface Service {
+    id: number;
+    categoryId: string;
+    subCategoryId: string | null;
+    name: string;
+    price: string;
+    duration: number[];
+    available: boolean;
+    index: number;
+}
+export type { LoadingState, Master, Category, SubCategory, Service }
+
+
 
 // export interface Date {
 //     id: number,

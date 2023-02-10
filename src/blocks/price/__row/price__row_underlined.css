@@ -1,0 +1,10 @@
+.price__row_underlined {
+  border-image: linear-gradient(
+      to right,
+      var(--accent-bright),
+      var(--accent-soft)
+    )
+    30;
+  border-bottom-width: 4px;
+  border-bottom-style: solid;
+}

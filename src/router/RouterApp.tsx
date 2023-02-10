@@ -1,13 +1,13 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Main from "../pages/main/Main";
-import OnlineReg from "../pages/online-reg/OnlineReg";
+import MainPage from "../features/main/page/MainPage";
+import OnlineReg from "../features/online-reg/OnlineReg";
 
 function RouterApp() {
   return (
     <Routes>
-      <Route path="/" element={<Main />}>
-        <Route path="*" element={<Main />} />
+      <Route path="/" element={<MainPage />}>
+        <Route path="*" element={<MainPage />} />
       </Route>
       <Route path="/online-reg" element={<OnlineReg />}>
         <Route path="*" element={<OnlineReg />} />

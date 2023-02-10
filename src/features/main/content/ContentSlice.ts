@@ -1,15 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '../store';
 
 interface LoadingState {
     isLoading: { [key: string]: boolean };
     isError: { [key: string]: boolean };
-}
-
-interface Parameter {
-    isLoading: boolean;
-    isError: boolean;
-    key: string
 }
 
 const initialState: LoadingState = {
@@ -17,17 +10,21 @@ const initialState: LoadingState = {
     isError: {},
 }
 
-const loadingStateSlice = createSlice({
-    name: 'loadingState',
+const contentSlice = createSlice({
+    name: 'content',
     initialState,
     reducers: {
-        setIsLoadingState: (state, action: PayloadAction<Parameter>) => {
+        setIsLoadingState: (state, action: PayloadAction<{
+            isLoading: boolean;
+            isError: boolean;
+            key: string
+        }>) => {
             state.isLoading[action.payload.key] = action.payload.isLoading
             state.isError[action.payload.key] = action.payload.isError
         },
     }
 })
 
-export const { setIsLoadingState } = loadingStateSlice.actions
+export const { setIsLoadingState } = contentSlice.actions
 
-export default loadingStateSlice.reducer
+export default contentSlice.reducer
