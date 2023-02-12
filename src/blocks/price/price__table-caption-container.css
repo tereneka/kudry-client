@@ -2,10 +2,15 @@
   display: flex;
   justify-content: space-between;
   width: 80%;
-  margin: 20px auto;
+  margin: 2px auto;
+  padding: 16px;
+  background-color: var(--accent-soft);
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-.price__table:first-of-type .price__table-caption-container {
+.price__table:first-of-type
+  .price__table-caption-container {
   margin-top: 0;
 }
 

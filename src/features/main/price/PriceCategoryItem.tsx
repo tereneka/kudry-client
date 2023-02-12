@@ -28,7 +28,6 @@ export default function PriceCategoryItem({ category }: Props) {
         { height: 0 }
     const tableCaptionElement: HTMLHeadingElement | null = document.querySelector('.price__table-caption-container')
 
-
     useEffect(() => {
         dispatch(setIsLoadingState({
             isLoading: isSubCategoresLoading, isError: isSubCategoresError, key: 'subCategoryList'
@@ -47,13 +46,16 @@ export default function PriceCategoryItem({ category }: Props) {
             <>
                 {
                     [...subCategores]?.sort((a, b) => a.index - b.index)
-                        .map(sub => {
+                        .map((sub, subIndex, subArr) => {
                             return services?.filter(service => service.subCategoryId === sub.id)
                                 .sort((a, b) => a.index - b.index)
-                                .map((service, index, arr) => {
+                                .map((service, serviceIndex, serviceArr) => {
+
                                     return (
                                         <tr
-                                            className={(index === arr.length - 1 ? 'price__row price__row_underlined' : 'price__row')}
+                                            className={((serviceIndex === serviceArr.length - 1) && (subIndex !== subArr.length - 1)
+                                                ? 'price__row price__row_underlined'
+                                                : 'price__row')}
                                             key={service.id}
                                         >
                                             <td className="price__cell" >{service.name}</td>
@@ -71,7 +73,7 @@ export default function PriceCategoryItem({ category }: Props) {
                 {[...services]?.sort((a, b) => a.index - b.index)
                     .map((service, index, arr) => {
                         return (
-                            <tr key={service.id}>
+                            <tr className='price__row' key={service.id}>
                                 <td className="price__cell">{service.name}</td>
                                 <td className="price__cell">{service.price}</td>
                             </tr>
@@ -87,7 +89,7 @@ export default function PriceCategoryItem({ category }: Props) {
         if (priceTableElement && tableCaptionElement) {
             const tableCaptionStyle = window.getComputedStyle(tableCaptionElement);
             window.scrollTo({
-                top: priceTableElement?.offsetTop - tableCaptionElement?.clientHeight - parseInt(tableCaptionStyle.marginTop) - parseInt(tableCaptionStyle.marginBottom),
+                top: priceTableElement?.offsetTop - tableCaptionElement?.clientHeight - parseInt(tableCaptionStyle.marginBottom),
                 behavior: 'smooth'
             })
         }
