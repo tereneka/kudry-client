@@ -47,7 +47,7 @@ export default function MasterList() {
         <section className="cards" id="team">
             <h3 className="section-title">к<br />о<br />м<br />а<br />н<br />д<br />а</h3>
             <div className="cards__wrapper">
-                {masters?.map((master, index) => {
+                {masters?.map(master => {
                     return <MasterListItem master={master} key={master.id} />
                 })}
             </div>

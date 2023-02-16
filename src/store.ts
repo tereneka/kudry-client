@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import contentReducer from './features/main/content/ContentSlice'
 import priceReducer from './features/main/price/PriceSlice'
+import photoReducer from './features/main/photo/PhotoSlice'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { apiSlice } from './features/api/apiSlise';
 
@@ -9,6 +10,7 @@ export const store = configureStore({
         [apiSlice.reducerPath]: apiSlice.reducer,
         contentState: contentReducer,
         priceState: priceReducer,
+        photoState: photoReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(apiSlice.middleware),

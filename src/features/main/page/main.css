@@ -34,6 +34,7 @@
 @import url(../../../blocks/photo/photo.css);
 @import url(../../../blocks/photo/photo__grid.css);
 @import url(../../../blocks/photo/photo__item.css);
+@import url(../../../blocks//photo/photo__next-btn.css);
 
 @import url(../../../blocks/cards/cards.css);
 @import url(../../../blocks/cards/__item/cards__item.css);

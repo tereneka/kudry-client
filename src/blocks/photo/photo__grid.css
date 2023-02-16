@@ -1,5 +1,5 @@
 .photo__grid {
-  display: grid;
+  display: none;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   width: 80%;
@@ -10,4 +10,8 @@
   .photo__grid {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+
+.photo__grid_opened {
+  display: grid;
 }

@@ -1,6 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { query, collection, orderBy, getDocs } from 'firebase/firestore';
-import { db } from '../../../db/firebaseConfig';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface CategoryVisibility {
     id: string;

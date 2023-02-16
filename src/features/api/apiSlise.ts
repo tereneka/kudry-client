@@ -1,6 +1,6 @@
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
-import { ref, getDownloadURL, listAll } from "firebase/storage";
+import { ref, getDownloadURL, listAll, list, ListResult } from "firebase/storage";
 import { db, storage } from "../../db/firebaseConfig";
 import { Category, Master, Service, SubCategory } from "../../types";
 
@@ -89,17 +89,18 @@ export const apiSlice = createApi({
             providesTags: ["Service"],
         }),
 
-        getPhotoList: builder.query<string[], string>({
-            async queryFn(path) {
+        getPhotoList: builder.query<string[][], { folderPath: string, numberPhotosPerPage: number }>({
+            async queryFn(args) {
                 try {
-                    const listRef = ref(storage, path);
-                    const photosList = await listAll(listRef)
-                    let urlsList: string[] = [];
-                    photosList.items.forEach(async (item) => {
-                        const photo = await getDownloadURL(ref(storage, item.fullPath));
-                        urlsList.push(photo)
-                    })
-                    return { data: urlsList };
+                    const listRef = ref(storage, args.folderPath);
+                    const photosList = await (await list(listRef))
+                        .items.map(i => i.fullPath)
+                    let data: any[] = [];
+
+                    for (let i = 0; i < photosList.length; i += args.numberPhotosPerPage) {
+                        data.push(photosList.slice(i, i + args.numberPhotosPerPage))
+                    }
+                    return { data };
                 } catch (error) {
                     return { error };
                 }
@@ -107,15 +108,18 @@ export const apiSlice = createApi({
             providesTags: ["Photo"],
         }),
 
-        getPhoto: builder.query<string, string>({
+        getPhoto: builder.query<string | undefined, string | void>({
             async queryFn(path) {
-                try {
-                    const photoRef = ref(storage, path);
-                    const url = await getDownloadURL(photoRef);
-                    return { data: url };
-                } catch (error) {
-                    return { error };
-                }
+                if (path) {
+                    try {
+                        const photoRef = ref(storage, path);
+                        const url = await getDownloadURL(photoRef);
+                        return { data: url };
+                    } catch (error) {
+                        return { error };
+                    }
+                } else return {}
+
             },
             providesTags: ["Photo"],
         }),
