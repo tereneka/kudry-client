@@ -36,7 +36,7 @@ export default function PhotoList({ title, photoFolderPath }: Props) {
             :
             undefined
     };
-    console.log(data);
+    console.log(openedPages);
 
     const dispatch = useAppDispatch();
 
@@ -47,7 +47,7 @@ export default function PhotoList({ title, photoFolderPath }: Props) {
     }, [data])
 
     function handleNextBtnClick() {
-
+        dispatch(setOpenedPages({ folderPath: photoFolderPath, lastOpenedPage: openedPages[photoFolderPath] + 1 }))
     }
 
 
@@ -64,7 +64,7 @@ export default function PhotoList({ title, photoFolderPath }: Props) {
                     </div>)
             })}
 
-            {data && data.length > 1 &&
+            {data && openedPages[photoFolderPath] !== data.length &&
                 <button
                     className='photo__next-btn'
                     type='button'
