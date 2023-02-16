@@ -1,11 +1,14 @@
 import React from 'react'
-import { LoadingState } from '../types';
 
-export default function Error({ isError }: LoadingState) {
+interface Props {
+    isVisible: boolean
+}
+
+export default function Error({ isVisible }: Props) {
 
     return (
         <p className="error">
-            {isError && 'произошла ошибка:('}
+            {isVisible && 'произошла ошибка:('}
         </p>
     )
 }

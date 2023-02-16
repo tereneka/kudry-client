@@ -15,8 +15,8 @@ export default function MainPage() {
     return (
         <>
             <Header />
-            <Spinner isLoading={isLoading} />
-            <Error isError={isError} />
+            <Spinner isVisible={isLoading} />
+            <Error isVisible={isError} />
             <Content isLoading={isLoading} isError={isError} />
         </>
     )

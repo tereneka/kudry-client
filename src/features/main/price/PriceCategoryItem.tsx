@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useGetServiceListQuery, useGetSubCategoryListQuery } from '../../api/apiSlise';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { Category } from '../../../types'
-import { setIsLoadingState } from '../content/ContentSlice';
+import { setContentLoadingState } from '../content/ContentSlice';
 import { toggleCategoryVisibility } from './PriceSlice';
 
 interface Props {
@@ -29,13 +29,13 @@ export default function PriceCategoryItem({ category }: Props) {
     const tableCaptionElement: HTMLHeadingElement | null = document.querySelector('.price__table-caption-container')
 
     useEffect(() => {
-        dispatch(setIsLoadingState({
+        dispatch(setContentLoadingState({
             isLoading: isSubCategoresLoading, isError: isSubCategoresError, key: 'subCategoryList'
         }))
     }, [isSubCategoresLoading, isSubCategoresError])
 
     useEffect(() => {
-        dispatch(setIsLoadingState({
+        dispatch(setContentLoadingState({
             isLoading: isServicesLoading, isError: isServicesError, key: 'serviceList'
         }))
     }, [isServicesLoading, isServicesError])

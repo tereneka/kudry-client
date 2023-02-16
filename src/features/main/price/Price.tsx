@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useGetCategoryListQuery } from '../../api/apiSlise'
 import { useAppDispatch, useAppSelector } from '../../../store';
 import PriceCategoryItem from './PriceCategoryItem';
-import { setIsLoadingState } from '../content/ContentSlice';
+import { setContentLoadingState } from '../content/ContentSlice';
 import { setCategoryVisibility } from './PriceSlice';
 
 export default function Price() {
@@ -11,7 +11,7 @@ export default function Price() {
 
 
     useEffect(() => {
-        dispatch(setIsLoadingState({
+        dispatch(setContentLoadingState({
             isLoading, isError, key: 'categoryList'
         }))
     }, [isLoading, isError])

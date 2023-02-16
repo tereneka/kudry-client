@@ -1,8 +1,11 @@
 import React from 'react'
-import { LoadingState } from '../types';
 
-export default function Spinner({ isLoading }: LoadingState) {
+interface Props {
+    isVisible: boolean
+}
+
+export default function Spinner({ isVisible }: Props) {
     return (
-        <div className={isLoading ? 'spinner spinner_visible' : 'spinner'} ><i></i></div >
+        <div className={isVisible ? 'spinner spinner_visible' : 'spinner'} ><i></i></div >
     )
 }

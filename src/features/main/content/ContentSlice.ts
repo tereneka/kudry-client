@@ -14,7 +14,7 @@ const contentSlice = createSlice({
     name: 'content',
     initialState,
     reducers: {
-        setIsLoadingState: (state, action: PayloadAction<{
+        setContentLoadingState: (state, action: PayloadAction<{
             isLoading: boolean;
             isError: boolean;
             key: string
@@ -25,6 +25,6 @@ const contentSlice = createSlice({
     }
 })
 
-export const { setIsLoadingState } = contentSlice.actions
+export const { setContentLoadingState } = contentSlice.actions
 
 export default contentSlice.reducer

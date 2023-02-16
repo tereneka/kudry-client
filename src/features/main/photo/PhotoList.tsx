@@ -1,70 +1,56 @@
-import { ref, listAll, getDownloadURL } from 'firebase/storage';
-import path from 'path';
-import React, { useEffect, useState } from 'react'
-import { storage } from '../../../db/firebaseConfig';
+import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../store';
-import { useGetPhotoListQuery, useGetPhotoQuery } from '../../api/apiSlise';
-import { setIsLoadingState } from '../content/ContentSlice';
-import PhotoListItem from './PhotoListItem';
+import { useGetPhotoListQuery } from '../../api/apiSlise';
 import { setOpenedPages } from './PhotoSlice';
+import { nanoid } from 'nanoid';
+import PhotoPage from './PhotoPage';
 
 interface Props {
     title: string;
-    photoFolderPath: string
+    folderPath: string
 }
 
-export default function PhotoList({ title, photoFolderPath }: Props) {
-    const { data, isLoading, isError } = useGetPhotoListQuery({ folderPath: photoFolderPath, numberPhotosPerPage: 8 });
-    const titltContent = title.split('').map((char, index, arr) => {
+export default function PhotoList({ title, folderPath }: Props) {
+    const { data: pageList, isLoading: isPageListLoading, isError: isPageListError } = useGetPhotoListQuery({ folderPath, numberPhotosPerPage: 8 });
+    const titleContent = title.split('').map((char, index, arr) => {
         return (
-            <>
-                <span>{char}</span>
+            <span key={nanoid()}>
+                {char}
                 {index < arr.length - 1 && <br />}
-            </>
+            </span>
         )
     });
-    const openedPages = useAppSelector(state => state.photoState.openedPages);
-    const photoGridClass = (index: number) => {
-        return index + 1 <= openedPages[photoFolderPath] ?
-            'photo__grid photo__grid_opened'
-            :
-            'photo__grid'
-    };
-    const photoPath = (index: number, path: string) => {
-        return index + 1 <= openedPages[photoFolderPath] ?
-            path
-            :
-            undefined
-    };
-    console.log(openedPages);
+    const photoState = useAppSelector(state => state.photoState);
 
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if (!openedPages[photoFolderPath]) {
-            dispatch(setOpenedPages({ folderPath: photoFolderPath, lastOpenedPage: 1 }))
+        if (!photoState.openedPages[folderPath]) {
+            dispatch(setOpenedPages({ folderPath, lastOpenedPage: 1 }))
         }
-    }, [data])
+    }, [pageList])
 
     function handleNextBtnClick() {
-        dispatch(setOpenedPages({ folderPath: photoFolderPath, lastOpenedPage: openedPages[photoFolderPath] + 1 }))
+        dispatch(setOpenedPages({ folderPath, lastOpenedPage: photoState.openedPages[folderPath] + 1 }))
     }
 
 
     return (
-        <section className="photo" id={photoFolderPath}>
-            <h3 className="section-title">{titltContent}</h3>
+        <section className="photo" id={folderPath}>
+            <h3 className="section-title">{titleContent}</h3>
 
-            {data?.map((photoPathList, index) => {
+            {pageList?.map((photoPathList, index) => {
                 return (
-                    <div className={photoGridClass(index)} key={index}>
-                        {photoPathList.map(path => {
-                            return <PhotoListItem photoPath={photoPath(index, path)} key={path} />
-                        })}
-                    </div>)
+                    <PhotoPage
+                        folderPath={folderPath}
+                        pageNumber={index + 1}
+                        photoPathList={photoPathList}
+                        key={nanoid()}
+                    />
+                )
             })}
 
-            {data && openedPages[photoFolderPath] !== data.length &&
+            {pageList && photoState.openedPages[folderPath] !== pageList.length &&
                 <button
                     className='photo__next-btn'
                     type='button'

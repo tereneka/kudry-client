@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useGetMasterListQuery } from '../../api/apiSlise';
 import { useAppDispatch } from '../../../store';
 import MasterListItem from './MasterListItem';
-import { setIsLoadingState } from '../content/ContentSlice';
+import { setContentLoadingState } from '../content/ContentSlice';
 
 export default function MasterList() {
     const { data: masters, isLoading, isError } = useGetMasterListQuery();
@@ -27,7 +27,7 @@ export default function MasterList() {
     }
 
     useEffect(() => {
-        dispatch(setIsLoadingState({
+        dispatch(setContentLoadingState({
             isLoading, isError, key: 'masterList'
         }))
     }, [isLoading, isError])

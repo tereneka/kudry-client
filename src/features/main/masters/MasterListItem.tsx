@@ -6,7 +6,7 @@ import { useGetPhotoQuery } from '../../api/apiSlise'
 import { useAppDispatch } from '../../../store';
 import { Master } from '../../../types'
 import { storage } from '../../../db/firebaseConfig';
-import { setIsLoadingState } from '../content/ContentSlice';
+import { setContentLoadingState } from '../content/ContentSlice';
 
 interface Props {
     master: Master
@@ -19,7 +19,7 @@ export default function MasterListItem({ master }: Props) {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(setIsLoadingState({
+        dispatch(setContentLoadingState({
             isLoading, isError, key: 'masterPhotoUrl'
         }))
     }, [isLoading, isError])

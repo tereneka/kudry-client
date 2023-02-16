@@ -1,8 +1,3 @@
-interface LoadingState {
-    isLoading?: boolean;
-    isError?: boolean;
-}
-
 interface Master {
     id?: string;
     categoryIdList: string[];
@@ -40,7 +35,7 @@ interface Service {
     available: boolean;
     index: number;
 }
-export type { LoadingState, Master, Category, SubCategory, Service }
+export type { Master, Category, SubCategory, Service }
 
 
 
