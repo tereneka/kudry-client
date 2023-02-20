@@ -1,6 +1,6 @@
 import React from 'react'
 import MasterList from '../masters/MasterList'
-import PhotoList from '../photo/PhotoList';
+import PhotoSection from '../photo/PhotoSection';
 import Price from '../price/Price';
 
 interface Props {
@@ -11,11 +11,11 @@ interface Props {
 
 export default function Content({ isLoading, isError }: Props) {
     return (
-        <main className={(isLoading || isError) ? 'content' : 'content content_visible'} >
+        <main className={`content ${(isLoading || isError) ? '' : 'content_visible'}`} >
             <MasterList />
             <Price />
-            <PhotoList title='интерьер' folderPath='interiors' />
-            <PhotoList title='работы' folderPath='works' />
+            <PhotoSection title='интерьер' folderPath='interiors' />
+            <PhotoSection title='работы' folderPath='works' />
         </main>
     )
 }

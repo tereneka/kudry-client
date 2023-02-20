@@ -1,22 +1,26 @@
-import { DocumentData } from 'firebase/firestore';
-import React, { useEffect } from 'react'
-import { getStorage, ref as storageRef } from 'firebase/storage';
-import { useDownloadURL } from 'react-firebase-hooks/storage';
+import React, { useEffect, useRef } from 'react'
 import { useGetPhotoQuery } from '../../api/apiSlise'
-import { useAppDispatch } from '../../../store';
+import { useAppDispatch, useAppSelector } from '../../../store';
 import { Master } from '../../../types'
-import { storage } from '../../../db/firebaseConfig';
 import { setContentLoadingState } from '../content/ContentSlice';
+import { setCardItemElementWidth } from './MasterSlice';
 
 interface Props {
-    master: Master
+    master: Master;
 }
 
 export default function MasterListItem({ master }: Props) {
     const { data: masterPhotoUrl, isLoading, isError } = useGetPhotoQuery(master.photoLink);
-
-
+    const isFullWidthStyle = useAppSelector(state => state.masterState.isFullWidthStyle);
+    const cardsItemElement = useRef<HTMLDivElement>(null);
     const dispatch = useAppDispatch();
+    const cardsItemClass = `cards__item ${isFullWidthStyle ? 'cards__item_fullwidth' : ''}`;
+
+    useEffect(() => {
+        if (cardsItemElement.current) {
+            dispatch(setCardItemElementWidth(cardsItemElement.current.clientWidth))
+        }
+    })
 
     useEffect(() => {
         dispatch(setContentLoadingState({
@@ -25,7 +29,7 @@ export default function MasterListItem({ master }: Props) {
     }, [isLoading, isError])
 
     return (
-        <div className="cards__item">
+        <div className={cardsItemClass} ref={cardsItemElement}>
             <img className="cards__item-img" src={masterPhotoUrl} alt="фото мастера" />
             <h4 className="cards__item-title">{master.name}</h4>
             <p className="cards__item-about">{master.profession}</p>

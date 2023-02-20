@@ -10,8 +10,10 @@ interface Props {
     folderPath: string
 }
 
-export default function PhotoList({ title, folderPath }: Props) {
-    const { data: pageList, isLoading: isPageListLoading, isError: isPageListError } = useGetPhotoListQuery({ folderPath, numberPhotosPerPage: 8 });
+export default function PhotoSection({ title, folderPath }: Props) {
+    const { data: pageList } = useGetPhotoListQuery({ folderPath, numberPhotosPerPage: 8 });
+    const photoState = useAppSelector(state => state.photoState);
+    const dispatch = useAppDispatch();
     const titleContent = title.split('').map((char, index, arr) => {
         return (
             <span key={nanoid()}>
@@ -20,9 +22,6 @@ export default function PhotoList({ title, folderPath }: Props) {
             </span>
         )
     });
-    const photoState = useAppSelector(state => state.photoState);
-
-    const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (!photoState.openedPages[folderPath]) {

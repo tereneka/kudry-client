@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import MainPage from "../features/main/page/MainPage";
-import OnlineReg from "../features/online-reg/OnlineReg";
+import MainPage from "../features/main-page/page/MainPage";
+import OnlineReg from "../features/online-reg-page/OnlineReg";
 
 function RouterApp() {
   return (

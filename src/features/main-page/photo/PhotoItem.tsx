@@ -9,7 +9,7 @@ interface Props {
     pageNumber: string;
 }
 
-export default function PhotoListItem({ photoPath, folderPath, pageNumber }: Props) {
+export default function PhotoItem({ photoPath, folderPath, pageNumber }: Props) {
     const { data: photoUrl, isLoading, isError } = useGetPhotoQuery(photoPath);
 
     const dispatch = useAppDispatch();

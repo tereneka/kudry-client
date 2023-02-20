@@ -8,7 +8,6 @@ interface Master {
     photoLink: string;
     available: boolean;
     index: number;
-
 }
 
 interface Category {

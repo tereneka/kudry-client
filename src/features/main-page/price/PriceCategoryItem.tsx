@@ -17,15 +17,9 @@ export default function PriceCategoryItem({ category }: Props) {
         .find(i => i.id === category.id)
     const dispatch = useAppDispatch();
     let serviceListElement: JSX.Element = <></>;
-    const toggleBtnClass = categoryVisibility?.isOpened ?
-        "price__toggle-btn price__toggle-btn_opened"
-        :
-        "price__toggle-btn";
+    const toggleBtnClass = `price__toggle-btn ${categoryVisibility?.isOpened ? "price__toggle-btn_opened" : ""}`;
     const priceTableElement: HTMLTableElement | null = document.querySelector(`#${category.id}`);
-    const priceTableStyle = categoryVisibility?.isOpened ?
-        { height: priceTableElement?.scrollHeight }
-        :
-        { height: 0 }
+    const priceTableStyle = { height: categoryVisibility?.isOpened ? priceTableElement?.scrollHeight : 0 };
     const tableCaptionElement: HTMLHeadingElement | null = document.querySelector('.price__table-caption-container')
 
     useEffect(() => {
