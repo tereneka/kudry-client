@@ -3,7 +3,6 @@ import { useGetCategoryListQuery } from '../../api/apiSlise'
 import { useAppDispatch, useAppSelector } from '../../../store';
 import PriceCategoryItem from './PriceCategoryItem';
 import { setContentLoadingState } from '../content/ContentSlice';
-import { setCategoryVisibility } from './PriceSlice';
 
 export default function Price() {
     const { data: categores, isLoading, isError } = useGetCategoryListQuery();
@@ -15,12 +14,6 @@ export default function Price() {
             isLoading, isError, key: 'categoryList'
         }))
     }, [isLoading, isError])
-
-    useEffect(() => {
-        categores?.forEach(category => {
-            dispatch(setCategoryVisibility({ id: category.id, isOpened: false }))
-        })
-    }, [categores])
 
     return (
         <section className="price" id="price">

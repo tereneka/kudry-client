@@ -1,26 +1,32 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useGetServiceListQuery, useGetSubCategoryListQuery } from '../../api/apiSlise';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { Category } from '../../../types'
 import { setContentLoadingState } from '../content/ContentSlice';
-import { toggleCategoryVisibility } from './PriceSlice';
+import { setIsCategoryOpened } from './PriceSlice';
 
 interface Props {
     category: Category;
 }
 
 export default function PriceCategoryItem({ category }: Props) {
-    const { data: subCategores, isLoading: isSubCategoresLoading, isError: isSubCategoresError } = useGetSubCategoryListQuery(category.id);
-    const { data: services, isLoading: isServicesLoading, isError: isServicesError } = useGetServiceListQuery(category.id);
-    const categoryVisibility = useAppSelector(state => state.priceState)
-        .categoryListVisibility
-        .find(i => i.id === category.id)
+    const {
+        data: subCategores,
+        isLoading: isSubCategoresLoading,
+        isError: isSubCategoresError
+    } = useGetSubCategoryListQuery(category.id);
+    const {
+        data: services,
+        isLoading: isServicesLoading,
+        isError: isServicesError
+    } = useGetServiceListQuery(category.id);
+    const isCategoryOpened = useAppSelector(state => state.priceState.isCategoryOpened) === category.id;
     const dispatch = useAppDispatch();
     let serviceListElement: JSX.Element = <></>;
-    const toggleBtnClass = `price__toggle-btn ${categoryVisibility?.isOpened ? "price__toggle-btn_opened" : ""}`;
-    const priceTableElement: HTMLTableElement | null = document.querySelector(`#${category.id}`);
-    const priceTableStyle = { height: categoryVisibility?.isOpened ? priceTableElement?.scrollHeight : 0 };
-    const tableCaptionElement: HTMLHeadingElement | null = document.querySelector('.price__table-caption-container')
+    const toggleBtnClass = `price__toggle-btn ${isCategoryOpened ? "price__toggle-btn_opened" : ""}`;
+    const tableRef = useRef<HTMLTableElement>(null);
+    const tableElement = tableRef.current;
+    const priceTableStyle = { height: isCategoryOpened ? tableElement?.scrollHeight : 0 };
 
     useEffect(() => {
         dispatch(setContentLoadingState({
@@ -47,9 +53,9 @@ export default function PriceCategoryItem({ category }: Props) {
 
                                     return (
                                         <tr
-                                            className={((serviceIndex === serviceArr.length - 1) && (subIndex !== subArr.length - 1)
-                                                ? 'price__row price__row_underlined'
-                                                : 'price__row')}
+                                            className={`price__row 
+                                            ${(serviceIndex === serviceArr.length - 1) && (subIndex !== subArr.length - 1)
+                                                    ? 'price__row price__row_underlined' : ''}`}
                                             key={service.id}
                                         >
                                             <td className="price__cell" >{service.name}</td>
@@ -79,20 +85,17 @@ export default function PriceCategoryItem({ category }: Props) {
     }
 
     function handleToggleBtnClick() {
-        dispatch(toggleCategoryVisibility({ id: category.id }))
-        if (priceTableElement && tableCaptionElement) {
-            const tableCaptionStyle = window.getComputedStyle(tableCaptionElement);
-            window.scrollTo({
-                top: priceTableElement?.offsetTop - tableCaptionElement?.clientHeight - parseInt(tableCaptionStyle.marginBottom),
-                behavior: 'smooth'
-            })
-        }
+        dispatch(setIsCategoryOpened(toggleBtnClass
+            .includes('price__toggle-btn_opened')
+            ? '' : category.id))
     }
 
     return (
         <>
             <div className="price__table-caption-container">
-                <h4 className="price__table-caption">{category.name}</h4>
+                <h4 className="price__table-caption">
+                    {category.name}
+                </h4>
                 <button
                     className={toggleBtnClass}
                     type="button"
@@ -103,7 +106,7 @@ export default function PriceCategoryItem({ category }: Props) {
             </div>
             <table
                 className="price__table"
-                id={category.id}
+                ref={tableRef}
                 style={priceTableStyle}
             >
                 <tbody>

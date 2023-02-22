@@ -12,13 +12,14 @@ interface Props {
 export default function MasterListItem({ master }: Props) {
     const { data: masterPhotoUrl, isLoading, isError } = useGetPhotoQuery(master.photoLink);
     const isFullWidthStyle = useAppSelector(state => state.masterState.isFullWidthStyle);
-    const cardsItemElement = useRef<HTMLDivElement>(null);
+    const cardsItemRef = useRef<HTMLDivElement>(null);
+    const cardsItemElement = cardsItemRef.current;
     const dispatch = useAppDispatch();
     const cardsItemClass = `cards__item ${isFullWidthStyle ? 'cards__item_fullwidth' : ''}`;
 
     useEffect(() => {
-        if (cardsItemElement.current) {
-            dispatch(setCardItemElementWidth(cardsItemElement.current.clientWidth))
+        if (cardsItemElement) {
+            dispatch(setCardItemElementWidth(cardsItemElement.clientWidth))
         }
     })
 
@@ -29,7 +30,7 @@ export default function MasterListItem({ master }: Props) {
     }, [isLoading, isError])
 
     return (
-        <div className={cardsItemClass} ref={cardsItemElement}>
+        <div className={cardsItemClass} ref={cardsItemRef}>
             <img className="cards__item-img" src={masterPhotoUrl} alt="фото мастера" />
             <h4 className="cards__item-title">{master.name}</h4>
             <p className="cards__item-about">{master.profession}</p>
