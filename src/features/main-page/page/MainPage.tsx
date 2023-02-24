@@ -34,6 +34,7 @@ export default function MainPage() {
         isError={isError}
       />
       <Footer />
+      <a className="up" href="#header" />
       {isPhotoPopupOpened && <PhotoPopup />}
     </>
   );
