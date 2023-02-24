@@ -6,6 +6,7 @@ import { useAppSelector } from "../../../store";
 import Content from "../content/Content";
 import "./main.css";
 import PhotoPopup from "../photo/PhotoPopup";
+import Footer from "../footer/Footer";
 
 export default function MainPage() {
   const contentLoadingState = useAppSelector(
@@ -32,6 +33,7 @@ export default function MainPage() {
         isLoading={isLoading}
         isError={isError}
       />
+      <Footer />
       {isPhotoPopupOpened && <PhotoPopup />}
     </>
   );
