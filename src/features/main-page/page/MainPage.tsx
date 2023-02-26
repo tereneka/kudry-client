@@ -7,8 +7,7 @@ import Content from "../content/Content";
 import "./main.css";
 import PhotoPopup from "../photo/PhotoPopup";
 import Footer from "../footer/Footer";
-import { Link } from "react-router-dom";
-import FixedLinks from "./FixedLinks";
+import FixedLinks from "../fixedLinks/FixedLinks";
 
 export default function MainPage() {
   const contentLoadingState = useAppSelector(
