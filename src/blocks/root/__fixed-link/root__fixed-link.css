@@ -1,0 +1,6 @@
+.root__fixed-link {
+  display: block;
+  background-color: var(--accent-bright);
+  border-radius: 50%;
+  box-sizing: border-box;
+}

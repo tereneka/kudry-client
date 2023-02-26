@@ -7,6 +7,8 @@ import Content from "../content/Content";
 import "./main.css";
 import PhotoPopup from "../photo/PhotoPopup";
 import Footer from "../footer/Footer";
+import { Link } from "react-router-dom";
+import FixedLinks from "./FixedLinks";
 
 export default function MainPage() {
   const contentLoadingState = useAppSelector(
@@ -34,7 +36,7 @@ export default function MainPage() {
         isError={isError}
       />
       <Footer />
-      <a className="up" href="#header" />
+      <FixedLinks />
       {isPhotoPopupOpened && <PhotoPopup />}
     </>
   );

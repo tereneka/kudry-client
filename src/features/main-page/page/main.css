@@ -1,16 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700;800&display=swap");
 @import url(../../../vendor/variables.css);
 
+@import url(../../../blocks/root/root__fixed-links.css);
+@import url(../../../blocks/root/__fixed-link/root__fixed-link.css);
+@import url(../../../blocks/root/__fixed-link/_name/root__fixed-link_name_up.css);
+@import url(../../../blocks/root/__fixed-link/_name/root__fixed-link_name_reg.css);
+@import url(../../../blocks/root/root__fixed-link-pulse.css);
+
 @import url(../../../blocks/spinner/spinner.css);
 
 @import url(../../../blocks/error/error.css);
 
 @import url(../../../blocks/logo/logo.css);
 @import url(../../../blocks/logo/logo__subtitle.css);
-@import url(../../../blocks/logo//logo__title.css);
-@import url(../../../blocks/logo//logo__img.css);
-
-@import url(../../../blocks/up/up.css);
+@import url(../../../blocks/logo/logo__title.css);
+@import url(../../../blocks/logo/logo__img.css);
 
 @import url(../../../blocks/header/header.css);
 @import url(../../../blocks/header/header__logo.css);
