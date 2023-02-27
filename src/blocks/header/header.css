@@ -2,4 +2,12 @@
   padding-top: 15px;
   box-sizing: border-box;
   position: relative;
+  background-image: linear-gradient(
+      rgba(255, 255, 255) 15%,
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255) 95%
+    ),
+    url(../../images/background/back-header.jpg);
+  background-size: cover;
+  background-position: center;
 }

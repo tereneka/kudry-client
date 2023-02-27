@@ -1,42 +1,47 @@
 interface Master {
-    id?: string;
-    categoryIdList: string[];
-    name: string;
-    profession: string;
-    weekends: number[];
-    disabledDates: string[];
-    photoLink: string;
-    available: boolean;
-    index: number;
+  id?: string;
+  categoryIdList: string[];
+  name: string;
+  profession: string;
+  weekends: number[];
+  disabledDates: string[];
+  photoLink: string;
+  available: boolean;
+  index: number;
 }
 
 interface Category {
-    id: string;
-    name: string;
-    hasSubCategores: boolean;
-    index: number;
+  id: string;
+  name: string;
+  hasSubCategores: boolean;
+  index: number;
+  available: boolean;
+  regAvailable: boolean;
 }
 
 interface SubCategory {
-    id: string;
-    categoryId: string;
-    name: string;
-    index: number;
+  id: string;
+  categoryId: string;
+  name: string;
+  index: number;
 }
 
 interface Service {
-    id: number;
-    categoryId: string;
-    subCategoryId: string | null;
-    name: string;
-    price: string;
-    duration: number[];
-    available: boolean;
-    index: number;
+  id: number;
+  categoryId: string;
+  subCategoryId: string | null;
+  name: string;
+  price: string;
+  duration: number[];
+  available: boolean;
+  index: number;
 }
-export type { Master, Category, SubCategory, Service }
-
-
+export type {
+  Master,
+  Category,
+  SubCategory,
+  Service,
+};
 
 // export interface Date {
 //     id: number,
