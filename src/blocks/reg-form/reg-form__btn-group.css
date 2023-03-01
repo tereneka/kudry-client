@@ -1,0 +1,5 @@
+.reg-form__btn-group {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  margin-top: 40px;
+}

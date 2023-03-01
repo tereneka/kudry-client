@@ -5,10 +5,14 @@ import {
 
 interface RegistrationState {
   selectedCategory: string;
+  currentFieldset: number;
+  isRegNextBtnActive: boolean;
 }
 
 const initialState: RegistrationState = {
   selectedCategory: "",
+  currentFieldset: 0,
+  isRegNextBtnActive: false,
 };
 
 const registrationSlice = createSlice({
@@ -21,10 +25,27 @@ const registrationSlice = createSlice({
     ) => {
       state.selectedCategory = action.payload;
     },
+
+    setCurrentFieldset: (
+      state,
+      action: PayloadAction<number>
+    ) => {
+      state.currentFieldset = action.payload;
+    },
+
+    setIsRegNextBtnActive: (
+      state,
+      action: PayloadAction<boolean>
+    ) => {
+      state.isRegNextBtnActive = action.payload;
+    },
   },
 });
 
-export const { setSelectedCategory } =
-  registrationSlice.actions;
+export const {
+  setSelectedCategory,
+  setCurrentFieldset,
+  setIsRegNextBtnActive,
+} = registrationSlice.actions;
 
 export default registrationSlice.reducer;

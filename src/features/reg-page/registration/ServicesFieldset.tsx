@@ -6,10 +6,13 @@ import {
 } from "../../../store";
 import { Category } from "../../../types";
 import { useGetServiceListQuery } from "../../api/apiSlise";
-import { setSelectedCategory } from "./RegistrationSlice";
+import {
+  setIsRegNextBtnActive,
+  setSelectedCategory,
+} from "./RegistrationSlice";
 
 interface Props {
-  categores: Category[];
+  categores: Category[] | undefined;
 }
 
 export default function ServicesFieldset({
@@ -29,7 +32,6 @@ export default function ServicesFieldset({
   return (
     <fieldset className="reg-form__fieldset">
       <Form.Item
-        className="reg-form__item"
         name="category"
         label="категория услуг"
         rules={[
@@ -39,7 +41,6 @@ export default function ServicesFieldset({
           },
         ]}>
         <Select
-          className="reg-form__item"
           style={{
             color: "red",
           }}
@@ -54,7 +55,7 @@ export default function ServicesFieldset({
       </Form.Item>
 
       <Form.Item
-        name="serviceId"
+        name="services"
         label="услуги"
         rules={[
           {
@@ -69,6 +70,12 @@ export default function ServicesFieldset({
               label: service.name,
             };
           })}
+          onSelect={() => {
+            dispatch(setIsRegNextBtnActive(true));
+          }}
+          onClear={() =>
+            dispatch(setIsRegNextBtnActive(false))
+          }
           mode="multiple"
           allowClear
         />

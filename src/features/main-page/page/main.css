@@ -11,6 +11,9 @@
 
 @import url(../../../blocks/error/error.css);
 
+@import url(../../../blocks/btn/btn.css);
+@import url(../../../blocks/btn/_size/btn_size_l.css);
+
 @import url(../../../blocks/logo/logo.css);
 @import url(../../../blocks/logo/logo__subtitle.css);
 @import url(../../../blocks/logo/logo__title.css);

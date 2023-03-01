@@ -4,10 +4,16 @@ import {
   Select,
   theme,
 } from "antd";
+import { nanoid } from "nanoid";
 import React, {
   useEffect,
+  useRef,
   useState,
 } from "react";
+import {
+  SwitchTransition,
+  CSSTransition,
+} from "react-transition-group";
 import {
   useAppDispatch,
   useAppSelector,
@@ -16,13 +22,53 @@ import {
   useGetRegCategoryListQuery,
   useGetServiceListQuery,
 } from "../../api/apiSlise";
-import { setSelectedCategory } from "./RegistrationSlice";
+import DateFieldset from "./DateFieldset";
+import MastersFieldset from "./MastersFieldset";
+import {
+  setCurrentFieldset,
+  setIsRegNextBtnActive,
+  setSelectedCategory,
+} from "./RegistrationSlice";
 import ServicesFieldset from "./ServicesFieldset";
 
 export default function RegForm() {
-  const { data: categores, isLoading } =
+  const { data: categores } =
     useGetRegCategoryListQuery();
+  const currentFieldset = useAppSelector(
+    (state) => state.regState.currentFieldset
+  );
+  const isNextBtnActive = useAppSelector(
+    (state) => state.regState.isRegNextBtnActive
+  );
   const dispatch = useAppDispatch();
+  const fieldsetList = [
+    <ServicesFieldset categores={categores} />,
+    <MastersFieldset />,
+    <DateFieldset />,
+  ];
+  const servicesRef =
+    useRef<HTMLDivElement>(null);
+  const mastersRef = useRef<HTMLDivElement>(null);
+  const dateRef = useRef<HTMLDivElement>(null);
+  const nodeRef = [
+    servicesRef,
+    mastersRef,
+    dateRef,
+  ][currentFieldset];
+
+  function handleNextBtnClick() {
+    dispatch(
+      setCurrentFieldset(currentFieldset + 1)
+    );
+    dispatch(setIsRegNextBtnActive(false));
+  }
+
+  function handleBackBtnClick() {
+    dispatch(
+      setCurrentFieldset(currentFieldset - 1)
+    );
+    dispatch(setIsRegNextBtnActive(true));
+  }
 
   useEffect(() => {
     if (categores) {
@@ -52,11 +98,65 @@ export default function RegForm() {
             initialValues={{
               category: categores[0].id,
             }}
-            labelCol={{ span: 6 }}
+            labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}>
-            <ServicesFieldset
-              categores={categores}
-            />
+            <SwitchTransition mode="out-in">
+              <CSSTransition
+                key={currentFieldset}
+                nodeRef={nodeRef}
+                addEndListener={(done: any) => {
+                  if (
+                    nodeRef &&
+                    nodeRef.current
+                  ) {
+                    nodeRef.current.addEventListener(
+                      "transitionend",
+                      done,
+                      false
+                    );
+                  }
+                }}
+                classNames="fade">
+                <div ref={nodeRef}>
+                  {fieldsetList[currentFieldset]}
+                </div>
+              </CSSTransition>
+            </SwitchTransition>
+
+            <div className="reg-form__btn-group">
+              {currentFieldset > 0 && (
+                <button
+                  className="btn btn_size_m reg-form__btn"
+                  type="button"
+                  onClick={handleBackBtnClick}>
+                  назад
+                </button>
+              )}
+
+              {currentFieldset <
+                fieldsetList.length - 1 && (
+                <button
+                  className={`btn btn_size_m ${
+                    isNextBtnActive
+                      ? ""
+                      : "btn_disabled"
+                  } reg-form__btn reg-form__btn_position_right`}
+                  type="button"
+                  disabled={!isNextBtnActive}
+                  onClick={handleNextBtnClick}>
+                  далее
+                </button>
+              )}
+
+              {currentFieldset ===
+                fieldsetList.length - 1 && (
+                <button
+                  className="btn btn_size_m reg-form__btn reg-form__btn_position_right"
+                  type="submit">
+                  отправить
+                </button>
+              )}
+            </div>
           </Form>
         </ConfigProvider>
       )}
