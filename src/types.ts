@@ -1,13 +1,14 @@
 interface Master {
-  id?: string;
+  id: string;
   categoryIdList: string[];
   name: string;
   profession: string;
   weekends: number[];
   disabledDates: string[];
   photoLink: string;
-  available: boolean;
   index: number;
+  available: boolean;
+  regAvailable: boolean;
 }
 
 interface Category {

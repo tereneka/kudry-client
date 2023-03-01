@@ -20,3 +20,23 @@
 @import url(../../../blocks/reg-form/reg-form__btn-group.css);
 @import url(../../../blocks/reg-form/__btn/reg-form__btn.css);
 @import url(../../../blocks/reg-form/__btn/reg-form__btn_position_right.css);
+
+@import url(../../../blocks/card/card.css);
+@import url(../../../blocks/card/card__img.css);
+@import url(../../../blocks/card/card__title.css);
+@import url(../../../blocks/card/card__about.css);
+
+.reg-form__master-card {
+  background-image: url(../../../images/background/back-green-l.jpg);
+  transition: all 0.2s ease-in-out;
+}
+
+.reg-form__master-card_checked {
+  width: 204px;
+  border: 2px solid var(--accent-bright);
+  box-shadow: 0 0 2px 2px var(--accent-bright);
+}
+
+.ant-radio-wrapper .ant-radio {
+  display: none;
+}

@@ -1,11 +1,5 @@
 .cards__item {
-  width: 200px;
-  min-width: 200px;
-  border-radius: 16px;
-  background-size: cover;
-  padding: 16px;
   margin-right: -10px;
-  box-sizing: border-box;
   box-shadow: -10px 0 10px var(--main-text);
 }
 

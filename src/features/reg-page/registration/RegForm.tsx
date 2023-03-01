@@ -1,15 +1,5 @@
-import {
-  ConfigProvider,
-  Form,
-  Select,
-  theme,
-} from "antd";
-import { nanoid } from "nanoid";
-import React, {
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ConfigProvider, Form } from "antd";
+import React, { useEffect, useRef } from "react";
 import {
   SwitchTransition,
   CSSTransition,
@@ -19,30 +9,32 @@ import {
   useAppSelector,
 } from "../../../store";
 import {
+  useGetMasterListQuery,
   useGetRegCategoryListQuery,
-  useGetServiceListQuery,
 } from "../../api/apiSlise";
 import DateFieldset from "./DateFieldset";
 import MastersFieldset from "./MastersFieldset";
 import {
-  setCurrentFieldset,
-  setIsRegNextBtnActive,
+  setFiltredMasters,
   setSelectedCategory,
 } from "./RegistrationSlice";
 import ServicesFieldset from "./ServicesFieldset";
 
 export default function RegForm() {
+  const [form] = Form.useForm();
   const { data: categores } =
     useGetRegCategoryListQuery();
+  const { data: masters } =
+    useGetMasterListQuery();
   const currentFieldset = useAppSelector(
     (state) => state.regState.currentFieldset
   );
-  const isNextBtnActive = useAppSelector(
-    (state) => state.regState.isRegNextBtnActive
-  );
   const dispatch = useAppDispatch();
   const fieldsetList = [
-    <ServicesFieldset categores={categores} />,
+    <ServicesFieldset
+      categores={categores}
+      masters={masters}
+    />,
     <MastersFieldset />,
     <DateFieldset />,
   ];
@@ -56,20 +48,6 @@ export default function RegForm() {
     dateRef,
   ][currentFieldset];
 
-  function handleNextBtnClick() {
-    dispatch(
-      setCurrentFieldset(currentFieldset + 1)
-    );
-    dispatch(setIsRegNextBtnActive(false));
-  }
-
-  function handleBackBtnClick() {
-    dispatch(
-      setCurrentFieldset(currentFieldset - 1)
-    );
-    dispatch(setIsRegNextBtnActive(true));
-  }
-
   useEffect(() => {
     if (categores) {
       dispatch(
@@ -77,6 +55,22 @@ export default function RegForm() {
       );
     }
   }, [categores]);
+
+  useEffect(() => {
+    if (categores && masters) {
+      dispatch(
+        setFiltredMasters(
+          masters?.filter(
+            (master) =>
+              master.categoryIdList.some(
+                (categoryId) =>
+                  categoryId === categores[0].id
+              ) && master.regAvailable
+          )
+        )
+      );
+    }
+  }, [categores, masters]);
 
   return (
     <>
@@ -98,8 +92,7 @@ export default function RegForm() {
             initialValues={{
               category: categores[0].id,
             }}
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}>
+            form={form}>
             <SwitchTransition mode="out-in">
               <CSSTransition
                 key={currentFieldset}
@@ -122,41 +115,6 @@ export default function RegForm() {
                 </div>
               </CSSTransition>
             </SwitchTransition>
-
-            <div className="reg-form__btn-group">
-              {currentFieldset > 0 && (
-                <button
-                  className="btn btn_size_m reg-form__btn"
-                  type="button"
-                  onClick={handleBackBtnClick}>
-                  назад
-                </button>
-              )}
-
-              {currentFieldset <
-                fieldsetList.length - 1 && (
-                <button
-                  className={`btn btn_size_m ${
-                    isNextBtnActive
-                      ? ""
-                      : "btn_disabled"
-                  } reg-form__btn reg-form__btn_position_right`}
-                  type="button"
-                  disabled={!isNextBtnActive}
-                  onClick={handleNextBtnClick}>
-                  далее
-                </button>
-              )}
-
-              {currentFieldset ===
-                fieldsetList.length - 1 && (
-                <button
-                  className="btn btn_size_m reg-form__btn reg-form__btn_position_right"
-                  type="submit">
-                  отправить
-                </button>
-              )}
-            </div>
           </Form>
         </ConfigProvider>
       )}

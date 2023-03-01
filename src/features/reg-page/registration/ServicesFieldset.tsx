@@ -4,29 +4,47 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../store";
-import { Category } from "../../../types";
+import { Category, Master } from "../../../types";
 import { useGetServiceListQuery } from "../../api/apiSlise";
+import RegFormNextBtn from "./RegFormNextBtn";
 import {
-  setIsRegNextBtnActive,
+  setFiltredMasters,
   setSelectedCategory,
 } from "./RegistrationSlice";
 
 interface Props {
   categores: Category[] | undefined;
+  masters: Master[] | undefined;
 }
 
 export default function ServicesFieldset({
   categores,
+  masters,
 }: Props) {
+  const form = Form.useFormInstance();
   const dispatch = useAppDispatch();
   const selectedCategory = useAppSelector(
     (state) => state.regState.selectedCategory
   );
   const { data: services } =
     useGetServiceListQuery(selectedCategory);
+  const servicesValue = Form.useWatch<
+    string[] | undefined
+  >("services", form);
 
   function handleCategoryChange(id: string) {
     dispatch(setSelectedCategory(id));
+    dispatch(
+      setFiltredMasters(
+        masters?.filter(
+          (master) =>
+            master.categoryIdList.some(
+              (categoryId) => categoryId === id
+            ) && master.regAvailable
+        )
+      )
+    );
+    form.resetFields(["services", "master"]);
   }
 
   return (
@@ -70,16 +88,21 @@ export default function ServicesFieldset({
               label: service.name,
             };
           })}
-          onSelect={() => {
-            dispatch(setIsRegNextBtnActive(true));
-          }}
-          onClear={() =>
-            dispatch(setIsRegNextBtnActive(false))
-          }
           mode="multiple"
           allowClear
         />
       </Form.Item>
+
+      <div className="reg-form__btn-group">
+        <RegFormNextBtn
+          isDisabled={
+            !!!(
+              servicesValue &&
+              servicesValue.length > 0
+            )
+          }
+        />
+      </div>
     </fieldset>
   );
 }

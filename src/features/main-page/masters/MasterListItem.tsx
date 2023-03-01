@@ -27,7 +27,7 @@ export default function MasterListItem({
     useRef<HTMLDivElement>(null);
   const cardsItemElement = cardsItemRef.current;
   const dispatch = useAppDispatch();
-  const cardsItemClass = `cards__item ${
+  const cardsItemClass = `card cards__item ${
     isFullWidthStyle
       ? "cards__item_fullwidth"
       : ""
@@ -58,14 +58,14 @@ export default function MasterListItem({
       className={cardsItemClass}
       ref={cardsItemRef}>
       <img
-        className="cards__item-img"
+        className="card__img"
         src={masterPhotoUrl}
         alt="фото мастера"
       />
-      <h4 className="cards__item-title">
+      <h4 className="card__title">
         {master.name}
       </h4>
-      <p className="cards__item-about">
+      <p className="card__about">
         {master.profession}
       </p>
     </div>
