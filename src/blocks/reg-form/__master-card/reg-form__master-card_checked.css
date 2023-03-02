@@ -1,0 +1,5 @@
+.reg-form__master-card_checked {
+  width: 204px;
+  border: 2px solid var(--accent-bright);
+  box-shadow: 0 0 2px 2px var(--accent-bright);
+}

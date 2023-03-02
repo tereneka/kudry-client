@@ -29,10 +29,11 @@ export default function MastersFieldset() {
     dispatch(
       setIsMasterCardChecked(e.target.value)
     );
+    form.resetFields(["date"]);
   }
 
   return (
-    <fieldset className="reg-form__fieldset">
+    <fieldset className="reg-form__fieldset reg-form__fieldset_name_masters">
       <Form.Item
         name="master"
         label="мастер"

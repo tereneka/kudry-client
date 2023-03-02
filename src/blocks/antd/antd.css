@@ -1,0 +1,6 @@
+/*скрыла стандартные радио-кнопки  */
+.reg-form__fieldset_name_masters
+  .ant-radio-wrapper
+  .ant-radio {
+  display: none;
+}

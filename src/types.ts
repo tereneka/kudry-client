@@ -28,7 +28,7 @@ interface SubCategory {
 }
 
 interface Service {
-  id: number;
+  id: string;
   categoryId: string;
   subCategoryId: string | null;
   name: string;

@@ -14,6 +14,8 @@ import {
 } from "../../api/apiSlise";
 import DateFieldset from "./DateFieldset";
 import MastersFieldset from "./MastersFieldset";
+import RegFormBackBtn from "./RegFormBackBtn";
+import RegFormSubmitBtn from "./RegFormSubmitBtn";
 import {
   setFiltredMasters,
   setSelectedCategory,
@@ -48,6 +50,10 @@ export default function RegForm() {
     dateRef,
   ][currentFieldset];
 
+  function handleFormSubmit(values: any) {
+    // console.log(values);
+  }
+
   useEffect(() => {
     if (categores) {
       dispatch(
@@ -75,48 +81,34 @@ export default function RegForm() {
   return (
     <>
       {categores && (
-        <ConfigProvider
-          theme={{
-            token: {
-              colorPrimary: "rgb(137, 175, 176)",
-              colorError: "#c5776b",
-              fontFamily:
-                '"Source Code Pro", monospace',
-              colorTextBase: "rgb(60, 60, 60)",
-              fontSize: 16,
-            },
-          }}>
-          <Form
-            className="reg-form"
-            name="registration"
-            initialValues={{
-              category: categores[0].id,
-            }}
-            form={form}>
-            <SwitchTransition mode="out-in">
-              <CSSTransition
-                key={currentFieldset}
-                nodeRef={nodeRef}
-                addEndListener={(done: any) => {
-                  if (
-                    nodeRef &&
-                    nodeRef.current
-                  ) {
-                    nodeRef.current.addEventListener(
-                      "transitionend",
-                      done,
-                      false
-                    );
-                  }
-                }}
-                classNames="fade">
-                <div ref={nodeRef}>
-                  {fieldsetList[currentFieldset]}
-                </div>
-              </CSSTransition>
-            </SwitchTransition>
-          </Form>
-        </ConfigProvider>
+        <Form
+          className="reg-form"
+          name="registration"
+          initialValues={{
+            category: categores[0].id,
+          }}
+          form={form}
+          onFinish={handleFormSubmit}>
+          <SwitchTransition mode="out-in">
+            <CSSTransition
+              key={currentFieldset}
+              nodeRef={nodeRef}
+              addEndListener={(done: any) => {
+                if (nodeRef && nodeRef.current) {
+                  nodeRef.current.addEventListener(
+                    "transitionend",
+                    done,
+                    false
+                  );
+                }
+              }}
+              classNames="fade">
+              <div ref={nodeRef}>
+                {fieldsetList[currentFieldset]}
+              </div>
+            </CSSTransition>
+          </SwitchTransition>
+        </Form>
       )}
     </>
   );
