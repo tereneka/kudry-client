@@ -2,17 +2,19 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { Master } from "../../../types";
+import { Master, Service } from "../../../types";
 
 interface RegistrationState {
-  selectedCategory: string;
+  selectedCategoryId: string;
+  selectedServices: Service[] | undefined;
   filtredMasters: Master[] | undefined;
   currentFieldset: number;
   isMasterCardChecked: string;
 }
 
 const initialState: RegistrationState = {
-  selectedCategory: "",
+  selectedCategoryId: "",
+  selectedServices: undefined,
   filtredMasters: undefined,
   currentFieldset: 0,
   isMasterCardChecked: "",
@@ -22,11 +24,18 @@ const registrationSlice = createSlice({
   name: "registration",
   initialState,
   reducers: {
-    setSelectedCategory: (
+    setSelectedCategoryId: (
       state,
       action: PayloadAction<string>
     ) => {
-      state.selectedCategory = action.payload;
+      state.selectedCategoryId = action.payload;
+    },
+
+    setSelectedServices: (
+      state,
+      action: PayloadAction<Service[] | undefined>
+    ) => {
+      state.selectedServices = action.payload;
     },
 
     setFiltredMasters: (
@@ -53,7 +62,8 @@ const registrationSlice = createSlice({
 });
 
 export const {
-  setSelectedCategory,
+  setSelectedCategoryId,
+  setSelectedServices,
   setFiltredMasters,
   setCurrentFieldset,
   setIsMasterCardChecked,

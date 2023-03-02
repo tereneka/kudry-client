@@ -16,7 +16,8 @@ import { useGetServiceListQuery } from "../../api/apiSlise";
 import RegFormNextBtn from "./RegFormNextBtn";
 import {
   setFiltredMasters,
-  setSelectedCategory,
+  setSelectedCategoryId,
+  setSelectedServices,
 } from "./RegistrationSlice";
 
 interface Props {
@@ -31,7 +32,10 @@ export default function ServicesFieldset({
   const form = Form.useFormInstance();
   const dispatch = useAppDispatch();
   const selectedCategoryId = useAppSelector(
-    (state) => state.regState.selectedCategory
+    (state) => state.regState.selectedCategoryId
+  );
+  const selectedServices = useAppSelector(
+    (state) => state.regState.selectedServices
   );
   const { data: services } =
     useGetServiceListQuery(selectedCategoryId);
@@ -41,16 +45,13 @@ export default function ServicesFieldset({
   const selectedHairLength = Form.useWatch<
     number | undefined
   >("hairLength", form);
-  const [selectedServices, setSelectedServices] =
-    useState<Service[] | undefined>([]);
   const [
     isHairLengthFormItemVisible,
     setIsHairLengthFormItemVisible,
   ] = useState(false);
-  console.log(selectedHairLength);
 
   function handleCategoryChange(id: string) {
-    dispatch(setSelectedCategory(id));
+    dispatch(setSelectedCategoryId(id));
     dispatch(
       setFiltredMasters(
         masters?.filter(
@@ -81,32 +82,17 @@ export default function ServicesFieldset({
         result.push(findedService);
       }
     });
-    // const filtredServices = services?.filter(
-    //   (service) =>
-    //     serviceIdList.some(
-    //       (id) => id === service.id
-    //     )
-    // );
+
     return result;
   }
 
-  function handleServicesChange(
-    serviceIdList: string[]
-  ) {
-    // const selectedServices = services?.filter(
-    //   (service) =>
-    //     serviceIdList.some(
-    //       (id) => id === service.id
-    //     )
-    // );
-    // console.log(selectedServices);
-  }
-
   useEffect(() => {
-    setSelectedServices(
-      selectedServiceIdList
-        ? filterServices(selectedServiceIdList)
-        : undefined
+    dispatch(
+      setSelectedServices(
+        selectedServiceIdList
+          ? filterServices(selectedServiceIdList)
+          : undefined
+      )
     );
   }, [selectedServiceIdList]);
 
@@ -133,9 +119,6 @@ export default function ServicesFieldset({
           },
         ]}>
         <Select
-          style={{
-            color: "red",
-          }}
           options={categores?.map((category) => {
             return {
               value: category.id,
@@ -164,7 +147,6 @@ export default function ServicesFieldset({
           })}
           mode="multiple"
           allowClear
-          onChange={handleServicesChange}
           onClear={() =>
             form.resetFields(["hairLength"])
           }
@@ -204,7 +186,7 @@ export default function ServicesFieldset({
               selectedServiceIdList &&
               selectedServiceIdList.length > 0 &&
               (!isHairLengthFormItemVisible ||
-                selectedHairLength)
+                selectedHairLength !== undefined)
             )
           }
         />

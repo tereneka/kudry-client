@@ -1,4 +1,4 @@
-import { DatePicker, Form } from "antd";
+import { Calendar, Form, Select } from "antd";
 import React from "react";
 import type { RangePickerProps } from "antd/es/date-picker";
 import dayjs from "dayjs";
@@ -8,27 +8,28 @@ import RegFormSubmitBtn from "./RegFormSubmitBtn";
 
 export default function DateFieldset() {
   dayjs.extend(customParseFormat);
-  const range = (start: number, end: number) => {
-    const result = [];
-    for (let i = start; i < end; i++) {
-      result.push(i);
-    }
-    return result;
-  };
-  // console.log(dayjs().hour() + 0.5);
-
   const disabledDate: RangePickerProps["disabledDate"] =
     (current) => {
       return (
         current && current < dayjs().endOf("day")
       );
     };
-  const disabledDateTime = () => ({
-    disabledHours: () => [
-      ...range(0, 11),
-      ...range(21, 24),
-    ],
-  });
+
+  const timeList = ["11:00"];
+  for (let i = 0; i < 18; i++) {
+    const time =
+      i % 2
+        ? parseInt(timeList[i]) + 1 + ":00"
+        : timeList[i].slice(0, 3) + "30";
+
+    timeList.push(time);
+  }
+
+  const form = Form.useFormInstance();
+  const selectedTime = Form.useWatch<
+    string | undefined
+  >("time", form);
+  console.log(selectedTime);
 
   return (
     <fieldset className="reg-form__fieldset">
@@ -38,26 +39,39 @@ export default function DateFieldset() {
         rules={[
           {
             required: true,
-            message: "выберите дату и время",
+            message: "выберите дату",
           },
         ]}>
-        <DatePicker
-          format="DD-MM-YYYY HH:mm"
+        <Calendar
+          fullscreen={false}
           disabledDate={disabledDate}
-          disabledTime={disabledDateTime}
-          minuteStep={30}
-          hideDisabledOptions
-          showNow={false}
-          showSecond={false}
-          showTime={{
-            defaultValue: dayjs("11:00", "HH:mm"),
-          }}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name="time"
+        label="время"
+        rules={[
+          {
+            required: true,
+            message: "выберите время",
+          },
+        ]}>
+        <Select
+          options={timeList.map((time) => {
+            return {
+              value: time,
+              label: time,
+            };
+          })}
         />
       </Form.Item>
 
       <div className="reg-form__btn-group">
         <RegFormBackBtn />
-        <RegFormSubmitBtn />
+        <RegFormSubmitBtn
+          isDisabled={!selectedTime}
+        />
       </div>
     </fieldset>
   );

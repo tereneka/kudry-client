@@ -18,9 +18,10 @@ import RegFormBackBtn from "./RegFormBackBtn";
 import RegFormSubmitBtn from "./RegFormSubmitBtn";
 import {
   setFiltredMasters,
-  setSelectedCategory,
+  setSelectedCategoryId,
 } from "./RegistrationSlice";
 import ServicesFieldset from "./ServicesFieldset";
+import dayjs from "dayjs";
 
 export default function RegForm() {
   const [form] = Form.useForm();
@@ -57,7 +58,7 @@ export default function RegForm() {
   useEffect(() => {
     if (categores) {
       dispatch(
-        setSelectedCategory(categores[0].id)
+        setSelectedCategoryId(categores[0].id)
       );
     }
   }, [categores]);
@@ -86,6 +87,7 @@ export default function RegForm() {
           name="registration"
           initialValues={{
             category: categores[0].id,
+            date: dayjs().add(1, "day"),
           }}
           form={form}
           onFinish={handleFormSubmit}>

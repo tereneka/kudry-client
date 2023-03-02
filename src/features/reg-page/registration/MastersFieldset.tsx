@@ -19,7 +19,7 @@ export default function MastersFieldset() {
   );
   const dispatch = useAppDispatch();
   const form = Form.useFormInstance();
-  const masterValue = Form.useWatch<
+  const selectedMasterId = Form.useWatch<
     string | undefined
   >("master", form);
 
@@ -57,7 +57,7 @@ export default function MastersFieldset() {
       <div className="reg-form__btn-group">
         <RegFormBackBtn />
         <RegFormNextBtn
-          isDisabled={!masterValue}
+          isDisabled={!selectedMasterId}
         />
       </div>
     </fieldset>
