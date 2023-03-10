@@ -8,6 +8,7 @@ import {
   useGetMasterListQuery,
 } from "../../api/apiSlise";
 import { setFormValues } from "../registration/RegistrationSlice";
+import DateForm from "./DateForm";
 import MastersForm from "./MastersForm";
 import ServicesForm from "./ServicesForm";
 
@@ -24,6 +25,7 @@ export default function RegistrationForm() {
     <>
       <ServicesForm />
       <MastersForm />
+      <DateForm />
     </>
   );
 }

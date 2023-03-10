@@ -7,6 +7,7 @@ import {
   Master,
   Service,
 } from "../../../types";
+import dayjs from "dayjs";
 
 interface RegistrationState {
   // formValues: {
@@ -17,6 +18,8 @@ interface RegistrationState {
     services: Service[] | undefined;
     master: Master | undefined;
     durationIndex: number;
+    date: string;
+    time: string | undefined;
   };
   selectedCategoryId: string;
   selectedServices: Service[] | undefined;
@@ -31,6 +34,10 @@ const initialState: RegistrationState = {
     services: undefined,
     master: undefined,
     durationIndex: 0,
+    date: dayjs()
+      .add(1, "day")
+      .format("DD.MM.YYYY"),
+    time: undefined,
   },
   selectedCategoryId: "",
   selectedServices: undefined,
