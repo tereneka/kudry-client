@@ -13,6 +13,9 @@ export default function RegFormSubmitBtn({
   const selectedServices = useAppSelector(
     (state) => state.regState.selectedServices
   );
+  const filtredMastersByCategory = useAppSelector(
+    (state) => state.regState.filtredMasters
+  );
 
   function handleFormSubmit() {
     // индекс длительности услуги в массиве в базе данных
@@ -62,7 +65,10 @@ export default function RegFormSubmitBtn({
       categoryId: form.getFieldValue("category"),
       serviceIdList:
         form.getFieldValue("services"),
-      masterId: form.getFieldValue("master"),
+      masterId:
+        form.getFieldValue("master") ||
+        (filtredMastersByCategory &&
+          filtredMastersByCategory[0].id),
       date: form.getFieldValue("date"),
       timeList,
     };

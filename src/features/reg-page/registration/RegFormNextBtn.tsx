@@ -37,10 +37,11 @@ export default function RegFormNextBtn({
       className={`btn btn_size_m ${
         isDisabled ? "btn_disabled" : ""
       } reg-form__btn reg-form__btn_position_right`}
-      type="button"
-      disabled={isDisabled}
-      onClick={handleBtnClick}>
-      далее
+      type="submit"
+      // disabled={isDisabled}
+      // onClick={handleBtnClick}
+    >
+      вперёд
     </button>
   );
 }

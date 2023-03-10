@@ -270,6 +270,8 @@ export const apiSlice = createApi({
       },
       providesTags: ["Photo"],
     }),
+
+    // setRegistretion: builder.mutation,
   }),
 });
 

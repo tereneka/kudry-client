@@ -52,7 +52,7 @@ export default function RegForm() {
   ][currentFieldset];
 
   function handleFormSubmit(values: any) {
-    // console.log(values);
+    console.log(values);
   }
 
   useEffect(() => {
@@ -91,7 +91,7 @@ export default function RegForm() {
           }}
           form={form}
           onFinish={handleFormSubmit}>
-          <SwitchTransition mode="out-in">
+          {/* <SwitchTransition mode="out-in">
             <CSSTransition
               key={currentFieldset}
               nodeRef={nodeRef}
@@ -109,7 +109,15 @@ export default function RegForm() {
                 {fieldsetList[currentFieldset]}
               </div>
             </CSSTransition>
-          </SwitchTransition>
+          </SwitchTransition> */}
+          <ServicesFieldset
+            categores={categores}
+            masters={masters}
+          />
+
+          <MastersFieldset />
+          <DateFieldset />
+          <button type="submit">submit</button>
         </Form>
       )}
     </>

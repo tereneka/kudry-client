@@ -69,9 +69,9 @@ export default function DateFieldset() {
 
       <div className="reg-form__btn-group">
         <RegFormBackBtn />
-        <RegFormSubmitBtn
+        {/* <RegFormSubmitBtn
           isDisabled={!selectedTime}
-        />
+        /> */}
       </div>
     </fieldset>
   );

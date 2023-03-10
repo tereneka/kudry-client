@@ -150,6 +150,9 @@ export default function ServicesFieldset({
           onClear={() =>
             form.resetFields(["hairLength"])
           }
+          onChange={(v, o) => {
+            console.log(v, o);
+          }}
         />
       </Form.Item>
 
