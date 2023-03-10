@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { regPageRouteList } from "../../../constants";
 import {
   useAppDispatch,
   useAppSelector,
@@ -14,6 +16,8 @@ export default function RegFormBackBtn() {
   );
   const dispatch = useAppDispatch();
 
+  const navigate = useNavigate();
+
   function handleBtnClick() {
     const n =
       currentFieldset === 2 &&
@@ -21,6 +25,12 @@ export default function RegFormBackBtn() {
       filtredMasters.length < 2
         ? 2
         : 1;
+
+    // navigate(
+    //   regPageRouteList[currentFieldset - n]
+    // );
+    navigate(-n);
+
     dispatch(
       setCurrentFieldset(currentFieldset - n)
     );

@@ -4,6 +4,8 @@ import {
   RadioChangeEvent,
 } from "antd";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { regPageRouteList } from "../../../constants";
 import {
   useAppSelector,
   useAppDispatch,
@@ -19,6 +21,10 @@ import {
 export default function MastersForm() {
   const [form] = Form.useForm();
 
+  const formValues = useAppSelector(
+    (state) => state.regState.formValues
+  );
+
   const masters = useAppSelector(
     (state) => state.regState.filtredMasters
   );
@@ -28,6 +34,8 @@ export default function MastersForm() {
   );
 
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
 
   function handleMasterChage(
     e: RadioChangeEvent
@@ -44,6 +52,10 @@ export default function MastersForm() {
   function handleFormSubmit(values: {
     master: string;
   }) {
+    navigate(
+      regPageRouteList[currentFieldset + 1]
+    );
+
     dispatch(
       setCurrentFieldset(currentFieldset + 1)
     );
@@ -54,6 +66,9 @@ export default function MastersForm() {
       form={form}
       className="reg-form"
       name="master"
+      initialValues={{
+        master: formValues.master?.id,
+      }}
       onFinish={handleFormSubmit}>
       <Form.Item
         name="master"

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { Outlet } from "react-router-dom";
 import {
   useAppSelector,
   useAppDispatch,
@@ -23,9 +24,7 @@ export default function RegistrationForm() {
 
   return (
     <>
-      <ServicesForm />
-      <MastersForm />
-      <DateForm />
+      <Outlet />
     </>
   );
 }

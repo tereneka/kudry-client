@@ -1,5 +1,7 @@
 import { Form, Select } from "antd";
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { regPageRouteList } from "../../../constants";
 import {
   useAppDispatch,
   useAppSelector,
@@ -59,11 +61,34 @@ export default function ServicesForm() {
 
   const dispatch = useAppDispatch();
 
-  function handleCategoryChange(id: string) {
-    form.resetFields([
-      "services",
-      "durationIndex",
-    ]);
+  const navigate = useNavigate();
+
+  function handleCategoryChange() {
+    dispatch(
+      setFormValues({
+        services: undefined,
+        durationIndex: undefined,
+      })
+    );
+
+    setTimeout(() => {
+      form.resetFields([
+        "services",
+        "durationIndex",
+      ]);
+    }, 100);
+  }
+
+  function handleServicesClear() {
+    dispatch(
+      setFormValues({
+        durationIndex: undefined,
+      })
+    );
+
+    setTimeout(() => {
+      form.resetFields(["durationIndex"]);
+    }, 100);
   }
 
   function handleFormSubmit(values: {
@@ -83,6 +108,10 @@ export default function ServicesForm() {
 
     const n = master ? 2 : 1;
 
+    navigate(
+      regPageRouteList[currentFieldset + n]
+    );
+
     dispatch(
       setCurrentFieldset(currentFieldset + n)
     );
@@ -94,7 +123,7 @@ export default function ServicesForm() {
             category.id === values.category
         ),
         durationIndex: values.durationIndex || 0,
-        master,
+        master: master || formValues.master,
       })
     );
   }
@@ -133,7 +162,14 @@ export default function ServicesForm() {
           className="reg-form"
           name="services"
           initialValues={{
-            category: categores[0].id,
+            category:
+              formValues.category?.id ||
+              categores[0].id,
+            services: formValues.services?.map(
+              (service) => service.id
+            ),
+            durationIndex:
+              formValues.durationIndex,
           }}
           onFinish={handleFormSubmit}>
           <Form.Item
@@ -179,11 +215,7 @@ export default function ServicesForm() {
               )}
               mode="multiple"
               allowClear
-              onClear={() =>
-                form.resetFields([
-                  "durationIndex",
-                ])
-              }
+              onClear={handleServicesClear}
             />
           </Form.Item>
 

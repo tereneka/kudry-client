@@ -17,7 +17,7 @@ interface RegistrationState {
     category: Category | undefined;
     services: Service[] | undefined;
     master: Master | undefined;
-    durationIndex: number;
+    durationIndex: number | undefined;
     date: string;
     time: string | undefined;
   };
@@ -33,7 +33,7 @@ const initialState: RegistrationState = {
     category: undefined,
     services: undefined,
     master: undefined,
-    durationIndex: 0,
+    durationIndex: undefined,
     date: dayjs()
       .add(1, "day")
       .format("DD.MM.YYYY"),
