@@ -15,11 +15,20 @@ export default function MasterCard({
     isLoading,
     isError,
   } = useGetPhotoQuery(master.photoLink);
+  // const isMasterCardChecked = useAppSelector(
+  //   (state) => state.regState.isMasterCardChecked
+  // );
+  // const masterCardClass = `card reg-form__master-card ${
+  //   isMasterCardChecked &&
+  //   isMasterCardChecked === master.id
+  //     ? "reg-form__master-card_checked"
+  //     : ""
+  // }`;
   const isMasterCardChecked = useAppSelector(
-    (state) => state.regState.isMasterCardChecked
+    (state) =>
+      state.regState.formValues.master?.id
   );
   const masterCardClass = `card reg-form__master-card ${
-    isMasterCardChecked &&
     isMasterCardChecked === master.id
       ? "reg-form__master-card_checked"
       : ""

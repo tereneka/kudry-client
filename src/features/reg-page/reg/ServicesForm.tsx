@@ -4,6 +4,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../store";
+import { Master } from "../../../types";
 import {
   useGetRegCategoryListQuery,
   useGetMasterListQuery,
@@ -18,6 +19,7 @@ import {
 
 export default function ServicesForm() {
   const [form] = Form.useForm();
+
   const formValues = useAppSelector(
     (state) => state.regState.formValues
   );
@@ -40,6 +42,10 @@ export default function ServicesForm() {
     (state) => state.regState.filtredMasters
   );
 
+  // продолжительность услуги зависит от длины волос для
+  // парикмахерских услуг(кроме мужской стрижки),
+  // индекс длительности услуги в массиве в базе данных
+  // соответствует value поля формы durationIndex
   const isDurationIndexFormItemVisible = !!(
     formValues.services &&
     formValues.services.some(
@@ -54,17 +60,6 @@ export default function ServicesForm() {
   const dispatch = useAppDispatch();
 
   function handleCategoryChange(id: string) {
-    dispatch(
-      setFiltredMasters(
-        masters?.filter(
-          (master) =>
-            master.categoryIdList.some(
-              (categoryId) => categoryId === id
-            ) && master.regAvailable
-        )
-      )
-    );
-
     form.resetFields([
       "services",
       "durationIndex",
@@ -76,10 +71,17 @@ export default function ServicesForm() {
     services: string[];
     durationIndex: number;
   }) {
-    const n =
-      filtredMasters && filtredMasters.length < 2
-        ? 2
-        : 1;
+    // если мастеров в выбранной категории меньше двух пропускаем форму выбора мастера
+    let master: Master | undefined;
+
+    if (filtredMasters) {
+      master =
+        filtredMasters.length > 1
+          ? undefined
+          : filtredMasters[0];
+    }
+
+    const n = master ? 2 : 1;
 
     dispatch(
       setCurrentFieldset(currentFieldset + n)
@@ -92,9 +94,24 @@ export default function ServicesForm() {
             category.id === values.category
         ),
         durationIndex: values.durationIndex || 0,
+        master,
       })
     );
   }
+
+  useEffect(() => {
+    dispatch(
+      setFiltredMasters(
+        masters?.filter(
+          (master) =>
+            master.categoryIdList.some(
+              (categoryId) =>
+                categoryId === selectedCategoryId
+            ) && master.regAvailable
+        )
+      )
+    );
+  }, [selectedCategoryId, masters]);
 
   useEffect(() => {
     dispatch(
