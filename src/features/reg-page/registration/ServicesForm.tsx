@@ -22,6 +22,14 @@ import {
 export default function ServicesForm() {
   const [form] = Form.useForm();
 
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
+  const currentForm = useAppSelector(
+    (state) => state.regState.currentForm
+  );
+
   const formValues = useAppSelector(
     (state) => state.regState.formValues
   );
@@ -54,14 +62,6 @@ export default function ServicesForm() {
       (service) => service.duration.length > 1
     )
   );
-
-  const currentForm = useAppSelector(
-    (state) => state.regState.currentForm
-  );
-
-  const dispatch = useAppDispatch();
-
-  const navigate = useNavigate();
 
   function handleCategoryChange() {
     dispatch(
@@ -241,7 +241,7 @@ export default function ServicesForm() {
           )}
 
           <div className="reg-form__btn-group">
-            <RegFormNextBtn isDisabled={false} />
+            <RegFormNextBtn />
           </div>
         </Form>
       )}

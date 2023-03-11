@@ -21,6 +21,14 @@ import {
 export default function MastersForm() {
   const [form] = Form.useForm();
 
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
+  const currentForm = useAppSelector(
+    (state) => state.regState.currentForm
+  );
+
   const formValues = useAppSelector(
     (state) => state.regState.formValues
   );
@@ -28,14 +36,6 @@ export default function MastersForm() {
   const masters = useAppSelector(
     (state) => state.regState.filtredMasters
   );
-
-  const currentForm = useAppSelector(
-    (state) => state.regState.currentForm
-  );
-
-  const dispatch = useAppDispatch();
-
-  const navigate = useNavigate();
 
   function handleMasterChage(
     e: RadioChangeEvent
@@ -88,7 +88,7 @@ export default function MastersForm() {
 
       <div className="reg-form__btn-group">
         <RegFormBackBtn />
-        <RegFormNextBtn isDisabled={false} />
+        <RegFormNextBtn />
       </div>
     </Form>
   );

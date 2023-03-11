@@ -14,16 +14,19 @@ import {
   useAddRegistrationMutation,
   useGetRegistrationAfterTodayListQuery,
 } from "../../api/apiSlise";
-import { services } from "../../../db/initialDbData";
 import { dateFormat } from "../../../constants";
-import { log } from "console";
 
 export default function DateForm() {
   const [form] = Form.useForm();
 
+  const dispatch = useAppDispatch();
+
   const formValues = useAppSelector(
     (state) => state.regState.formValues
   );
+
+  const [addRegistration, { isLoading }] =
+    useAddRegistrationMutation();
 
   const selectedDate = Form.useWatch<dayjs.Dayjs>(
     "date",
@@ -32,10 +35,39 @@ export default function DateForm() {
 
   const { data: registrationList } =
     useGetRegistrationAfterTodayListQuery();
+
   const masterRegList = registrationList?.filter(
     (reg) =>
       reg.masterId === formValues.master?.id
   );
+
+  const currentRegDuration =
+    formValues?.services?.reduce(
+      (sum, currentService) => {
+        const currentValue =
+          currentService.duration.length > 1 &&
+          formValues.durationIndex
+            ? currentService.duration[
+                formValues.durationIndex
+              ]
+            : currentService.duration[0];
+        return sum + currentValue;
+      },
+      0
+    ) || 0;
+
+  // массив времени для селекта формы
+  const timeList = ["11:00"];
+  for (let i = 0; i < 18; i++) {
+    const time =
+      i % 2
+        ? parseInt(timeList[i]) + 1 + ":00"
+        : timeList[i].slice(0, 3) + "30";
+
+    timeList.push(time);
+  }
+
+  // определяем недоступные даты для записи
   const masterDateList: {
     [key: string]: string[];
   } = {};
@@ -56,15 +88,6 @@ export default function DateForm() {
     if (masterDateList[key].length >= 19)
       masterDisabledDate.push(key);
   }
-  console.log(masterDateList);
-
-  // console.log(new Date().getUTCDate());
-  // console.log(
-  //   dayjs("12.03.2023", dateFormat).format(
-  //     dateFormat
-  //   )
-  // );
-  // console.log(Object.keys(masterDateList));
 
   dayjs.extend(customParseFormat);
   const disabledDate: RangePickerProps["disabledDate"] =
@@ -79,44 +102,7 @@ export default function DateForm() {
       );
     };
 
-  const timeList = ["11:00"];
-  for (let i = 0; i < 18; i++) {
-    const time =
-      i % 2
-        ? parseInt(timeList[i]) + 1 + ":00"
-        : timeList[i].slice(0, 3) + "30";
-
-    timeList.push(time);
-  }
-
-  const duration = formValues.services
-    ? formValues.services.reduce(
-        (sum, currentService) => {
-          const currentValue =
-            currentService.duration.length > 1 &&
-            formValues.durationIndex
-              ? currentService.duration[
-                  formValues.durationIndex
-                ]
-              : currentService.duration[0];
-          return sum + currentValue;
-        },
-        0
-      )
-    : 0;
-
-  const dispatch = useAppDispatch();
-
-  const [addRegistration, { isLoading }] =
-    useAddRegistrationMutation();
-
-  // const disabledTime: string[] = [];
-
-  // timeList.forEach((time) => {
-  //   if (isTimeDisabled(time)) {
-  //     disabledTime.push(time);
-  //   }
-  // });
+  // определяем недоступное время для записи
   const disabledTime = timeList.map((time) => {
     return masterDateList[
       selectedDate?.format(dateFormat)
@@ -124,36 +110,31 @@ export default function DateForm() {
       ? false
       : true;
   });
+
   disabledTime.forEach((time, index) => {
     if (!time) {
-      for (let i = 1; i < duration; i++) {
+      // блокируем время, чтобы записи не наложились друг на друга
+      for (
+        let i = 1;
+        i < currentRegDuration;
+        i++
+      ) {
+        disabledTime[index - i] = false;
+      }
+    } else if (
+      index === disabledTime.length - 1 &&
+      currentRegDuration > 2
+    ) {
+      // блокируем время, чтобы окончание записи не было позднее 21:00
+      for (
+        let i = 0;
+        i < currentRegDuration - 2;
+        i++
+      ) {
         disabledTime[index - i] = false;
       }
     }
   });
-  disabledTime.forEach((time, index) => {
-    if (index + duration > 19) {
-      for (
-        let i = 1;
-        i < disabledTime.length - index;
-        i++
-      ) {
-        disabledTime[index + i] = false;
-      }
-    }
-  });
-  console.log(disabledTime);
-
-  function isTimeDisabled(time: string) {
-    return (
-      !!masterDateList[
-        selectedDate?.format(dateFormat)
-      ] &&
-      masterDateList[
-        selectedDate?.format(dateFormat)
-      ].includes(time)
-    );
-  }
 
   function handleFormSubmit(values: {
     date: dayjs.Dayjs;
@@ -166,39 +147,29 @@ export default function DateForm() {
       })
     );
 
-    // const duration = formValues.services
-    //   ? formValues.services.reduce(
-    //       (sum, currentService) => {
-    //         const currentValue =
-    //           currentService.duration.length >
-    //             1 && formValues.durationIndex
-    //             ? currentService.duration[
-    //                 formValues.durationIndex
-    //               ]
-    //             : currentService.duration[0];
-    //         return sum + currentValue;
-    //       },
-    //       0
-    //     )
-    //   : 0;
+    const regTimeList: string[] = [values.time];
 
-    const timeList: string[] = [values.time];
-
-    for (let i = 0; i < duration - 1; i++) {
+    for (
+      let i = 0;
+      i < currentRegDuration - 1;
+      i++
+    ) {
       let time: string;
       if (values.time.slice(3, 4) === "0") {
         time =
           i % 2
-            ? parseInt(timeList[i]) + 1 + ":00"
-            : timeList[i].slice(0, 3) + "30";
+            ? parseInt(regTimeList[i]) + 1 + ":00"
+            : regTimeList[i].slice(0, 3) + "30";
       } else {
         time =
           i % 2
-            ? timeList[i].slice(0, 3) + "30"
-            : parseInt(timeList[i]) + 1 + ":00";
+            ? regTimeList[i].slice(0, 3) + "30"
+            : parseInt(regTimeList[i]) +
+              1 +
+              ":00";
       }
 
-      timeList.push(time);
+      regTimeList.push(time);
     }
 
     if (!isLoading) {
@@ -209,19 +180,9 @@ export default function DateForm() {
         ),
         masterId: formValues.master?.id,
         date: values.date.toDate(),
-        time: timeList,
+        time: regTimeList,
       });
     }
-
-    console.log({
-      categoryId: formValues.category?.id,
-      serviceIdList: formValues.services?.map(
-        (service) => service.id
-      ),
-      masterId: formValues.master?.id,
-      date: values.date.toDate(),
-      time: timeList,
-    });
   }
 
   return (
@@ -270,7 +231,7 @@ export default function DateForm() {
 
       <div className="reg-form__btn-group">
         <RegFormBackBtn />
-        <RegFormNextBtn isDisabled={false} />
+        <RegFormNextBtn />
       </div>
     </Form>
   );
