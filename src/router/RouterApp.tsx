@@ -2,9 +2,9 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import MainPage from "../features/main-page/page/MainPage";
 import RegPage from "../features/reg-page/page/RegPage";
-import DateForm from "../features/reg-page/reg/DateForm";
-import MastersForm from "../features/reg-page/reg/MastersForm";
-import ServicesForm from "../features/reg-page/reg/ServicesForm";
+import DateForm from "../features/reg-page/registration/DateForm";
+import MastersForm from "../features/reg-page/registration/MastersForm";
+import ServicesForm from "../features/reg-page/registration/ServicesForm";
 
 function RouterApp() {
   return (

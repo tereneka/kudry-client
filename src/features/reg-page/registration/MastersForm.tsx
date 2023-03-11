@@ -4,36 +4,68 @@ import {
   RadioChangeEvent,
 } from "antd";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { regPageRouteList } from "../../../constants";
 import {
-  useAppDispatch,
   useAppSelector,
+  useAppDispatch,
 } from "../../../store";
 import MasterCard from "./MasterCard";
 import RegFormBackBtn from "./RegFormBackBtn";
 import RegFormNextBtn from "./RegFormNextBtn";
-import { setIsMasterCardChecked } from "./RegistrationSlice";
+import {
+  setCurrentForm,
+  setFormValues,
+} from "./RegistrationSlice";
 
-export default function MastersFieldset() {
+export default function MastersForm() {
+  const [form] = Form.useForm();
+
+  const formValues = useAppSelector(
+    (state) => state.regState.formValues
+  );
+
   const masters = useAppSelector(
     (state) => state.regState.filtredMasters
   );
+
+  const currentForm = useAppSelector(
+    (state) => state.regState.currentForm
+  );
+
   const dispatch = useAppDispatch();
-  const form = Form.useFormInstance();
-  const selectedMasterId = Form.useWatch<
-    string | undefined
-  >("master", form);
+
+  const navigate = useNavigate();
 
   function handleMasterChage(
     e: RadioChangeEvent
   ) {
     dispatch(
-      setIsMasterCardChecked(e.target.value)
+      setFormValues({
+        master: masters?.find(
+          (master) => master.id === e.target.value
+        ),
+      })
     );
-    form.resetFields(["date"]);
+  }
+
+  function handleFormSubmit(values: {
+    master: string;
+  }) {
+    navigate(regPageRouteList[currentForm + 1]);
+
+    dispatch(setCurrentForm(currentForm + 1));
   }
 
   return (
-    <fieldset className="reg-form__fieldset reg-form__fieldset_name_masters">
+    <Form
+      form={form}
+      className="reg-form"
+      name="master"
+      initialValues={{
+        master: formValues.master?.id,
+      }}
+      onFinish={handleFormSubmit}>
       <Form.Item
         name="master"
         label="мастер"
@@ -56,10 +88,8 @@ export default function MastersFieldset() {
 
       <div className="reg-form__btn-group">
         <RegFormBackBtn />
-        <RegFormNextBtn
-          isDisabled={!selectedMasterId}
-        />
+        <RegFormNextBtn isDisabled={false} />
       </div>
-    </fieldset>
+    </Form>
   );
 }

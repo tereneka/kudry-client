@@ -25,9 +25,9 @@ export const store = configureStore({
     regState: regReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(
-      apiSlice.middleware
-    ),
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(apiSlice.middleware),
 });
 
 export const useAppDispatch: () => AppDispatch =

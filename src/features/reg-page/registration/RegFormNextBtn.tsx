@@ -3,7 +3,7 @@ import {
   useAppSelector,
   useAppDispatch,
 } from "../../../store";
-import { setCurrentFieldset } from "./RegistrationSlice";
+import { setCurrentForm } from "./RegistrationSlice";
 
 interface Props {
   isDisabled: boolean;
@@ -12,8 +12,8 @@ interface Props {
 export default function RegFormNextBtn({
   isDisabled,
 }: Props) {
-  const currentFieldset = useAppSelector(
-    (state) => state.regState.currentFieldset
+  const currentForm = useAppSelector(
+    (state) => state.regState.currentForm
   );
   const filtredMasters = useAppSelector(
     (state) => state.regState.filtredMasters
@@ -22,14 +22,12 @@ export default function RegFormNextBtn({
 
   function handleBtnClick() {
     const n =
-      currentFieldset === 0 &&
+      currentForm === 0 &&
       filtredMasters &&
       filtredMasters.length < 2
         ? 2
         : 1;
-    dispatch(
-      setCurrentFieldset(currentFieldset + n)
-    );
+    dispatch(setCurrentForm(currentForm + n));
   }
 
   return (

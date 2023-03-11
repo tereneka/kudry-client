@@ -10,9 +10,6 @@ import {
 import dayjs from "dayjs";
 
 interface RegistrationState {
-  // formValues: {
-  //   [key: string]: any;
-  // };
   formValues: {
     category: Category | undefined;
     services: Service[] | undefined;
@@ -21,11 +18,8 @@ interface RegistrationState {
     date: string;
     time: string | undefined;
   };
-  selectedCategoryId: string;
-  selectedServices: Service[] | undefined;
   filtredMasters: Master[] | undefined;
-  currentFieldset: number;
-  isMasterCardChecked: string;
+  currentForm: number;
 }
 
 const initialState: RegistrationState = {
@@ -39,31 +33,14 @@ const initialState: RegistrationState = {
       .format("DD.MM.YYYY"),
     time: undefined,
   },
-  selectedCategoryId: "",
-  selectedServices: undefined,
   filtredMasters: undefined,
-  currentFieldset: 0,
-  isMasterCardChecked: "",
+  currentForm: 0,
 };
 
 const registrationSlice = createSlice({
   name: "registration",
   initialState,
   reducers: {
-    setSelectedCategoryId: (
-      state,
-      action: PayloadAction<string>
-    ) => {
-      state.selectedCategoryId = action.payload;
-    },
-
-    setSelectedServices: (
-      state,
-      action: PayloadAction<Service[] | undefined>
-    ) => {
-      state.selectedServices = action.payload;
-    },
-
     setFiltredMasters: (
       state,
       action: PayloadAction<Master[] | undefined>
@@ -71,18 +48,11 @@ const registrationSlice = createSlice({
       state.filtredMasters = action.payload;
     },
 
-    setCurrentFieldset: (
+    setCurrentForm: (
       state,
       action: PayloadAction<number>
     ) => {
-      state.currentFieldset = action.payload;
-    },
-
-    setIsMasterCardChecked: (
-      state,
-      action: PayloadAction<string>
-    ) => {
-      state.isMasterCardChecked = action.payload;
+      state.currentForm = action.payload;
     },
 
     setFormValues: (
@@ -101,11 +71,8 @@ const registrationSlice = createSlice({
 
 export const {
   setFormValues,
-  setSelectedCategoryId,
-  setSelectedServices,
   setFiltredMasters,
-  setCurrentFieldset,
-  setIsMasterCardChecked,
+  setCurrentForm,
 } = registrationSlice.actions;
 
 export default registrationSlice.reducer;

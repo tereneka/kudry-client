@@ -37,11 +37,22 @@ interface Service {
   available: boolean;
   index: number;
 }
+
+interface Registration {
+  id: string;
+  categoryId: string;
+  serviceIdList: string[];
+  masterId: string;
+  date: { [key: string]: any };
+  time: string[];
+}
+
 export type {
   Master,
   Category,
   SubCategory,
   Service,
+  Registration,
 };
 
 // export interface Date {

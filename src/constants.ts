@@ -4,4 +4,6 @@ const regPageRouteList = [
   "/online-reg/date",
 ];
 
-export { regPageRouteList };
+const dateFormat = "DD.MM.YYYY";
+
+export { regPageRouteList, dateFormat };

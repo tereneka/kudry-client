@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import {
   createApi,
   fakeBaseQuery,
@@ -8,13 +9,13 @@ import {
   orderBy,
   query,
   where,
+  doc,
+  setDoc,
 } from "firebase/firestore";
 import {
   ref,
   getDownloadURL,
-  listAll,
   list,
-  ListResult,
 } from "firebase/storage";
 import {
   db,
@@ -23,6 +24,7 @@ import {
 import {
   Category,
   Master,
+  Registration,
   Service,
   SubCategory,
 } from "../../types";
@@ -36,6 +38,7 @@ export const apiSlice = createApi({
     "SubCategory",
     "Photo",
     "Service",
+    "Registration",
   ],
   endpoints: (builder) => ({
     getMasterList: builder.query<Master[], void>({
@@ -271,7 +274,51 @@ export const apiSlice = createApi({
       providesTags: ["Photo"],
     }),
 
-    // setRegistretion: builder.mutation,
+    getRegistrationAfterTodayList: builder.query<
+      Registration[],
+      void
+    >({
+      async queryFn() {
+        try {
+          const registrationsQuery = query(
+            collection(db, "registrations"),
+            where("date", ">=", new Date())
+          );
+          const querySnaphot = await getDocs(
+            registrationsQuery
+          );
+          let registrations: any[] = [];
+          querySnaphot?.forEach((doc) => {
+            registrations.push({
+              id: doc.id,
+              ...doc.data(),
+            });
+          });
+          return {
+            data: registrations,
+          };
+        } catch (error) {
+          return { error };
+        }
+      },
+      providesTags: ["Registration"],
+    }),
+
+    addRegistration: builder.mutation({
+      queryFn: async (data) => {
+        try {
+          const registrationRef = doc(
+            collection(db, "registrations")
+          );
+          await setDoc(registrationRef, data);
+
+          return data;
+        } catch (error) {
+          return error;
+        }
+      },
+      invalidatesTags: ["Registration"],
+    }),
   }),
 });
 
@@ -283,4 +330,6 @@ export const {
   useGetServiceListQuery,
   useGetPhotoQuery,
   useGetPhotoListQuery,
+  useGetRegistrationAfterTodayListQuery,
+  useAddRegistrationMutation,
 } = apiSlice;

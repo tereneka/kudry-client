@@ -12,12 +12,12 @@ import {
   useGetMasterListQuery,
   useGetServiceListQuery,
 } from "../../api/apiSlise";
-import RegFormNextBtn from "../registration/RegFormNextBtn";
+import RegFormNextBtn from "./RegFormNextBtn";
 import {
-  setCurrentFieldset,
+  setCurrentForm,
   setFiltredMasters,
   setFormValues,
-} from "../registration/RegistrationSlice";
+} from "./RegistrationSlice";
 
 export default function ServicesForm() {
   const [form] = Form.useForm();
@@ -55,8 +55,8 @@ export default function ServicesForm() {
     )
   );
 
-  const currentFieldset = useAppSelector(
-    (state) => state.regState.currentFieldset
+  const currentForm = useAppSelector(
+    (state) => state.regState.currentForm
   );
 
   const dispatch = useAppDispatch();
@@ -108,13 +108,9 @@ export default function ServicesForm() {
 
     const n = master ? 2 : 1;
 
-    navigate(
-      regPageRouteList[currentFieldset + n]
-    );
+    navigate(regPageRouteList[currentForm + n]);
 
-    dispatch(
-      setCurrentFieldset(currentFieldset + n)
-    );
+    dispatch(setCurrentForm(currentForm + n));
 
     dispatch(
       setFormValues({
