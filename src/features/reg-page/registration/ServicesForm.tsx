@@ -12,6 +12,7 @@ import {
   useGetMasterListQuery,
   useGetServiceListQuery,
 } from "../../api/apiSlise";
+import RegFormBackBtn from "./RegFormBackBtn";
 import RegFormNextBtn from "./RegFormNextBtn";
 import {
   setCurrentForm,
@@ -149,6 +150,7 @@ export default function ServicesForm() {
       })
     );
   }, [selectedServiceIdList]);
+  console.log(formValues);
 
   return (
     <>
@@ -241,6 +243,7 @@ export default function ServicesForm() {
           )}
 
           <div className="reg-form__btn-group">
+            <RegFormBackBtn />
             <RegFormNextBtn />
           </div>
         </Form>

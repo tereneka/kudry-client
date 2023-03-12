@@ -5,6 +5,7 @@ import RegPage from "../features/reg-page/page/RegPage";
 import DateForm from "../features/reg-page/registration/DateForm";
 import MastersForm from "../features/reg-page/registration/MastersForm";
 import ServicesForm from "../features/reg-page/registration/ServicesForm";
+import UserInfoForm from "../features/reg-page/registration/UserInfoForm";
 
 function RouterApp() {
   return (
@@ -15,6 +16,10 @@ function RouterApp() {
       <Route
         path="/online-reg"
         element={<RegPage />}>
+        <Route
+          path="contacts"
+          element={<UserInfoForm />}
+        />
         <Route
           path="services"
           element={<ServicesForm />}

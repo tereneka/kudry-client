@@ -40,6 +40,8 @@ interface Service {
 
 interface Registration {
   id: string;
+  userName: string;
+  phone: string;
   categoryId: string;
   serviceIdList: string[];
   masterId: string;

@@ -11,6 +11,8 @@ import dayjs from "dayjs";
 
 interface RegistrationState {
   formValues: {
+    userName: string;
+    phone: string;
     category: Category | undefined;
     services: Service[] | undefined;
     master: Master | undefined;
@@ -24,6 +26,8 @@ interface RegistrationState {
 
 const initialState: RegistrationState = {
   formValues: {
+    userName: "",
+    phone: "",
     category: undefined,
     services: undefined,
     master: undefined,
