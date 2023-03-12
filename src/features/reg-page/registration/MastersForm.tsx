@@ -65,7 +65,8 @@ export default function MastersForm() {
       initialValues={{
         master: formValues.master?.id,
       }}
-      onFinish={handleFormSubmit}>
+      onFinish={handleFormSubmit}
+      key={2}>
       <Form.Item
         name="master"
         label="мастер"

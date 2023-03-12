@@ -150,14 +150,14 @@ export default function ServicesForm() {
       })
     );
   }, [selectedServiceIdList]);
-  console.log(formValues);
 
   return (
     <>
       {categores && (
         <Form
-          form={form}
           className="reg-form"
+          form={form}
+          // className="reg-form"
           name="services"
           initialValues={{
             category:

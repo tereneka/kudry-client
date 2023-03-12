@@ -53,7 +53,8 @@ export default function UserInfoForm() {
         userName: formValues.userName,
         phone: formValues.phone.slice(2),
       }}
-      onFinish={handleFormSubmit}>
+      onFinish={handleFormSubmit}
+      key={0}>
       <Form.Item
         name="userName"
         label="имя"

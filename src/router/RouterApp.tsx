@@ -13,6 +13,7 @@ function RouterApp() {
       <Route path="/" element={<MainPage />}>
         <Route path="*" element={<MainPage />} />
       </Route>
+
       <Route
         path="/online-reg"
         element={<RegPage />}>

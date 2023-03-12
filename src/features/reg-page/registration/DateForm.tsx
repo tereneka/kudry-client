@@ -193,7 +193,8 @@ export default function DateForm() {
       initialValues={{
         date: dayjs().add(1, "day"),
       }}
-      onFinish={handleFormSubmit}>
+      onFinish={handleFormSubmit}
+      key={3}>
       <Form.Item
         name="date"
         label="дата"
