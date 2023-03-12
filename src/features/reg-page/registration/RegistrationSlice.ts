@@ -22,7 +22,6 @@ interface RegistrationState {
   };
   filtredMasters: Master[] | undefined;
   currentForm: number;
-  inProp: boolean;
 }
 
 const initialState: RegistrationState = {
@@ -40,7 +39,6 @@ const initialState: RegistrationState = {
   },
   filtredMasters: undefined,
   currentForm: 0,
-  inProp: false,
 };
 
 const registrationSlice = createSlice({
@@ -72,10 +70,6 @@ const registrationSlice = createSlice({
         ...action.payload,
       };
     },
-
-    setInProp: (state) => {
-      state.inProp = !state.inProp;
-    },
   },
 });
 
@@ -83,7 +77,6 @@ export const {
   setFormValues,
   setFiltredMasters,
   setCurrentForm,
-  setInProp,
 } = registrationSlice.actions;
 
 export default registrationSlice.reducer;
