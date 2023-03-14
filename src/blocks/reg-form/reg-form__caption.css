@@ -1,0 +1,13 @@
+.reg-form__caption {
+  width: 600px;
+  margin: 0 auto;
+}
+.reg-form__caption::before {
+  content: " ";
+  width: 20px;
+  height: 20px;
+  background-color: var(--accent-bright);
+  display: inline-block;
+  border-radius: 50%;
+  vertical-align: middle;
+}

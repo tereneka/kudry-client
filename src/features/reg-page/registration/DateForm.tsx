@@ -104,6 +104,23 @@ export default function DateForm() {
       );
     };
 
+  const timeSelectOptions = timeList.map(
+    (time, index) => {
+      const isDisabled =
+        !getDisabledTime(selectedDate)[index];
+      return {
+        value: time,
+        label: time,
+        disabled: isDisabled,
+        className: `reg-form__select-option ${
+          isDisabled
+            ? "reg-form__select-option_disabled"
+            : ""
+        }`,
+      };
+    }
+  );
+
   function getDisabledTime(date: dayjs.Dayjs) {
     // определяем недоступное время для записи
     const disabledTime = timeList.map((time) => {
@@ -245,22 +262,14 @@ export default function DateForm() {
               message: "выберите время",
             },
           ]}>
-          <Select
-            options={timeList.map(
-              (time, index) => {
-                return {
-                  value: time,
-                  label: time,
-                  disabled:
-                    !getDisabledTime(
-                      selectedDate
-                    )[index],
-                };
-              }
-            )}
-          />
+          <Select options={timeSelectOptions} />
         </Form.Item>
       </div>
+
+      <p className="reg-form__caption">
+        &nbsp; &mdash; недоступные для записи
+        дата/время
+      </p>
     </Form>
   );
 }

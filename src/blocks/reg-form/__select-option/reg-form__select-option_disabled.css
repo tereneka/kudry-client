@@ -1,0 +1,7 @@
+.reg-form__select-option_disabled {
+  background-color: var(--accent-bright);
+  width: max-content;
+  color: var(--main-back) !important;
+  border: 2px solid white;
+  box-sizing: border-box;
+}

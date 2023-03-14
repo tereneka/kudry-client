@@ -28,6 +28,8 @@
 @import url(../../../blocks/reg-form/reg-form__radio-group.css);
 @import url(../../../blocks/reg-form/reg-form__item-group.css);
 @import url(../../../blocks/reg-form/reg-form__disabled-cell-box.css);
+@import url(../../../blocks/reg-form/__select-option/reg-form__select-option_disabled.css);
+@import url(../../../blocks/reg-form/reg-form__caption.css);
 
 @import url(../../../blocks/card/card.css);
 @import url(../../../blocks/card/card__img.css);
