@@ -1,6 +1,11 @@
-/*скрыла стандартные радио-кнопки  */
-.reg-form__fieldset_name_masters
+/*скрываем стандартные радио-кнопки  */
+.reg-form_name_masters
   .ant-radio-wrapper
   .ant-radio {
   display: none;
+}
+
+/* задаём стиль для недоступных дней календаря */
+.ant-picker-calendar .ant-picker-cell-disabled {
+  color: var(--main-back);
 }

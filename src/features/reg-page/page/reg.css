@@ -25,6 +25,9 @@
 @import url(../../../blocks/reg-form/__btn/reg-form__btn_position_right.css);
 @import url(../../../blocks/reg-form/__master-card/reg-form__master-card.css);
 @import url(../../../blocks/reg-form/__master-card/reg-form__master-card_checked.css);
+@import url(../../../blocks/reg-form/reg-form__radio-group.css);
+@import url(../../../blocks/reg-form/reg-form__item-group.css);
+@import url(../../../blocks/reg-form/reg-form__disabled-cell-box.css);
 
 @import url(../../../blocks/card/card.css);
 @import url(../../../blocks/card/card__img.css);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Calendar, Form, Select } from "antd";
 import type { RangePickerProps } from "antd/es/date-picker";
 import dayjs from "dayjs";
@@ -174,6 +174,8 @@ export default function DateForm() {
 
     if (!isLoading) {
       addRegistration({
+        userName: formValues.userName,
+        phone: formValues.phone,
         categoryId: formValues.category?.id,
         serviceIdList: formValues.services?.map(
           (service) => service.id
@@ -194,45 +196,61 @@ export default function DateForm() {
         date: dayjs().add(1, "day"),
       }}
       onFinish={handleFormSubmit}
-      key={3}>
-      <Form.Item
-        name="date"
-        label="дата"
-        rules={[
-          {
-            required: true,
-            message: "выберите дату",
-          },
-        ]}>
-        <Calendar
-          fullscreen={false}
-          disabledDate={disabledDate}
-        />
-      </Form.Item>
-
-      <Form.Item
-        name="time"
-        label="время"
-        rules={[
-          {
-            required: true,
-            message: "выберите время",
-          },
-        ]}>
-        <Select
-          options={timeList.map((time, index) => {
-            return {
-              value: time,
-              label: time,
-              disabled: !disabledTime[index],
-            };
-          })}
-        />
-      </Form.Item>
-
+      onFinishFailed={() =>
+        window.scrollTo(
+          0,
+          document.body.scrollHeight
+        )
+      }
+      layout={"vertical"}>
       <div className="reg-form__btn-group">
         <RegFormBackBtn />
         <RegFormNextBtn />
+      </div>
+      <div className="reg-form__item-group">
+        <Form.Item
+          name="date"
+          label="дата"
+          rules={[
+            {
+              required: true,
+              message: "выберите дату",
+            },
+          ]}>
+          <Calendar
+            fullscreen={false}
+            disabledDate={disabledDate}
+            dateCellRender={(current) => {
+              if (disabledDate(current)) {
+                return (
+                  <div className="reg-form__disabled-cell-box" />
+                );
+              }
+            }}
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="time"
+          label="время"
+          rules={[
+            {
+              required: true,
+              message: "выберите время",
+            },
+          ]}>
+          <Select
+            options={timeList.map(
+              (time, index) => {
+                return {
+                  value: time,
+                  label: time,
+                  disabled: !disabledTime[index],
+                };
+              }
+            )}
+          />
+        </Form.Item>
       </div>
     </Form>
   );

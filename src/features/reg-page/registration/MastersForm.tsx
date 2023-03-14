@@ -60,36 +60,39 @@ export default function MastersForm() {
   return (
     <Form
       form={form}
-      className="reg-form"
+      className="reg-form reg-form_name_masters"
       name="master"
       initialValues={{
         master: formValues.master?.id,
       }}
       onFinish={handleFormSubmit}
-      key={2}>
-      <Form.Item
-        name="master"
-        label="мастер"
-        rules={[
-          {
-            required: true,
-            message: "выберите мастера",
-          },
-        ]}>
-        <Radio.Group onChange={handleMasterChage}>
-          {masters?.map((master) => (
-            <Radio
-              value={master.id}
-              key={master.id}>
-              <MasterCard master={master} />
-            </Radio>
-          ))}
-        </Radio.Group>
-      </Form.Item>
-
+      layout={"vertical"}>
       <div className="reg-form__btn-group">
         <RegFormBackBtn />
         <RegFormNextBtn />
+      </div>
+      <div className="reg-form__item-group">
+        <Form.Item
+          name="master"
+          label="мастер"
+          rules={[
+            {
+              required: true,
+              message: "выберите мастера",
+            },
+          ]}>
+          <Radio.Group
+            className="reg-form__radio-group"
+            onChange={handleMasterChage}>
+            {masters?.map((master) => (
+              <Radio
+                value={master.id}
+                key={master.id}>
+                <MasterCard master={master} />
+              </Radio>
+            ))}
+          </Radio.Group>
+        </Form.Item>
       </div>
     </Form>
   );

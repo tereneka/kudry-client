@@ -1,0 +1,10 @@
+.reg-form__disabled-cell-box {
+  background-color: var(--accent-bright);
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  border-radius: 4px;
+}

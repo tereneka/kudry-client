@@ -157,7 +157,6 @@ export default function ServicesForm() {
         <Form
           className="reg-form"
           form={form}
-          // className="reg-form"
           name="services"
           initialValues={{
             category:
@@ -169,82 +168,85 @@ export default function ServicesForm() {
             durationIndex:
               formValues.durationIndex,
           }}
-          onFinish={handleFormSubmit}>
-          <Form.Item
-            name="category"
-            label="категория услуг"
-            rules={[
-              {
-                required: true,
-                message:
-                  "выберите категорию услуг",
-              },
-            ]}>
-            <Select
-              options={categores?.map(
-                (category) => {
-                  return {
-                    value: category.id,
-                    label: category.name,
-                  };
-                }
-              )}
-              onChange={handleCategoryChange}
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="services"
-            label="услуги"
-            rules={[
-              {
-                required: true,
-                message: "выберите услуги",
-              },
-            ]}>
-            <Select
-              options={services?.map(
-                (service) => {
-                  return {
-                    value: service.id,
-                    label: service.name,
-                  };
-                }
-              )}
-              mode="multiple"
-              allowClear
-              onClear={handleServicesClear}
-            />
-          </Form.Item>
-
-          {isDurationIndexFormItemVisible && (
-            <Form.Item
-              name="durationIndex"
-              label="длина волос"
-              rules={[
-                {
-                  required: true,
-                  message: "выберите длину волос",
-                },
-              ]}>
-              <Select
-                options={[
-                  "короткие",
-                  "средние",
-                  "длинные",
-                ].map((option, index) => {
-                  return {
-                    value: index,
-                    label: option,
-                  };
-                })}
-              />
-            </Form.Item>
-          )}
-
+          onFinish={handleFormSubmit}
+          layout={"vertical"}>
           <div className="reg-form__btn-group">
             <RegFormBackBtn />
             <RegFormNextBtn />
+          </div>
+          <div className="reg-form__item-group">
+            <Form.Item
+              name="category"
+              label="категория услуг"
+              rules={[
+                {
+                  required: true,
+                  message:
+                    "выберите категорию услуг",
+                },
+              ]}>
+              <Select
+                options={categores?.map(
+                  (category) => {
+                    return {
+                      value: category.id,
+                      label: category.name,
+                    };
+                  }
+                )}
+                onChange={handleCategoryChange}
+              />
+            </Form.Item>
+
+            <Form.Item
+              name="services"
+              label="услуги"
+              rules={[
+                {
+                  required: true,
+                  message: "выберите услуги",
+                },
+              ]}>
+              <Select
+                options={services?.map(
+                  (service) => {
+                    return {
+                      value: service.id,
+                      label: service.name,
+                    };
+                  }
+                )}
+                mode="multiple"
+                allowClear
+                onClear={handleServicesClear}
+              />
+            </Form.Item>
+
+            {isDurationIndexFormItemVisible && (
+              <Form.Item
+                name="durationIndex"
+                label="длина волос"
+                rules={[
+                  {
+                    required: true,
+                    message:
+                      "выберите длину волос",
+                  },
+                ]}>
+                <Select
+                  options={[
+                    "короткие",
+                    "средние",
+                    "длинные",
+                  ].map((option, index) => {
+                    return {
+                      value: index,
+                      label: option,
+                    };
+                  })}
+                />
+              </Form.Item>
+            )}
           </div>
         </Form>
       )}

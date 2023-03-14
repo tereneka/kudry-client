@@ -1,6 +1,5 @@
 .reg-form {
-  width: 70%;
-  margin: 0 auto;
+  margin: -150px auto 40px;
   position: relative;
   z-index: 10;
 }

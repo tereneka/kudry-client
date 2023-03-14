@@ -54,41 +54,42 @@ export default function UserInfoForm() {
         phone: formValues.phone.slice(2),
       }}
       onFinish={handleFormSubmit}
-      key={0}>
-      <Form.Item
-        name="userName"
-        label="имя"
-        rules={[
-          {
-            required: true,
-            message: "введите имя",
-          },
-        ]}>
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        name="phone"
-        label="телефон"
-        rules={[
-          {
-            required: true,
-            message: "введите номер телефона",
-          },
-          {
-            min: 10,
-            message:
-              "минимальное количествосимволов 10",
-          },
-        ]}>
-        <Input
-          addonBefore={"+7"}
-          maxLength={10}
-        />
-      </Form.Item>
-
+      layout={"vertical"}>
       <div className="reg-form__btn-group">
         <RegFormNextBtn />
+      </div>
+      <div className="reg-form__item-group">
+        <Form.Item
+          name="userName"
+          label="имя"
+          rules={[
+            {
+              required: true,
+              message: "введите имя",
+            },
+          ]}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="phone"
+          label="телефон"
+          rules={[
+            {
+              required: true,
+              message: "введите номер телефона",
+            },
+            {
+              min: 10,
+              message:
+                "минимальное количествосимволов 10",
+            },
+          ]}>
+          <Input
+            addonBefore={"+7"}
+            maxLength={10}
+          />
+        </Form.Item>
       </div>
     </Form>
   );
