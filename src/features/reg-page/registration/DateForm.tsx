@@ -44,7 +44,7 @@ export default function DateForm() {
   const currentRegDuration =
     formValues?.services?.reduce(
       (sum, currentService) => {
-        const currentValue =
+        const currentValue: number =
           currentService.duration.length > 1 &&
           formValues.durationIndex
             ? currentService.duration[
@@ -71,6 +71,7 @@ export default function DateForm() {
   const masterDateList: {
     [key: string]: string[];
   } = {};
+  // в переменную masterDisabledDate записываем даты с полной записью у выбранного мастера
   const masterDisabledDate: string[] = [];
 
   masterRegList?.forEach((reg) => {
@@ -98,43 +99,48 @@ export default function DateForm() {
         masterDisabledDate.some(
           (date) =>
             date === current.format(dateFormat)
-        )
+        ) ||
+        !getDisabledTime(current).some((i) => i)
       );
     };
 
-  // определяем недоступное время для записи
-  const disabledTime = timeList.map((time) => {
-    return masterDateList[
-      selectedDate?.format(dateFormat)
-    ]?.includes(time)
-      ? false
-      : true;
-  });
+  function getDisabledTime(date: dayjs.Dayjs) {
+    // определяем недоступное время для записи
+    const disabledTime = timeList.map((time) => {
+      return masterDateList[
+        date?.format(dateFormat)
+      ]?.includes(time)
+        ? false
+        : true;
+    });
 
-  disabledTime.forEach((time, index) => {
-    if (!time) {
-      // блокируем время, чтобы записи не наложились друг на друга
-      for (
-        let i = 1;
-        i < currentRegDuration;
-        i++
+    disabledTime.forEach((time, index) => {
+      if (!time) {
+        // блокируем время, чтобы записи не наложились друг на друга
+        for (
+          let i = 1;
+          i < currentRegDuration;
+          i++
+        ) {
+          disabledTime[index - i] = false;
+        }
+      } else if (
+        index === disabledTime.length - 1 &&
+        currentRegDuration > 2
       ) {
-        disabledTime[index - i] = false;
+        // блокируем время, чтобы окончание записи не было позднее 21:00
+        for (
+          let i = 0;
+          i < currentRegDuration - 2;
+          i++
+        ) {
+          disabledTime[index - i] = false;
+        }
       }
-    } else if (
-      index === disabledTime.length - 1 &&
-      currentRegDuration > 2
-    ) {
-      // блокируем время, чтобы окончание записи не было позднее 21:00
-      for (
-        let i = 0;
-        i < currentRegDuration - 2;
-        i++
-      ) {
-        disabledTime[index - i] = false;
-      }
-    }
-  });
+    });
+
+    return disabledTime;
+  }
 
   function handleFormSubmit(values: {
     date: dayjs.Dayjs;
@@ -245,7 +251,10 @@ export default function DateForm() {
                 return {
                   value: time,
                   label: time,
-                  disabled: !disabledTime[index],
+                  disabled:
+                    !getDisabledTime(
+                      selectedDate
+                    )[index],
                 };
               }
             )}
