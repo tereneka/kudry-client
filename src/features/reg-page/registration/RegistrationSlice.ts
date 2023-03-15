@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 
 interface RegistrationState {
   formValues: {
+    id: string | undefined;
     userName: string;
     phone: string;
     category: Category | undefined;
@@ -22,10 +23,12 @@ interface RegistrationState {
   };
   filtredMasters: Master[] | undefined;
   currentForm: number;
+  isRegError: boolean;
 }
 
 const initialState: RegistrationState = {
   formValues: {
+    id: undefined,
     userName: "",
     phone: "",
     category: undefined,
@@ -39,6 +42,7 @@ const initialState: RegistrationState = {
   },
   filtredMasters: undefined,
   currentForm: 0,
+  isRegError: false,
 };
 
 const registrationSlice = createSlice({
@@ -70,6 +74,13 @@ const registrationSlice = createSlice({
         ...action.payload,
       };
     },
+
+    setIsRegError: (
+      state,
+      action: PayloadAction<boolean>
+    ) => {
+      state.isRegError = action.payload;
+    },
   },
 });
 
@@ -77,6 +88,7 @@ export const {
   setFormValues,
   setFiltredMasters,
   setCurrentForm,
+  setIsRegError,
 } = registrationSlice.actions;
 
 export default registrationSlice.reducer;

@@ -1,4 +1,5 @@
 import { async } from "@firebase/util";
+import { BaseQueryError } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import {
   createApi,
   fakeBaseQuery,
@@ -11,6 +12,8 @@ import {
   where,
   doc,
   setDoc,
+  addDoc,
+  DocumentReference,
 } from "firebase/firestore";
 import {
   ref,
@@ -28,6 +31,7 @@ import {
   Service,
   SubCategory,
 } from "../../types";
+import { setFormValues } from "../reg-page/registration/RegistrationSlice";
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -304,21 +308,63 @@ export const apiSlice = createApi({
       providesTags: ["Registration"],
     }),
 
-    addRegistration: builder.mutation({
-      queryFn: async (data) => {
-        try {
-          const registrationRef = doc(
-            collection(db, "registrations")
-          );
-          await setDoc(registrationRef, data);
-
-          return data;
-        } catch (error) {
-          return error;
-        }
+    addRegistration: builder.mutation<
+      string,
+      any
+    >({
+      queryFn(body, api) {
+        const registrationRef = collection(
+          db,
+          "registrations"
+        );
+        return addDoc(registrationRef, body)
+          .then((data) => {
+            api.dispatch(
+              setFormValues({ id: data.id })
+            );
+            return data.id;
+          })
+          .catch((err) => err);
       },
       invalidatesTags: ["Registration"],
     }),
+
+    // addRegistration: builder.mutation<
+    //   string,
+    //   any
+    // >({
+    //   async queryFn(body) {
+    //     try {
+    //       const registrationRef = collection(
+    //         db,
+    //         "registrations"
+    //       );
+    //       const res: DocumentReference<any> =
+    //         await addDoc(registrationRef, body);
+
+    //       return res.id;
+    //     } catch (error) {
+    //       return error;
+    //     }
+    //   },
+    //   invalidatesTags: ["Registration"],
+    // }),
+
+    // addRegistration: builder.mutation({
+    //   async queryFn(data) {
+    //     try {
+    //       const registrationRef = doc(
+    //         collection(db, "registrations")
+    //       );
+    //       await setDoc(registrationRef, data);
+
+    //       return data;
+    //     } catch (error) {
+    //       return error;
+    //     }
+    //   },
+    //   invalidatesTags: ["Registration"],
+    // }),
   }),
 });
 

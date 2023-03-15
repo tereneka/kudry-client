@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Calendar, Form, Select } from "antd";
 import type { RangePickerProps } from "antd/es/date-picker";
 import dayjs from "dayjs";
@@ -9,17 +9,39 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../store";
-import { setFormValues } from "./RegistrationSlice";
+import {
+  setCurrentForm,
+  setFormValues,
+  setIsRegError,
+} from "./RegistrationSlice";
 import {
   useAddRegistrationMutation,
   useGetRegistrationAfterTodayListQuery,
 } from "../../api/apiSlise";
-import { dateFormat } from "../../../constants";
+import {
+  dateFormat,
+  regPageRouteList,
+} from "../../../constants";
+import {
+  addDoc,
+  collection,
+  doc,
+  setDoc,
+} from "firebase/firestore";
+import { db } from "../../../db/firebaseConfig";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../../../components/Spinner";
 
 export default function DateForm() {
   const [form] = Form.useForm();
 
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
+  const currentForm = useAppSelector(
+    (state) => state.regState.currentForm
+  );
 
   const formValues = useAppSelector(
     (state) => state.regState.formValues
@@ -27,6 +49,11 @@ export default function DateForm() {
 
   const [addRegistration, { isLoading }] =
     useAddRegistrationMutation();
+
+  const [
+    isCurrentRegLoading,
+    setIsCurrentRegLoading,
+  ] = useState(false);
 
   const selectedDate = Form.useWatch<dayjs.Dayjs>(
     "date",
@@ -163,6 +190,8 @@ export default function DateForm() {
     date: dayjs.Dayjs;
     time: string;
   }) {
+    setIsCurrentRegLoading(true);
+
     dispatch(
       setFormValues({
         date: values.date.format(dateFormat),
@@ -206,70 +235,91 @@ export default function DateForm() {
         masterId: formValues.master?.id,
         date: values.date.toDate(),
         time: regTimeList,
-      });
+      })
+        .catch(() =>
+          dispatch(setIsRegError(true))
+        )
+        .finally(() => {
+          navigate(
+            regPageRouteList[currentForm + 1]
+          );
+
+          dispatch(
+            setCurrentForm(currentForm + 1)
+          );
+
+          setIsCurrentRegLoading(false);
+        });
     }
   }
 
   return (
-    <Form
-      form={form}
-      className="reg-form"
-      name="date"
-      initialValues={{
-        date: dayjs().add(1, "day"),
-      }}
-      onFinish={handleFormSubmit}
-      onFinishFailed={() =>
-        window.scrollTo(
-          0,
-          document.body.scrollHeight
-        )
-      }
-      layout={"vertical"}>
-      <div className="reg-form__btn-group">
-        <RegFormBackBtn />
-        <RegFormNextBtn />
-      </div>
-      <div className="reg-form__item-group">
-        <Form.Item
+    <>
+      <Spinner isVisible={isCurrentRegLoading} />
+      {!isCurrentRegLoading && (
+        <Form
+          form={form}
+          className="reg-form"
           name="date"
-          label="дата"
-          rules={[
-            {
-              required: true,
-              message: "выберите дату",
-            },
-          ]}>
-          <Calendar
-            fullscreen={false}
-            disabledDate={disabledDate}
-            dateCellRender={(current) => {
-              if (disabledDate(current)) {
-                return (
-                  <div className="reg-form__disabled-cell-box" />
-                );
-              }
-            }}
-          />
-        </Form.Item>
+          initialValues={{
+            date: dayjs().add(1, "day"),
+          }}
+          onFinish={handleFormSubmit}
+          onFinishFailed={() =>
+            window.scrollTo(
+              0,
+              document.body.scrollHeight
+            )
+          }
+          layout={"vertical"}>
+          <div className="reg-form__btn-group">
+            <RegFormBackBtn />
+            <RegFormNextBtn />
+          </div>
+          <div className="reg-form__item-group">
+            <Form.Item
+              name="date"
+              label="дата"
+              rules={[
+                {
+                  required: true,
+                  message: "выберите дату",
+                },
+              ]}>
+              <Calendar
+                fullscreen={false}
+                disabledDate={disabledDate}
+                dateCellRender={(current) => {
+                  if (disabledDate(current)) {
+                    return (
+                      <div className="reg-form__disabled-cell-box" />
+                    );
+                  }
+                }}
+              />
+            </Form.Item>
 
-        <Form.Item
-          name="time"
-          label="время"
-          rules={[
-            {
-              required: true,
-              message: "выберите время",
-            },
-          ]}>
-          <Select options={timeSelectOptions} />
-        </Form.Item>
-      </div>
+            <Form.Item
+              name="time"
+              label="время"
+              rules={[
+                {
+                  required: true,
+                  message: "выберите время",
+                },
+              ]}>
+              <Select
+                options={timeSelectOptions}
+              />
+            </Form.Item>
+          </div>
 
-      <p className="reg-form__caption">
-        &nbsp; &mdash; недоступные для записи
-        дата/время
-      </p>
-    </Form>
+          <p className="reg-form__caption">
+            &nbsp; &mdash; недоступные для записи
+            дата/время
+          </p>
+        </Form>
+      )}
+    </>
   );
 }

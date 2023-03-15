@@ -35,3 +35,57 @@
 @import url(../../../blocks/card/card__img.css);
 @import url(../../../blocks/card/card__title.css);
 @import url(../../../blocks/card/card__about.css);
+
+.reg-result {
+  width: max-content;
+  max-width: 100%;
+  margin: -80px auto 0;
+  position: relative;
+  z-index: 10;
+}
+
+.reg-result__title {
+  font-size: 16px;
+  font-weight: 800;
+  font-style: normal;
+  line-height: 1;
+  margin: 0;
+}
+
+.reg-result__title_xxx {
+  text-align: center;
+}
+
+.reg-result__title_xxx::before {
+  content: "";
+  width: 64px;
+  height: 16px;
+  background-image: url(../../../images/icons/heart.svg);
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.reg-result__title_xxx::after {
+  content: "";
+  width: 64px;
+  height: 16px;
+  background-image: url(../../../images/icons/heart.svg);
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+.reg-result__list {
+  list-style: none;
+  margin: 20px auto;
+  padding-left: 0;
+}
+
+.reg-result__list-item {
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.5;
+  margin: 0;
+}

@@ -4,6 +4,7 @@ import MainPage from "../features/main-page/page/MainPage";
 import RegPage from "../features/reg-page/page/RegPage";
 import DateForm from "../features/reg-page/registration/DateForm";
 import MastersForm from "../features/reg-page/registration/MastersForm";
+import RegistrationResult from "../features/reg-page/registration/RegistrationResult";
 import ServicesForm from "../features/reg-page/registration/ServicesForm";
 import UserInfoForm from "../features/reg-page/registration/UserInfoForm";
 
@@ -32,6 +33,10 @@ function RouterApp() {
         <Route
           path="date"
           element={<DateForm />}
+        />
+        <Route
+          path="result"
+          element={<RegistrationResult />}
         />
         <Route path="*" element={<RegPage />} />
       </Route>
