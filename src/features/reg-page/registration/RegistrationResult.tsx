@@ -12,7 +12,6 @@ export default function RegistrationResult() {
   );
 
   const isSuccess = !!(!isError && formValues.id);
-  console.log(formValues);
 
   return (
     <>
@@ -22,24 +21,19 @@ export default function RegistrationResult() {
         <div className="reg-result">
           <p className="reg-result__title">
             {formValues.userName +
-              ", Ваша запись успешно оформлена:"}
+              ", Ваша запись оформлена:"}
           </p>
 
           <ul className="reg-result__list">
-            {/* <li className="reg-result__list-item">
-              {formValues.category?.name +
-                " - " +
-                formValues.services
-                  ?.map((service) => service.name)
-                  .join(", ")}
-            </li> */}
             <li className="reg-result__list-item">
               {formValues.category?.name + ":"}
-              <ul>
+              <ul className="reg-result__nested-list">
                 {formValues.services?.map(
                   (service) => (
-                    <li className="reg-result__list-item">
-                      {service.name.toLowerCase()}
+                    <li
+                      className="reg-result__list-item"
+                      key={service.id}>
+                      {service.name}
                     </li>
                   )
                 )}
@@ -57,8 +51,8 @@ export default function RegistrationResult() {
             </li>
           </ul>
 
-          <p className="reg-result__title reg-result__title_xxx">
-            ЖДЁМ ВАС В&nbsp;&laquo;КУДРИ&raquo;
+          <p className="reg-result__title reg-result__title_decorated">
+            ждём вас в&nbsp;&laquo;кудри&raquo;
           </p>
         </div>
       )}

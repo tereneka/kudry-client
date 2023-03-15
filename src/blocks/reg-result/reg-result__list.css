@@ -1,0 +1,5 @@
+.reg-result__list {
+  list-style-position: inside;
+  margin: 20px auto;
+  padding-left: 0;
+}

@@ -1,0 +1,7 @@
+.reg-result {
+  width: max-content;
+  max-width: 100%;
+  margin: -80px auto 0;
+  position: relative;
+  z-index: 10;
+}

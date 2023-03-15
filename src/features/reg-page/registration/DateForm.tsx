@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Calendar, Form, Select } from "antd";
 import type { RangePickerProps } from "antd/es/date-picker";
 import dayjs from "dayjs";
@@ -22,13 +22,6 @@ import {
   dateFormat,
   regPageRouteList,
 } from "../../../constants";
-import {
-  addDoc,
-  collection,
-  doc,
-  setDoc,
-} from "firebase/firestore";
-import { db } from "../../../db/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../../components/Spinner";
 

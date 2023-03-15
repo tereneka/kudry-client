@@ -1,0 +1,22 @@
+.reg-result__title_decorated {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.reg-result__title_decorated::before,
+.reg-result__title_decorated::after {
+  content: "";
+  width: 48px;
+  height: 16px;
+  background-image: url(../../../images/icons/heart.svg);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.reg-result__title_decorated::before {
+  margin-right: 8px;
+}
+
+.reg-result__title_decorated::after {
+  margin-left: 8px;
+}
