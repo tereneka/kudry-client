@@ -16,7 +16,9 @@ import {
 } from "../../../store";
 import {
   useAddRegistrationMutation,
+  useGetMasterListQuery,
   useGetRegCategoryListQuery,
+  useGetRegistrationAfterTodayListQuery,
 } from "../../api/apiSlise";
 import Header from "../header/Header";
 import "./reg.css";
@@ -30,6 +32,8 @@ import {
   setIsRegError,
   setIsRegistrationLoading,
 } from "../registration/RegistrationSlice";
+import Spinner from "../../../components/Spinner";
+import Error from "../../../components/Error";
 
 export default function RegPage() {
   const location = useLocation().pathname;
@@ -38,11 +42,28 @@ export default function RegPage() {
 
   const dispatch = useAppDispatch();
 
-  const { data: categores } =
-    useGetRegCategoryListQuery();
+  const {
+    data: categores,
+    isLoading: isCategoresLoading,
+    isError: isCategoresError,
+  } = useGetRegCategoryListQuery();
+
+  const {
+    data: masters,
+    isLoading: isMastersLoading,
+    isError: isMastersError,
+  } = useGetMasterListQuery();
+
+  const {
+    data: registrationList,
+    isLoading: isRegListLoading,
+    isError: isRegListError,
+  } = useGetRegistrationAfterTodayListQuery();
 
   const currentOutlet = useOutlet({
     categores,
+    masters,
+    registrationList,
     getRegistrationDuration,
   });
 
@@ -71,7 +92,7 @@ export default function RegPage() {
       (route) => route.path === location
     ) ?? {};
 
-  const reistrationFormList = [
+  const registrationFormList = [
     {
       name: "userInfo",
       initialValues: {
@@ -79,6 +100,8 @@ export default function RegPage() {
         phone: formValues.phone.slice(2),
       },
       onFinish: handleUserInfoFormSubmit,
+      isLoading: false,
+      isError: false,
     },
     {
       name: "services",
@@ -92,6 +115,8 @@ export default function RegPage() {
         durationIndex: formValues.durationIndex,
       },
       onFinish: handleServicesFormSubmit,
+      isLoading: isCategoresLoading,
+      isError: isCategoresError || !categores,
     },
     {
       name: "master",
@@ -99,6 +124,8 @@ export default function RegPage() {
         master: formValues.master?.id,
       },
       onFinish: () => {},
+      isLoading: isMastersLoading,
+      isError: isMastersError || !masters,
     },
     {
       name: "date",
@@ -106,6 +133,8 @@ export default function RegPage() {
         date: dayjs().add(1, "day"),
       },
       onFinish: handleDateFormSubmit,
+      isLoading: isRegListLoading,
+      isError: isRegListError || !masters,
     },
   ];
 
@@ -256,7 +285,7 @@ export default function RegPage() {
       )
     );
 
-    reistrationFormList[
+    registrationFormList[
       currentRegistrationPage
     ].onFinish(values);
   }
@@ -282,34 +311,62 @@ export default function RegPage() {
               <div ref={nodeRef} className="page">
                 {currentRegistrationPage <
                 registrationRoutes.length - 1 ? (
-                  <Form
-                    form={form}
-                    className="reg-form"
-                    name={
-                      reistrationFormList[
-                        currentRegistrationPage
-                      ].name
-                    }
-                    initialValues={
-                      reistrationFormList[
-                        currentRegistrationPage
-                      ].initialValues
-                    }
-                    onFinish={handleFormSubmit}
-                    onFinishFailed={() =>
-                      window.scrollTo(
-                        0,
-                        document.body.scrollHeight
-                      )
-                    }
-                    layout={"vertical"}>
-                    <div className="reg-form__btn-group">
-                      <RegFormBackBtn />
-                      <RegFormNextBtn />
-                    </div>
+                  <>
+                    <Spinner
+                      isVisible={
+                        registrationFormList[
+                          currentRegistrationPage
+                        ].isLoading
+                      }
+                    />
 
-                    {currentOutlet}
-                  </Form>
+                    <Error
+                      isVisible={
+                        registrationFormList[
+                          currentRegistrationPage
+                        ].isError
+                      }
+                    />
+
+                    {!registrationFormList[
+                      currentRegistrationPage
+                    ].isError &&
+                      !registrationFormList[
+                        currentRegistrationPage
+                      ].isLoading && (
+                        <Form
+                          form={form}
+                          className="reg-form"
+                          name={
+                            registrationFormList[
+                              currentRegistrationPage
+                            ].name
+                          }
+                          initialValues={
+                            registrationFormList[
+                              currentRegistrationPage
+                            ].initialValues
+                          }
+                          onFinish={
+                            handleFormSubmit
+                          }
+                          onFinishFailed={() =>
+                            window.scrollTo(
+                              0,
+                              document.body
+                                .scrollHeight
+                            )
+                          }
+                          layout={"vertical"}>
+                          <div className="reg-form__btn-group">
+                            <RegFormBackBtn />
+                            <RegFormNextBtn />
+                          </div>
+
+                          {currentOutlet}
+                        </Form>
+                      )}
+                  </>
                 ) : (
                   currentOutlet
                 )}

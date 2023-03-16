@@ -1,6 +1,8 @@
 import { Form, Select } from "antd";
 import React, { useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
+import Error from "../../../components/Error";
+import Spinner from "../../../components/Spinner";
 import {
   useAppDispatch,
   useAppSelector,
@@ -26,9 +28,9 @@ export default function ServicesForm() {
   const formValues = useAppSelector(
     (state) => state.regState.formValues
   );
-  const categores: Category[] | undefined =
-    useOutletContext<RegistrationContext>()
-      .categores;
+
+  const { categores, masters } =
+    useOutletContext<RegistrationContext>();
 
   const selectedCategoryId = Form.useWatch<
     string | undefined
@@ -36,12 +38,10 @@ export default function ServicesForm() {
 
   const { data: services } =
     useGetServiceListQuery(selectedCategoryId);
+
   const selectedServiceIdList = Form.useWatch<
     string[] | undefined
   >("services", form);
-
-  const { data: masters } =
-    useGetMasterListQuery();
 
   // продолжительность услуги зависит от длины волос для
   // парикмахерских услуг(кроме мужской стрижки),
@@ -110,7 +110,7 @@ export default function ServicesForm() {
 
   return (
     <>
-      {categores && (
+      {
         <div className="reg-form__item-group">
           <Form.Item
             name="category"
@@ -184,7 +184,7 @@ export default function ServicesForm() {
             </Form.Item>
           )}
         </div>
-      )}
+      }
     </>
   );
 }

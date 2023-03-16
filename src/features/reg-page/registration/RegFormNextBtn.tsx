@@ -1,5 +1,5 @@
 import React from "react";
-import { regPageRouteList } from "../../../constants";
+import { registrationRoutes } from "../../../router/routes";
 import { useAppSelector } from "../../../store";
 
 export default function RegFormNextBtn() {
@@ -9,8 +9,8 @@ export default function RegFormNextBtn() {
   );
 
   const btnText =
-    currentRegistrationPage + 1 ===
-    regPageRouteList.length
+    currentRegistrationPage ===
+    registrationRoutes.length - 2
       ? "отправить"
       : "вперёд";
 

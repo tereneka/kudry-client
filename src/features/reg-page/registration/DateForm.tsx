@@ -21,8 +21,8 @@ export default function DateForm() {
     form
   );
 
-  const { data: registrationList } =
-    useGetRegistrationAfterTodayListQuery();
+  const { registrationList } =
+    useOutletContext<RegistrationContext>();
 
   const masterRegList = registrationList?.filter(
     (reg) =>
