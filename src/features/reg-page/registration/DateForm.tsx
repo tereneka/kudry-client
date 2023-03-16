@@ -1,52 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { Calendar, Form, Select } from "antd";
 import type { RangePickerProps } from "antd/es/date-picker";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import RegFormBackBtn from "./RegFormBackBtn";
-import RegFormNextBtn from "./RegFormNextBtn";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../store";
-import {
-  setCurrentForm,
-  setFormValues,
-  setIsRegError,
-} from "./RegistrationSlice";
-import {
-  useAddRegistrationMutation,
-  useGetRegistrationAfterTodayListQuery,
-} from "../../api/apiSlise";
-import {
-  dateFormat,
-  regPageRouteList,
-} from "../../../constants";
-import { useNavigate } from "react-router-dom";
-import Spinner from "../../../components/Spinner";
+import { useAppSelector } from "../../../store";
+import { useGetRegistrationAfterTodayListQuery } from "../../api/apiSlise";
+import { dateFormat } from "../../../constants";
+import { useOutletContext } from "react-router-dom";
+import { RegistrationContext } from "../../../types";
 
 export default function DateForm() {
-  const [form] = Form.useForm();
-
-  const dispatch = useAppDispatch();
-
-  const navigate = useNavigate();
-
-  const currentForm = useAppSelector(
-    (state) => state.regState.currentForm
-  );
+  const form = Form.useFormInstance();
 
   const formValues = useAppSelector(
     (state) => state.regState.formValues
   );
-
-  const [addRegistration, { isLoading }] =
-    useAddRegistrationMutation();
-
-  const [
-    isCurrentRegLoading,
-    setIsCurrentRegLoading,
-  ] = useState(false);
 
   const selectedDate = Form.useWatch<dayjs.Dayjs>(
     "date",
@@ -62,19 +30,7 @@ export default function DateForm() {
   );
 
   const currentRegDuration =
-    formValues?.services?.reduce(
-      (sum, currentService) => {
-        const currentValue: number =
-          currentService.duration.length > 1 &&
-          formValues.durationIndex
-            ? currentService.duration[
-                formValues.durationIndex
-              ]
-            : currentService.duration[0];
-        return sum + currentValue;
-      },
-      0
-    ) || 0;
+    useOutletContext<RegistrationContext>().getRegistrationDuration();
 
   // массив времени для селекта формы
   const timeList = ["11:00"];
@@ -179,140 +135,48 @@ export default function DateForm() {
     return disabledTime;
   }
 
-  function handleFormSubmit(values: {
-    date: dayjs.Dayjs;
-    time: string;
-  }) {
-    setIsCurrentRegLoading(true);
-
-    dispatch(
-      setFormValues({
-        date: values.date.format(dateFormat),
-        time: values.time,
-      })
-    );
-
-    const regTimeList: string[] = [values.time];
-
-    for (
-      let i = 0;
-      i < currentRegDuration - 1;
-      i++
-    ) {
-      let time: string;
-      if (values.time.slice(3, 4) === "0") {
-        time =
-          i % 2
-            ? parseInt(regTimeList[i]) + 1 + ":00"
-            : regTimeList[i].slice(0, 3) + "30";
-      } else {
-        time =
-          i % 2
-            ? regTimeList[i].slice(0, 3) + "30"
-            : parseInt(regTimeList[i]) +
-              1 +
-              ":00";
-      }
-
-      regTimeList.push(time);
-    }
-
-    if (!isLoading) {
-      addRegistration({
-        userName: formValues.userName,
-        phone: formValues.phone,
-        categoryId: formValues.category?.id,
-        serviceIdList: formValues.services?.map(
-          (service) => service.id
-        ),
-        masterId: formValues.master?.id,
-        date: values.date.toDate(),
-        time: regTimeList,
-      })
-        .catch(() =>
-          dispatch(setIsRegError(true))
-        )
-        .finally(() => {
-          navigate(
-            regPageRouteList[currentForm + 1]
-          );
-
-          dispatch(
-            setCurrentForm(currentForm + 1)
-          );
-
-          setIsCurrentRegLoading(false);
-        });
-    }
-  }
-
   return (
     <>
-      <Spinner isVisible={isCurrentRegLoading} />
-      {!isCurrentRegLoading && (
-        <Form
-          form={form}
-          className="reg-form"
+      <div className="reg-form__item-group">
+        <Form.Item
           name="date"
-          initialValues={{
-            date: dayjs().add(1, "day"),
-          }}
-          onFinish={handleFormSubmit}
-          onFinishFailed={() =>
-            window.scrollTo(
-              0,
-              document.body.scrollHeight
-            )
-          }
-          layout={"vertical"}>
-          <div className="reg-form__btn-group">
-            <RegFormBackBtn />
-            <RegFormNextBtn />
-          </div>
-          <div className="reg-form__item-group">
-            <Form.Item
-              name="date"
-              label="дата"
-              rules={[
-                {
-                  required: true,
-                  message: "выберите дату",
-                },
-              ]}>
-              <Calendar
-                fullscreen={false}
-                disabledDate={disabledDate}
-                dateCellRender={(current) => {
-                  if (disabledDate(current)) {
-                    return (
-                      <div className="reg-form__disabled-cell-box" />
-                    );
-                  }
-                }}
-              />
-            </Form.Item>
+          label="дата"
+          rules={[
+            {
+              required: true,
+              message: "выберите дату",
+            },
+          ]}>
+          <Calendar
+            fullscreen={false}
+            disabledDate={disabledDate}
+            dateCellRender={(current) => {
+              if (disabledDate(current)) {
+                return (
+                  <div className="reg-form__disabled-cell-box" />
+                );
+              }
+            }}
+          />
+        </Form.Item>
 
-            <Form.Item
-              name="time"
-              label="время"
-              rules={[
-                {
-                  required: true,
-                  message: "выберите время",
-                },
-              ]}>
-              <Select
-                options={timeSelectOptions}
-              />
-            </Form.Item>
-          </div>
+        <Form.Item
+          name="time"
+          label="время"
+          rules={[
+            {
+              required: true,
+              message: "выберите время",
+            },
+          ]}>
+          <Select options={timeSelectOptions} />
+        </Form.Item>
+      </div>
 
-          <p className="reg-form__caption">
-            &nbsp; &mdash; недоступные для записи
-            дата/время
-          </p>
-        </Form>
-      )}
+      <p className="reg-form__caption">
+        &nbsp; &mdash; недоступные для записи
+        дата/время
+      </p>
     </>
   );
 }

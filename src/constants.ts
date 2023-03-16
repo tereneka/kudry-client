@@ -6,6 +6,14 @@ const regPageRouteList = [
   "/online-reg/result",
 ];
 
+// const regPageRouteList = [
+//   "contacts",
+//   "services",
+//   "masters",
+//   "date",
+//   "result",
+// ];
+
 const dateFormat = "DD.MM.YYYY";
 
 export { regPageRouteList, dateFormat };

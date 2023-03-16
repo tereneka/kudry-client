@@ -49,38 +49,16 @@ interface Registration {
   time: string[];
 }
 
+interface RegistrationContext {
+  categores: Category[] | undefined;
+  getRegistrationDuration: () => number;
+}
+
 export type {
   Master,
   Category,
   SubCategory,
   Service,
   Registration,
+  RegistrationContext,
 };
-
-// export interface Date {
-//     id: number,
-//     date: string,
-//     available: boolean,
-//     masterId: number,
-// }
-// export interface Time {
-//     id: number,
-//     time: string,
-//     available: boolean,
-//     masterId: number,
-//     dateId: number,
-// }
-// export interface MasterCategory {
-//     id: number,
-//     masterId: number,
-//     categoryId: number,
-// }
-// export interface MasterSubCategory {
-//     id: number,
-//     gender?: string | null,
-//     masterId: number,
-//     subCategoryId: number,
-// }
-// export interface CurrentId {
-//     id: number
-// }

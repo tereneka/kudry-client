@@ -22,8 +22,9 @@ interface RegistrationState {
     time: string | undefined;
   };
   filtredMasters: Master[] | undefined;
-  currentForm: number;
+  currentRegistrationPage: number;
   isRegError: boolean;
+  isRegistrationLoading: boolean;
 }
 
 const initialState: RegistrationState = {
@@ -41,8 +42,9 @@ const initialState: RegistrationState = {
     time: undefined,
   },
   filtredMasters: undefined,
-  currentForm: 0,
+  currentRegistrationPage: 0,
   isRegError: false,
+  isRegistrationLoading: false,
 };
 
 const registrationSlice = createSlice({
@@ -56,11 +58,12 @@ const registrationSlice = createSlice({
       state.filtredMasters = action.payload;
     },
 
-    setCurrentForm: (
+    setCurrentRegistrationPage: (
       state,
       action: PayloadAction<number>
     ) => {
-      state.currentForm = action.payload;
+      state.currentRegistrationPage =
+        action.payload;
     },
 
     setFormValues: (
@@ -81,14 +84,23 @@ const registrationSlice = createSlice({
     ) => {
       state.isRegError = action.payload;
     },
+
+    setIsRegistrationLoading: (
+      state,
+      action: PayloadAction<boolean>
+    ) => {
+      state.isRegistrationLoading =
+        action.payload;
+    },
   },
 });
 
 export const {
   setFormValues,
   setFiltredMasters,
-  setCurrentForm,
+  setCurrentRegistrationPage,
   setIsRegError,
+  setIsRegistrationLoading,
 } = registrationSlice.actions;
 
 export default registrationSlice.reducer;

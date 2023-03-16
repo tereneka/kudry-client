@@ -4,34 +4,15 @@ import {
   RadioChangeEvent,
 } from "antd";
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { regPageRouteList } from "../../../constants";
 import {
   useAppSelector,
   useAppDispatch,
 } from "../../../store";
 import MasterCard from "./MasterCard";
-import RegFormBackBtn from "./RegFormBackBtn";
-import RegFormNextBtn from "./RegFormNextBtn";
-import {
-  setCurrentForm,
-  setFormValues,
-} from "./RegistrationSlice";
+import { setFormValues } from "./RegistrationSlice";
 
 export default function MastersForm() {
-  const [form] = Form.useForm();
-
   const dispatch = useAppDispatch();
-
-  const navigate = useNavigate();
-
-  const currentForm = useAppSelector(
-    (state) => state.regState.currentForm
-  );
-
-  const formValues = useAppSelector(
-    (state) => state.regState.formValues
-  );
 
   const masters = useAppSelector(
     (state) => state.regState.filtredMasters
@@ -49,51 +30,29 @@ export default function MastersForm() {
     );
   }
 
-  function handleFormSubmit(values: {
-    master: string;
-  }) {
-    navigate(regPageRouteList[currentForm + 1]);
-
-    dispatch(setCurrentForm(currentForm + 1));
-  }
-
   return (
-    <Form
-      form={form}
-      className="reg-form reg-form_name_masters"
-      name="master"
-      initialValues={{
-        master: formValues.master?.id,
-      }}
-      onFinish={handleFormSubmit}
-      layout={"vertical"}>
-      <div className="reg-form__btn-group">
-        <RegFormBackBtn />
-        <RegFormNextBtn />
-      </div>
-      <div className="reg-form__item-group">
-        <Form.Item
-          name="master"
-          label="мастер"
-          rules={[
-            {
-              required: true,
-              message: "выберите мастера",
-            },
-          ]}>
-          <Radio.Group
-            className="reg-form__radio-group"
-            onChange={handleMasterChage}>
-            {masters?.map((master) => (
-              <Radio
-                value={master.id}
-                key={master.id}>
-                <MasterCard master={master} />
-              </Radio>
-            ))}
-          </Radio.Group>
-        </Form.Item>
-      </div>
-    </Form>
+    <div className="reg-form__item-group">
+      <Form.Item
+        name="master"
+        label="мастер"
+        rules={[
+          {
+            required: true,
+            message: "выберите мастера",
+          },
+        ]}>
+        <Radio.Group
+          className="reg-form__radio-group reg-form__radio-group_name_master"
+          onChange={handleMasterChage}>
+          {masters?.map((master) => (
+            <Radio
+              value={master.id}
+              key={master.id}>
+              <MasterCard master={master} />
+            </Radio>
+          ))}
+        </Radio.Group>
+      </Form.Item>
+    </div>
   );
 }

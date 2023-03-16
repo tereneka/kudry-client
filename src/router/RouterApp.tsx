@@ -2,11 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import MainPage from "../features/main-page/page/MainPage";
 import RegPage from "../features/reg-page/page/RegPage";
-import DateForm from "../features/reg-page/registration/DateForm";
-import MastersForm from "../features/reg-page/registration/MastersForm";
-import RegistrationResult from "../features/reg-page/registration/RegistrationResult";
-import ServicesForm from "../features/reg-page/registration/ServicesForm";
-import UserInfoForm from "../features/reg-page/registration/UserInfoForm";
+import { registrationRoutes } from "./routes";
 
 function RouterApp() {
   return (
@@ -18,7 +14,14 @@ function RouterApp() {
       <Route
         path="/online-reg"
         element={<RegPage />}>
-        <Route
+        {registrationRoutes.map((route) => (
+          <Route
+            path={route.path}
+            element={route.element}
+            key={route.path}
+          />
+        ))}
+        {/* <Route
           path="contacts"
           element={<UserInfoForm />}
         />
@@ -37,7 +40,7 @@ function RouterApp() {
         <Route
           path="result"
           element={<RegistrationResult />}
-        />
+        /> */}
         <Route path="*" element={<RegPage />} />
       </Route>
     </Routes>

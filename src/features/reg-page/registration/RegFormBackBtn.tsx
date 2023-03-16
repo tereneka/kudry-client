@@ -5,11 +5,12 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../store";
-import { setCurrentForm } from "./RegistrationSlice";
+import { setCurrentRegistrationPage } from "./RegistrationSlice";
 
 export default function RegFormBackBtn() {
-  const currentForm = useAppSelector(
-    (state) => state.regState.currentForm
+  const currentRegistrationPage = useAppSelector(
+    (state) =>
+      state.regState.currentRegistrationPage
   );
   const filtredMasters = useAppSelector(
     (state) => state.regState.filtredMasters
@@ -20,18 +21,19 @@ export default function RegFormBackBtn() {
 
   function handleBtnClick() {
     const n =
-      currentForm === 2 &&
+      currentRegistrationPage === 2 &&
       filtredMasters &&
       filtredMasters.length < 2
         ? 2
         : 1;
 
-    // navigate(
-    //   regPageRouteList[currentForm - n]
-    // );
     navigate(-n);
 
-    dispatch(setCurrentForm(currentForm - n));
+    dispatch(
+      setCurrentRegistrationPage(
+        currentRegistrationPage - n
+      )
+    );
   }
 
   return (

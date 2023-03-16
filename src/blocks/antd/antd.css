@@ -1,5 +1,5 @@
 /*скрываем стандартные радио-кнопки  */
-.reg-form_name_masters
+.reg-form__radio-group_name_master
   .ant-radio-wrapper
   .ant-radio {
   display: none;

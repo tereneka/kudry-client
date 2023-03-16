@@ -1,5 +1,6 @@
 import React from "react";
 import Error from "../../../components/Error";
+import Spinner from "../../../components/Spinner";
 import { useAppSelector } from "../../../store";
 
 export default function RegistrationResult() {
@@ -7,15 +8,30 @@ export default function RegistrationResult() {
     (state) => state.regState.formValues
   );
 
+  const isLoading = useAppSelector(
+    (state) =>
+      state.regState.isRegistrationLoading
+  );
+
   const isError = useAppSelector(
     (state) => state.regState.isRegError
   );
 
-  const isSuccess = !!(!isError && formValues.id);
+  const isSuccess = !!(
+    !isLoading &&
+    !isError &&
+    formValues.id
+  );
 
   return (
     <>
-      <Error isVisible={!isSuccess} />
+      <Spinner isVisible={isLoading} />
+      <Error
+        isVisible={
+          isError ||
+          (!formValues.id && !isLoading)
+        }
+      />
 
       {isSuccess && (
         <div className="reg-result">

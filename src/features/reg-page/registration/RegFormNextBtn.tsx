@@ -3,12 +3,14 @@ import { regPageRouteList } from "../../../constants";
 import { useAppSelector } from "../../../store";
 
 export default function RegFormNextBtn() {
-  const currentForm = useAppSelector(
-    (state) => state.regState.currentForm
+  const currentRegistrationPage = useAppSelector(
+    (state) =>
+      state.regState.currentRegistrationPage
   );
 
   const btnText =
-    currentForm + 1 === regPageRouteList.length
+    currentRegistrationPage + 1 ===
+    regPageRouteList.length
       ? "отправить"
       : "вперёд";
 
