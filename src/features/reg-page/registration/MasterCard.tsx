@@ -28,18 +28,20 @@ export default function MasterCard({
   }`;
 
   return (
-    <div className={masterCardClass}>
-      <img
-        className="card__img"
-        src={masterPhotoUrl}
-        alt="фото мастера"
-      />
-      <h4 className="card__title">
-        {master.name}
-      </h4>
-      <p className="card__about">
-        {master.profession}
-      </p>
-    </div>
+    <>
+      <div className={masterCardClass}>
+        <img
+          className="card__img"
+          src={masterPhotoUrl}
+          alt="фото мастера"
+        />
+        <h4 className="card__title">
+          {master.name}
+        </h4>
+        <p className="card__about">
+          {master.profession}
+        </p>
+      </div>
+    </>
   );
 }

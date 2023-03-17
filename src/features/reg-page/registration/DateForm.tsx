@@ -29,9 +29,6 @@ export default function DateForm() {
       reg.masterId === formValues.master?.id
   );
 
-  const currentRegDuration =
-    useOutletContext<RegistrationContext>().getRegistrationDuration();
-
   // массив времени для селекта формы
   const timeList = ["11:00"];
   for (let i = 0; i < 18; i++) {
@@ -112,19 +109,19 @@ export default function DateForm() {
         // блокируем время, чтобы записи не наложились друг на друга
         for (
           let i = 1;
-          i < currentRegDuration;
+          i < formValues.duration;
           i++
         ) {
           disabledTime[index - i] = false;
         }
       } else if (
         index === disabledTime.length - 1 &&
-        currentRegDuration > 2
+        formValues.duration > 2
       ) {
         // блокируем время, чтобы окончание записи не было позднее 21:00
         for (
           let i = 0;
-          i < currentRegDuration - 2;
+          i < formValues.duration - 2;
           i++
         ) {
           disabledTime[index - i] = false;

@@ -64,7 +64,6 @@ export default function RegPage() {
     categores,
     masters,
     registrationList,
-    getRegistrationDuration,
   });
 
   const [form] = Form.useForm();
@@ -138,25 +137,6 @@ export default function RegPage() {
     },
   ];
 
-  function getRegistrationDuration() {
-    const res =
-      formValues?.services?.reduce(
-        (sum, currentService) => {
-          const currentValue: number =
-            currentService.duration.length > 1 &&
-            formValues.durationIndex
-              ? currentService.duration[
-                  formValues.durationIndex
-                ]
-              : currentService.duration[0];
-          return sum + currentValue;
-        },
-        0
-      ) || 0;
-
-    return res;
-  }
-
   function handleUserInfoFormSubmit(values: {
     userName: string;
     phone: string;
@@ -179,6 +159,20 @@ export default function RegPage() {
         ? filtredMasters[0]
         : undefined;
 
+    const duration =
+      formValues?.services?.reduce(
+        (sum, currentService) => {
+          const currentValue: number =
+            currentService.duration.length > 1
+              ? currentService.duration[
+                  values.durationIndex
+                ]
+              : currentService.duration[0];
+          return sum + currentValue;
+        },
+        0
+      ) || 0;
+
     dispatch(
       setFormValues({
         category: categores?.find(
@@ -186,6 +180,7 @@ export default function RegPage() {
             category.id === values.category
         ),
         durationIndex: values.durationIndex || 0,
+        duration,
         master: master,
       })
     );
@@ -195,9 +190,6 @@ export default function RegPage() {
     date: dayjs.Dayjs;
     time: string;
   }) {
-    const registrationDuration =
-      getRegistrationDuration();
-
     dispatch(setIsRegistrationLoading(true));
 
     dispatch(
@@ -211,7 +203,7 @@ export default function RegPage() {
 
     for (
       let i = 0;
-      i < registrationDuration - 1;
+      i < formValues.duration - 1;
       i++
     ) {
       let time: string;

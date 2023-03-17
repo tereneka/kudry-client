@@ -53,7 +53,6 @@ interface RegistrationContext {
   categores: Category[] | undefined;
   masters: Master[] | undefined;
   registrationList: Registration[] | undefined;
-  getRegistrationDuration: () => number;
 }
 
 export type {
