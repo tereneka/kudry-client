@@ -1,7 +1,11 @@
-import React from "react";
-import { useAppSelector } from "../../../store";
+import React, { useEffect } from "react";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../store";
 import { Master } from "../../../types";
 import { useGetPhotoQuery } from "../../api/apiSlise";
+import { setMasterPhotosLoadingState } from "./RegistrationSlice";
 
 interface Props {
   master: Master;
@@ -10,11 +14,10 @@ interface Props {
 export default function MasterCard({
   master,
 }: Props) {
-  const {
-    data: masterPhotoUrl,
-    isLoading,
-    isError,
-  } = useGetPhotoQuery(master.photoLink);
+  const dispatch = useAppDispatch();
+
+  const { data: masterPhotoUrl, isLoading } =
+    useGetPhotoQuery(master.photoLink);
 
   const isMasterCardChecked = useAppSelector(
     (state) =>
@@ -26,6 +29,15 @@ export default function MasterCard({
       ? "reg-form__master-card_checked"
       : ""
   }`;
+
+  useEffect(() => {
+    dispatch(
+      setMasterPhotosLoadingState({
+        key: master.id,
+        isLoading,
+      })
+    );
+  }, [isLoading]);
 
   return (
     <>

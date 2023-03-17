@@ -260,7 +260,7 @@ export const apiSlice = createApi({
 
     getPhoto: builder.query<
       string | undefined,
-      string | void
+      string
     >({
       async queryFn(path) {
         if (path) {
@@ -328,43 +328,6 @@ export const apiSlice = createApi({
       },
       invalidatesTags: ["Registration"],
     }),
-
-    // addRegistration: builder.mutation<
-    //   string,
-    //   any
-    // >({
-    //   async queryFn(body) {
-    //     try {
-    //       const registrationRef = collection(
-    //         db,
-    //         "registrations"
-    //       );
-    //       const res: DocumentReference<any> =
-    //         await addDoc(registrationRef, body);
-
-    //       return res.id;
-    //     } catch (error) {
-    //       return error;
-    //     }
-    //   },
-    //   invalidatesTags: ["Registration"],
-    // }),
-
-    // addRegistration: builder.mutation({
-    //   async queryFn(data) {
-    //     try {
-    //       const registrationRef = doc(
-    //         collection(db, "registrations")
-    //       );
-    //       await setDoc(registrationRef, data);
-
-    //       return data;
-    //     } catch (error) {
-    //       return error;
-    //     }
-    //   },
-    //   invalidatesTags: ["Registration"],
-    // }),
   }),
 });
 

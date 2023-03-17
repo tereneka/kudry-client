@@ -60,6 +60,15 @@ export default function RegPage() {
     isError: isRegListError,
   } = useGetRegistrationAfterTodayListQuery();
 
+  const masterPhotosLoadingState = useAppSelector(
+    (state) =>
+      state.regState.masterPhotosLoadingState
+  );
+
+  const isMasterPhotosLoading = Object.values(
+    masterPhotosLoadingState
+  ).some((v) => v);
+
   const currentOutlet = useOutlet({
     categores,
     masters,
@@ -123,7 +132,8 @@ export default function RegPage() {
         master: formValues.master?.id,
       },
       onFinish: () => {},
-      isLoading: isMastersLoading,
+      isLoading:
+        isMastersLoading || isMasterPhotosLoading,
       isError: isMastersError || !masters,
     },
     {
@@ -136,6 +146,15 @@ export default function RegPage() {
       isError: isRegListError || !masters,
     },
   ];
+
+  const formClassName = `reg-form ${
+    !registrationFormList[currentRegistrationPage]
+      ?.isError &&
+    !registrationFormList[currentRegistrationPage]
+      ?.isLoading
+      ? "reg-form_visible"
+      : ""
+  }`;
 
   function handleUserInfoFormSubmit(values: {
     userName: string;
@@ -320,44 +339,35 @@ export default function RegPage() {
                       }
                     />
 
-                    {!registrationFormList[
-                      currentRegistrationPage
-                    ].isError &&
-                      !registrationFormList[
-                        currentRegistrationPage
-                      ].isLoading && (
-                        <Form
-                          form={form}
-                          className="reg-form"
-                          name={
-                            registrationFormList[
-                              currentRegistrationPage
-                            ].name
-                          }
-                          initialValues={
-                            registrationFormList[
-                              currentRegistrationPage
-                            ].initialValues
-                          }
-                          onFinish={
-                            handleFormSubmit
-                          }
-                          onFinishFailed={() =>
-                            window.scrollTo(
-                              0,
-                              document.body
-                                .scrollHeight
-                            )
-                          }
-                          layout={"vertical"}>
-                          <div className="reg-form__btn-group">
-                            <RegFormBackBtn />
-                            <RegFormNextBtn />
-                          </div>
+                    <Form
+                      form={form}
+                      className={formClassName}
+                      name={
+                        registrationFormList[
+                          currentRegistrationPage
+                        ].name
+                      }
+                      initialValues={
+                        registrationFormList[
+                          currentRegistrationPage
+                        ].initialValues
+                      }
+                      onFinish={handleFormSubmit}
+                      onFinishFailed={() =>
+                        window.scrollTo(
+                          0,
+                          document.body
+                            .scrollHeight
+                        )
+                      }
+                      layout={"vertical"}>
+                      <div className="reg-form__btn-group">
+                        <RegFormBackBtn />
+                        <RegFormNextBtn />
+                      </div>
 
-                          {currentOutlet}
-                        </Form>
-                      )}
+                      {currentOutlet}
+                    </Form>
                   </>
                 ) : (
                   currentOutlet

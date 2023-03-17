@@ -2,4 +2,9 @@
   margin: -150px auto 40px;
   position: relative;
   z-index: 10;
+  display: none;
+}
+
+.reg-form_visible {
+  display: block;
 }

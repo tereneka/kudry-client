@@ -26,6 +26,9 @@ interface RegistrationState {
   currentRegistrationPage: number;
   isRegError: boolean;
   isRegistrationLoading: boolean;
+  masterPhotosLoadingState: {
+    [key: string]: boolean;
+  };
 }
 
 const initialState: RegistrationState = {
@@ -47,6 +50,7 @@ const initialState: RegistrationState = {
   currentRegistrationPage: 0,
   isRegError: false,
   isRegistrationLoading: false,
+  masterPhotosLoadingState: {},
 };
 
 const registrationSlice = createSlice({
@@ -94,6 +98,18 @@ const registrationSlice = createSlice({
       state.isRegistrationLoading =
         action.payload;
     },
+
+    setMasterPhotosLoadingState: (
+      state,
+      action: PayloadAction<{
+        key: string;
+        isLoading: boolean;
+      }>
+    ) => {
+      state.masterPhotosLoadingState[
+        action.payload.key
+      ] = action.payload.isLoading;
+    },
   },
 });
 
@@ -103,6 +119,7 @@ export const {
   setCurrentRegistrationPage,
   setIsRegError,
   setIsRegistrationLoading,
+  setMasterPhotosLoadingState,
 } = registrationSlice.actions;
 
 export default registrationSlice.reducer;

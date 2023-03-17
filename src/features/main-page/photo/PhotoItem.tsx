@@ -21,7 +21,7 @@ export default function PhotoItem({
     data: photoUrl,
     isLoading,
     isError,
-  } = useGetPhotoQuery(photoPath);
+  } = useGetPhotoQuery(photoPath || "");
   const dispatch = useAppDispatch();
 
   function handelPhotoClick() {
