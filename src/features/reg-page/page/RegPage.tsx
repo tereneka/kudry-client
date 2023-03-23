@@ -20,7 +20,6 @@ import {
   useGetRegCategoryListQuery,
   useGetRegistrationAfterTodayListQuery,
 } from "../../api/apiSlise";
-import Header from "../header/Header";
 import "./reg.css";
 import dayjs from "dayjs";
 import { Form } from "antd";
@@ -309,7 +308,6 @@ export default function RegPage() {
 
   return (
     <>
-      <Header />
       <main>
         <SwitchTransition>
           <CSSTransition

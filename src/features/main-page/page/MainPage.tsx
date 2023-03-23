@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "../header/Header";
 import Spinner from "../../../components/Spinner";
 import Error from "../../../components/Error";
 import { useAppSelector } from "../../../store";
@@ -27,7 +26,6 @@ export default function MainPage() {
 
   return (
     <>
-      <Header />
       <Spinner isVisible={isLoading} />
       <Error isVisible={isError} />
       <Content

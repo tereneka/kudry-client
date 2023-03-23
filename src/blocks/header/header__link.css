@@ -24,6 +24,10 @@ li:nth-of-type(2n) .header__link {
   background-image: url(../../images/background/back-pink.png);
 }
 
+.header__link:hover {
+  opacity: 0.8;
+}
+
 @media screen and (min-width: 375px) {
   .header__link {
     font-size: 14px;
@@ -36,12 +40,5 @@ li:nth-of-type(2n) .header__link {
     height: 80px;
     font-size: 16px;
     padding-top: calc(50% - 12px);
-  }
-}
-
-@media screen and (min-width: 900px) {
-  .header__link:hover {
-    scale: 1.2;
-    rotate: 360deg;
   }
 }

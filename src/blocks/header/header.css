@@ -10,4 +10,5 @@
     url(../../images/background/back-header.jpg);
   background-size: cover;
   background-position: center;
+  min-height: 400px;
 }
