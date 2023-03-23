@@ -3,6 +3,7 @@ import {
   ThunkAction,
   Action,
 } from "@reduxjs/toolkit";
+import contentReducer from "./features/main-page/content/ContentSlice";
 import masterReducer from "./features/main-page/masters/MasterSlice";
 import priceReducer from "./features/main-page/price/PriceSlice";
 import photoReducer from "./features/main-page/photo/PhotoSlice";
@@ -17,6 +18,7 @@ import { apiSlice } from "./features/api/apiSlise";
 export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
+    contentState: contentReducer,
     masterState: masterReducer,
     priceState: priceReducer,
     photoState: photoReducer,

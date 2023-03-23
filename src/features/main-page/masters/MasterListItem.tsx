@@ -5,6 +5,7 @@ import {
   useAppSelector,
 } from "../../../store";
 import { Master } from "../../../types";
+import { setContentLoadingState } from "../content/ContentSlice";
 import { setCardItemElementWidth } from "./MasterSlice";
 
 interface Props {
@@ -41,6 +42,16 @@ export default function MasterListItem({
       );
     }
   });
+
+  useEffect(() => {
+    dispatch(
+      setContentLoadingState({
+        isLoading,
+        isError,
+        key: "masterPhotoUrl",
+      })
+    );
+  }, [isLoading, isError]);
 
   return (
     <div

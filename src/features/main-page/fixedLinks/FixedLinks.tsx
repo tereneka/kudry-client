@@ -9,8 +9,7 @@ export default function FixedLinks() {
         <div className="root__fixed-link-pulse"></div>
         <Link
           className="root__fixed-link root__fixed-link_name_reg"
-          // to={`/online-reg/${registrationRoutes[0].path}`}
-          to={"/online-reg"}
+          to={`/online-reg/${registrationRoutes[0].path}`}
           target={"_blank"}>
           online запись
         </Link>

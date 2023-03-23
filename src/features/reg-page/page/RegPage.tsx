@@ -1,8 +1,13 @@
+import React from "react";
 import {
   useLocation,
   useNavigate,
   useOutlet,
 } from "react-router-dom";
+import {
+  SwitchTransition,
+  CSSTransition,
+} from "react-transition-group";
 import { dateFormat } from "../../../constants";
 import { registrationRoutes } from "../../../router/routes";
 import {
@@ -15,6 +20,8 @@ import {
   useGetRegCategoryListQuery,
   useGetRegistrationAfterTodayListQuery,
 } from "../../api/apiSlise";
+import Header from "../header/Header";
+import "./reg.css";
 import dayjs from "dayjs";
 import { Form } from "antd";
 import RegFormBackBtn from "../registration/RegFormBackBtn";
@@ -27,10 +34,6 @@ import {
 } from "../registration/RegistrationSlice";
 import Spinner from "../../../components/Spinner";
 import Error from "../../../components/Error";
-import {
-  SwitchTransition,
-  CSSTransition,
-} from "react-transition-group";
 
 export default function RegPage() {
   const location = useLocation().pathname;
@@ -72,11 +75,6 @@ export default function RegPage() {
     registrationList,
   });
 
-  const { nodeRef } =
-    registrationRoutes.find(
-      (route) => route.path === location
-    ) ?? {};
-
   const [form] = Form.useForm();
 
   const formValues = useAppSelector(
@@ -96,6 +94,11 @@ export default function RegPage() {
     addRegistration,
     { isLoading: isAddRegistrationLoading },
   ] = useAddRegistrationMutation();
+
+  const { nodeRef } =
+    registrationRoutes.find(
+      (route) => route.path === location
+    ) ?? {};
 
   const registrationFormList = [
     {
@@ -306,70 +309,74 @@ export default function RegPage() {
 
   return (
     <>
-      <SwitchTransition>
-        <CSSTransition
-          key={location}
-          nodeRef={nodeRef}
-          timeout={300}
-          classNames="page"
-          unmountOnExit>
-          {() => (
-            <div ref={nodeRef} className="page">
-              {currentRegistrationPage <
-              registrationRoutes.length - 1 ? (
-                <>
-                  <Spinner
-                    isVisible={
-                      registrationFormList[
-                        currentRegistrationPage
-                      ].isLoading
-                    }
-                  />
+      <Header />
+      <main>
+        <SwitchTransition>
+          <CSSTransition
+            key={location}
+            nodeRef={nodeRef}
+            timeout={300}
+            classNames="reg-page"
+            unmountOnExit>
+            {() => (
+              <div ref={nodeRef} className="page">
+                {currentRegistrationPage <
+                registrationRoutes.length - 1 ? (
+                  <>
+                    <Spinner
+                      isVisible={
+                        registrationFormList[
+                          currentRegistrationPage
+                        ].isLoading
+                      }
+                    />
 
-                  <Error
-                    isVisible={
-                      registrationFormList[
-                        currentRegistrationPage
-                      ].isError
-                    }
-                  />
+                    <Error
+                      isVisible={
+                        registrationFormList[
+                          currentRegistrationPage
+                        ].isError
+                      }
+                    />
 
-                  <Form
-                    form={form}
-                    className={formClassName}
-                    name={
-                      registrationFormList[
-                        currentRegistrationPage
-                      ].name
-                    }
-                    initialValues={
-                      registrationFormList[
-                        currentRegistrationPage
-                      ].initialValues
-                    }
-                    onFinish={handleFormSubmit}
-                    onFinishFailed={() =>
-                      window.scrollTo(
-                        0,
-                        document.body.scrollHeight
-                      )
-                    }
-                    layout={"vertical"}>
-                    <div className="reg-form__btn-group">
-                      <RegFormBackBtn />
-                      <RegFormNextBtn />
-                    </div>
+                    <Form
+                      form={form}
+                      className={formClassName}
+                      name={
+                        registrationFormList[
+                          currentRegistrationPage
+                        ].name
+                      }
+                      initialValues={
+                        registrationFormList[
+                          currentRegistrationPage
+                        ].initialValues
+                      }
+                      onFinish={handleFormSubmit}
+                      onFinishFailed={() =>
+                        window.scrollTo(
+                          0,
+                          document.body
+                            .scrollHeight
+                        )
+                      }
+                      layout={"vertical"}>
+                      <div className="reg-form__btn-group">
+                        <RegFormBackBtn />
+                        <RegFormNextBtn />
+                      </div>
 
-                    {currentOutlet}
-                  </Form>
-                </>
-              ) : (
-                currentOutlet
-              )}
-            </div>
-          )}
-        </CSSTransition>
-      </SwitchTransition>
+                      {currentOutlet}
+                    </Form>
+                  </>
+                ) : (
+                  currentOutlet
+                )}
+              </div>
+            )}
+          </CSSTransition>
+        </SwitchTransition>
+      </main>
     </>
   );
 }

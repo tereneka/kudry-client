@@ -4,22 +4,24 @@
   font-weight: 800;
   font-style: normal;
   text-decoration: none;
-  background-image: url(../../../images/background/back-green.png);
   background-position: center;
   background-size: cover;
   border-radius: 50%;
+  display: inline-block;
   width: calc(20vw - 3px);
   height: calc(20vw - 3px);
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   text-align: center;
+  padding-top: calc(50% - 9px);
+  box-sizing: border-box;
   transition: all 0.4s ease-in-out;
 }
 
-.header__link:hover {
-  opacity: 0.8;
+li:nth-of-type(2n + 1) .header__link {
+  background-image: url(../../images/background/back-green.png);
+}
+
+li:nth-of-type(2n) .header__link {
+  background-image: url(../../images/background/back-pink.png);
 }
 
 @media screen and (min-width: 375px) {
@@ -33,5 +35,13 @@
     width: 80px;
     height: 80px;
     font-size: 16px;
+    padding-top: calc(50% - 12px);
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .header__link:hover {
+    scale: 1.2;
+    rotate: 360deg;
   }
 }
