@@ -8,7 +8,6 @@ import {
   useAppSelector,
 } from "../../../store";
 import MasterListItem from "./MasterListItem";
-import { setContentLoadingState } from "../content/ContentSlice";
 import { setIsFullWidthStyle } from "./MasterSlice";
 
 export default function MasterList() {
@@ -38,16 +37,6 @@ export default function MasterList() {
       );
     }
   }
-
-  useEffect(() => {
-    dispatch(
-      setContentLoadingState({
-        isLoading,
-        isError,
-        key: "masterList",
-      })
-    );
-  }, [isLoading, isError]);
 
   useEffect(() => {
     resizeCardsSection();

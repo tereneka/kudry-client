@@ -8,7 +8,6 @@ import {
   useAppSelector,
 } from "../../../store";
 import { Category } from "../../../types";
-import { setContentLoadingState } from "../content/ContentSlice";
 import { setIsCategoryOpened } from "./PriceSlice";
 
 interface Props {
@@ -46,29 +45,6 @@ export default function PriceCategoryItem({
       ? tableElement?.scrollHeight
       : 0,
   };
-
-  useEffect(() => {
-    dispatch(
-      setContentLoadingState({
-        isLoading: isSubCategoresLoading,
-        isError: isSubCategoresError,
-        key: "subCategoryList",
-      })
-    );
-  }, [
-    isSubCategoresLoading,
-    isSubCategoresError,
-  ]);
-
-  useEffect(() => {
-    dispatch(
-      setContentLoadingState({
-        isLoading: isServicesLoading,
-        isError: isServicesError,
-        key: "serviceList",
-      })
-    );
-  }, [isServicesLoading, isServicesError]);
 
   if (subCategores && subCategores.length > 0) {
     serviceListElement = (
