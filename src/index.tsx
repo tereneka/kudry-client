@@ -19,24 +19,24 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <ConfigProvider
-          locale={ruRU}
-          theme={{
-            token: {
-              colorPrimary: "rgb(137, 175, 176)",
-              colorError: "#c5776b",
-              fontFamily:
-                '"Source Code Pro", monospace',
-              colorTextBase: "rgb(60, 60, 60)",
-              fontSize: 16,
-            },
-          }}>
+    <Provider store={store}>
+      <ConfigProvider
+        locale={ruRU}
+        theme={{
+          token: {
+            colorPrimary: "rgb(137, 175, 176)",
+            colorError: "#c5776b",
+            fontFamily:
+              '"Source Code Pro", monospace',
+            colorTextBase: "rgb(60, 60, 60)",
+            fontSize: 16,
+          },
+        }}>
+        <BrowserRouter>
           <App />
-        </ConfigProvider>
-      </Provider>
-    </BrowserRouter>
+        </BrowserRouter>
+      </ConfigProvider>
+    </Provider>
   </React.StrictMode>
 );
 
