@@ -1,9 +1,4 @@
 .content {
   max-width: 1280px;
-  margin: auto;
-  display: none;
-}
-
-.content_visible {
-  display: block;
+  margin: -150px auto 0;
 }

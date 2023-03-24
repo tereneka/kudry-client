@@ -7,4 +7,6 @@
   font-style: normal;
   line-height: 1;
   color: var(--accent-bright);
+  position: relative;
+  z-index: 1;
 }

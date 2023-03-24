@@ -31,7 +31,7 @@ import {
   Service,
   SubCategory,
 } from "../../types";
-import { setFormValues } from "../reg-page/registration/RegistrationSlice";
+import { setFormValues } from "../registration/RegistrationSlice";
 
 export const apiSlice = createApi({
   reducerPath: "api",
