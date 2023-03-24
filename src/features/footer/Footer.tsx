@@ -1,9 +1,9 @@
 import React from "react";
-import map from "../../../images/icons/map.svg";
-import telephone from "../../../images/icons/telephone.svg";
-import insta from "../../../images/icons/insta.svg";
-import whatsapp from "../../../images/icons/whatsapp.svg";
-import telegram from "../../../images/icons/telegram.svg";
+import map from "../../images/icons/map.svg";
+import telephone from "../../images/icons/telephone.svg";
+import insta from "../../images/icons/insta.svg";
+import whatsapp from "../../images/icons/whatsapp.svg";
+import telegram from "../../images/icons/telegram.svg";
 
 export default function Footer() {
   return (
