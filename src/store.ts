@@ -3,11 +3,11 @@ import {
   ThunkAction,
   Action,
 } from "@reduxjs/toolkit";
-import mainPageReducer from "./features/main-page/MainPageSlice";
-import masterReducer from "./features/masters/MasterSlice";
-import priceReducer from "./features/price/PriceSlice";
-import photoReducer from "./features/photo/PhotoSlice";
-import regReducer from "./features/registration/RegistrationSlice";
+import contentReducer from "./features/main-page/content/ContentSlice";
+import masterReducer from "./features/main-page/masters/MasterSlice";
+import priceReducer from "./features/main-page/price/PriceSlice";
+import photoReducer from "./features/main-page/photo/PhotoSlice";
+import regReducer from "./features/reg-page/registration/RegistrationSlice";
 import {
   TypedUseSelectorHook,
   useDispatch,
@@ -18,7 +18,7 @@ import { apiSlice } from "./features/api/apiSlise";
 export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
-    mainPageState: mainPageReducer,
+    contentState: contentReducer,
     masterState: masterReducer,
     priceState: priceReducer,
     photoState: photoReducer,

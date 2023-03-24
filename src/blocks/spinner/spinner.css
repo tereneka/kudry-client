@@ -1,10 +1,9 @@
 .spinner {
-  width: 4em;
-  height: 4em;
+  width: 1em;
+  height: 1em;
   margin: auto;
   border-radius: 50%;
   display: none;
-  padding: 20px;
 }
 
 .spinner i::after {
@@ -12,7 +11,7 @@
   clip: rect(0, 8em, 8em, 0.5em);
   width: 4em;
   height: 4em;
-  content: "";
+  content: '';
   animation: spinner-circle 0.8s ease-in-out
     infinite;
   border-radius: 50%;

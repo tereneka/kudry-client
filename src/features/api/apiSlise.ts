@@ -31,7 +31,7 @@ import {
   Service,
   SubCategory,
 } from "../../types";
-import { setFormValues } from "../registration/RegistrationSlice";
+import { setFormValues } from "../reg-page/registration/RegistrationSlice";
 
 export const apiSlice = createApi({
   reducerPath: "api",
@@ -220,28 +220,7 @@ export const apiSlice = createApi({
       providesTags: ["Service"],
     }),
 
-    getPhotoList: builder.query<string[], string>(
-      {
-        async queryFn(folderPath) {
-          try {
-            const listRef = ref(
-              storage,
-              folderPath
-            );
-            const photosList = await (
-              await list(listRef)
-            ).items.map((i) => i.fullPath);
-
-            return { data: photosList };
-          } catch (error) {
-            return { error };
-          }
-        },
-        providesTags: ["Photo"],
-      }
-    ),
-
-    getPhotoPageList: builder.query<
+    getPhotoList: builder.query<
       string[][],
       {
         folderPath: string;
@@ -360,7 +339,6 @@ export const {
   useGetServiceListQuery,
   useGetPhotoQuery,
   useGetPhotoListQuery,
-  useGetPhotoPageListQuery,
   useGetRegistrationAfterTodayListQuery,
   useAddRegistrationMutation,
 } = apiSlice;
