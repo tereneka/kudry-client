@@ -1,5 +1,3 @@
-import { async } from "@firebase/util";
-import { BaseQueryError } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import {
   createApi,
   fakeBaseQuery,
@@ -10,10 +8,7 @@ import {
   orderBy,
   query,
   where,
-  doc,
-  setDoc,
   addDoc,
-  DocumentReference,
 } from "firebase/firestore";
 import {
   ref,
