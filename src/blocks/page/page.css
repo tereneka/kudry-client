@@ -1,9 +1,0 @@
-.page {
-  visibility: hidden;
-  opacity: 0;
-}
-
-.page_visible {
-  visibility: visible;
-  opacity: 1;
-}
