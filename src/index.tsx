@@ -9,7 +9,7 @@ import { ConfigProvider } from "antd";
 import ruRU from "antd/locale/ru_RU";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 
 dayjs.locale("ru-ru");
 
@@ -32,9 +32,9 @@ root.render(
             fontSize: 16,
           },
         }}>
-        <BrowserRouter>
+        <HashRouter>
           <App />
-        </BrowserRouter>
+        </HashRouter>
       </ConfigProvider>
     </Provider>
   </React.StrictMode>
