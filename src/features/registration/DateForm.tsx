@@ -3,14 +3,19 @@ import { Calendar, Form, Select } from "antd";
 import type { RangePickerProps } from "antd/es/date-picker";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { useAppSelector } from "../../store";
-import { useGetRegistrationAfterTodayListQuery } from "../api/apiSlise";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../store";
 import { dateFormat } from "../../constants";
 import { useOutletContext } from "react-router-dom";
 import { RegistrationContext } from "../../types";
+import { setFormValues } from "./RegistrationSlice";
 
 export default function DateForm() {
   const form = Form.useFormInstance();
+
+  const dispatch = useAppDispatch();
 
   const formValues = useAppSelector(
     (state) => state.regState.formValues
@@ -132,6 +137,18 @@ export default function DateForm() {
     return disabledTime;
   }
 
+  function handleDateChange() {
+    dispatch(
+      setFormValues({
+        time: undefined,
+      })
+    );
+
+    setTimeout(() => {
+      form.resetFields(["time"]);
+    }, 100);
+  }
+
   return (
     <>
       <div className="reg-form__item-group">
@@ -154,6 +171,7 @@ export default function DateForm() {
                 );
               }
             }}
+            onChange={handleDateChange}
           />
         </Form.Item>
 

@@ -361,7 +361,9 @@ export default function RegPage() {
                       }
                       layout={"vertical"}>
                       <div className="reg-form__btn-group">
-                        <RegFormBackBtn />
+                        {currentRegistrationPage >
+                          0 && <RegFormBackBtn />}
+
                         <RegFormNextBtn />
                       </div>
 
