@@ -1,0 +1,5 @@
+.spinner_for_main-page {
+  position: fixed;
+  top: calc(50vh - 2em);
+  left: calc(50vw - 2em);
+}

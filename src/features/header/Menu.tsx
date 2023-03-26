@@ -1,17 +1,45 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Menu() {
-    return (
-        <>
-            <nav>
-                <ul className="header__links">
-                    <li><a className="header__link" href="#team">команда</a></li>
-                    <li><a className="header__link" href="#price">цены</a></li>
-                    <li><a className="header__link" href="#interiors">интерьер</a></li>
-                    <li><a className="header__link" href="#works">работы</a></li>
-                    <li><a className="header__link" href="#footer">контакты</a></li>
-                </ul>
-            </nav>
-        </>
-    )
+  const linkList = [
+    {
+      path: "#team",
+      text: "команда",
+    },
+    {
+      path: "#price",
+      text: "цены",
+    },
+    {
+      path: "#interiors",
+      text: "интерьер",
+    },
+    {
+      path: "#works",
+      text: "работы",
+    },
+    {
+      path: "#footer",
+      text: "контакты",
+    },
+  ];
+
+  return (
+    <>
+      <nav>
+        <ul className="header__links">
+          {linkList.map((link) => (
+            <li key={link.path}>
+              <Link
+                to={link.path}
+                className="header__link">
+                {link.text}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </>
+  );
 }

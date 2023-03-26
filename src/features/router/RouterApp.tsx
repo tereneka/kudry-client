@@ -21,26 +21,6 @@ function RouterApp() {
             key={route.path}
           />
         ))}
-        {/* <Route
-          path="contacts"
-          element={<UserInfoForm />}
-        />
-        <Route
-          path="services"
-          element={<ServicesForm />}
-        />
-        <Route
-          path="masters"
-          element={<MastersForm />}
-        />
-        <Route
-          path="date"
-          element={<DateForm />}
-        />
-        <Route
-          path="result"
-          element={<RegistrationResult />}
-        /> */}
         <Route path="*" element={<RegPage />} />
       </Route>
     </Routes>

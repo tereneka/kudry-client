@@ -1,11 +1,20 @@
-import React from 'react'
+import React from "react";
 
 interface Props {
-    isVisible: boolean
+  isVisible: boolean;
+  className?: string;
 }
 
-export default function Spinner({ isVisible }: Props) {
-    return (
-        <div className={`spinner ${isVisible ? 'spinner_visible' : ''}`} ><i></i></div >
-    )
+export default function Spinner({
+  isVisible,
+  className,
+}: Props) {
+  return (
+    <div
+      className={`spinner ${
+        isVisible ? "spinner_visible" : ""
+      } ${className ? className : ""}`}>
+      <i></i>
+    </div>
+  );
 }

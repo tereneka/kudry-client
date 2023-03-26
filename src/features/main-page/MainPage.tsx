@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import Spinner from "../../components/Spinner";
 import Error from "../../components/Error";
 import { useAppSelector } from "../../store";
@@ -8,8 +8,11 @@ import FixedLinks from "../fixedLinks/FixedLinks";
 import MasterList from "../masters/MasterList";
 import PhotoSection from "../photo/PhotoSection";
 import Price from "../price/Price";
+import { useNavigate } from "react-router-dom";
 
 export default function MainPage() {
+  const navigate = useNavigate();
+
   const contentLoadingState = useAppSelector(
     (state) => state.mainPageState
   );
@@ -26,9 +29,16 @@ export default function MainPage() {
     (state) => state.photoState.popupPhotoUrl
   );
 
+  useEffect(() => {
+    navigate("/");
+  }, []);
+
   return (
     <>
-      <Spinner isVisible={isLoading} />
+      <Spinner
+        isVisible={isLoading}
+        className="spinner_for_main-page"
+      />
       <Error isVisible={isError} />
 
       <div

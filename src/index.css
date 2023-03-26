@@ -13,6 +13,8 @@
 @import url(./blocks/antd/antd.css);
 
 @import url(./blocks/spinner/spinner.css);
+@import url(./blocks/spinner/spinner_visible.css);
+@import url(./blocks/spinner/spinner_for_main-page.css);
 
 @import url(./blocks/error/error.css);
 

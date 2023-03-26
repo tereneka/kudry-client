@@ -15,9 +15,9 @@ export default function FixedLinks() {
         </Link>
       </li>
       <li>
-        <a
+        <Link
+          to="#header"
           className="root__fixed-link root__fixed-link_name_up"
-          href="#header"
         />
       </li>
     </ul>

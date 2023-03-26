@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import { useGetCategoryListQuery } from "../api/apiSlise";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../store";
+import { useAppDispatch } from "../../store";
 import PriceCategoryItem from "./PriceCategoryItem";
 import { setMainPageLoadingState } from "../main-page/MainPageSlice";
 
