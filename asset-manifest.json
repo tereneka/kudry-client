@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/kudry-client/static/css/main.7ff2693c.css",
+    "main.css": "/kudry-client/static/css/main.8ea17e83.css",
     "main.js": "/kudry-client/static/js/main.2738c00b.js",
     "static/js/787.e559f490.chunk.js": "/kudry-client/static/js/787.e559f490.chunk.js",
     "static/media/back-header.jpg": "/kudry-client/static/media/back-header.620bb4af59c0a1a1ee36.jpg",
@@ -16,12 +16,12 @@
     "static/media/plus.svg": "/kudry-client/static/media/plus.de581b2a87b5b8b3446e.svg",
     "static/media/up.svg": "/kudry-client/static/media/up.9757911f0e79ac436045.svg",
     "static/media/heart.svg": "/kudry-client/static/media/heart.71925c79c5ec2027f955.svg",
-    "main.7ff2693c.css.map": "/kudry-client/static/css/main.7ff2693c.css.map",
+    "main.8ea17e83.css.map": "/kudry-client/static/css/main.8ea17e83.css.map",
     "main.2738c00b.js.map": "/kudry-client/static/js/main.2738c00b.js.map",
     "787.e559f490.chunk.js.map": "/kudry-client/static/js/787.e559f490.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7ff2693c.css",
+    "static/css/main.8ea17e83.css",
     "static/js/main.2738c00b.js"
   ]
 }
