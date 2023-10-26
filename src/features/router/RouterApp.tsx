@@ -1,18 +1,18 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import MainPage from "../main-page/MainPage";
-import RegPage from "../reg-page/RegPage";
-import { registrationRoutes } from "./routes";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import MainPage from '../main-page/MainPage';
+import RegPage from '../reg-page/RegPage';
+import { registrationRoutes } from './routes';
 
 function RouterApp() {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />}>
-        <Route path="*" element={<MainPage />} />
+      <Route path='/' element={<MainPage />}>
+        <Route path='*' element={<MainPage />} />
       </Route>
-
-      <Route
-        path="/online-reg"
+      {/* онлайн регистрация */}
+      {/* <Route
+        path='/online-reg'
         element={<RegPage />}>
         {registrationRoutes.map((route) => (
           <Route
@@ -21,8 +21,8 @@ function RouterApp() {
             key={route.path}
           />
         ))}
-        <Route path="*" element={<RegPage />} />
-      </Route>
+        <Route path='*' element={<RegPage />} />
+      </Route> */}
     </Routes>
   );
 }

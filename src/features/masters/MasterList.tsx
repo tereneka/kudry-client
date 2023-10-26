@@ -1,15 +1,15 @@
 import React, {
   useEffect,
   useState,
-} from "react";
-import { useGetMasterListQuery } from "../api/apiSlise";
+} from 'react';
+import { useGetMasterListQuery } from '../api/apiSlise';
 import {
   useAppDispatch,
   useAppSelector,
-} from "../../store";
-import MasterListItem from "./MasterListItem";
-import { setIsFullWidthStyle } from "./MasterSlice";
-import { setMainPageLoadingState } from "../main-page/MainPageSlice";
+} from '../../store';
+import MasterListItem from './MasterListItem';
+import { setIsFullWidthStyle } from './MasterSlice';
+import { setMainPageLoadingState } from '../main-page/MainPageSlice';
 
 export default function MasterList() {
   const {
@@ -23,8 +23,8 @@ export default function MasterList() {
   const dispatch = useAppDispatch();
   const cardsWrapperClass = `cards__wrapper ${
     masterState.isFullWidthStyle
-      ? "cards__wrapper_fullwidth"
-      : ""
+      ? 'cards__wrapper_fullwidth'
+      : ''
   }`;
 
   function resizeCardsSection() {
@@ -44,7 +44,7 @@ export default function MasterList() {
       setMainPageLoadingState({
         isLoading,
         isError,
-        key: "masterList",
+        key: 'masterList',
       })
     );
   }, [isLoading, isError]);
@@ -54,13 +54,13 @@ export default function MasterList() {
   }, [masterState.cardItemElementWidth]);
 
   window.addEventListener(
-    "resize",
+    'resize',
     resizeCardsSection
   );
 
   return (
-    <section className="cards" id="team">
-      <h3 className="section-title">
+    <section className='cards' id='team'>
+      <h3 className='section-title'>
         к<br />о<br />м<br />а<br />н<br />д<br />
         а
       </h3>
