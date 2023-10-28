@@ -1,7 +1,7 @@
 {
   "name": "kudry-client",
   "version": "0.1.0",
-  "homepage": "https://tereneka.github.io/kudry-client/",
+  "homepage": "https://kudrihair.ru/",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.2",
