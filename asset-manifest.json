@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/kudry-client/static/css/main.7c071482.css",
-    "main.js": "/kudry-client/static/js/main.6856974b.js",
-    "static/js/787.e559f490.chunk.js": "/kudry-client/static/js/787.e559f490.chunk.js",
-    "static/media/back-header.jpg": "/kudry-client/static/media/back-header.620bb4af59c0a1a1ee36.jpg",
-    "static/media/back-green-l.jpg": "/kudry-client/static/media/back-green-l.390b80c1d70a78107917.jpg",
-    "static/media/scissors.svg": "/kudry-client/static/media/scissors.d99e1c817d6a7db11586b04ca06c3ebc.svg",
-    "static/media/insta.svg": "/kudry-client/static/media/insta.e71d0420c16357052d885c273c7f6811.svg",
-    "static/media/whatsapp.svg": "/kudry-client/static/media/whatsapp.ab0f5198f3ed1d07f1c9b8e2d5ae6bf5.svg",
-    "index.html": "/kudry-client/index.html",
-    "static/media/telephone.svg": "/kudry-client/static/media/telephone.97e838703b9247767c0bd8107cf0f673.svg",
-    "static/media/telegram.svg": "/kudry-client/static/media/telegram.5f9d98307dc1d78007d527d570b77908.svg",
-    "static/media/map.svg": "/kudry-client/static/media/map.c1665719d5fd5c9b0f2c647af3c3e60f.svg",
-    "static/media/close.svg": "/kudry-client/static/media/close.302d9e01e087a3b8fcfd.svg",
-    "static/media/plus.svg": "/kudry-client/static/media/plus.de581b2a87b5b8b3446e.svg",
-    "static/media/up.svg": "/kudry-client/static/media/up.9757911f0e79ac436045.svg",
-    "static/media/heart.svg": "/kudry-client/static/media/heart.71925c79c5ec2027f955.svg",
-    "main.7c071482.css.map": "/kudry-client/static/css/main.7c071482.css.map",
-    "main.6856974b.js.map": "/kudry-client/static/js/main.6856974b.js.map",
-    "787.e559f490.chunk.js.map": "/kudry-client/static/js/787.e559f490.chunk.js.map"
+    "main.css": "/static/css/main.faf57cf1.css",
+    "main.js": "/static/js/main.e1413374.js",
+    "static/js/787.e559f490.chunk.js": "/static/js/787.e559f490.chunk.js",
+    "static/media/back-header.jpg": "/static/media/back-header.620bb4af59c0a1a1ee36.jpg",
+    "static/media/back-green-l.jpg": "/static/media/back-green-l.390b80c1d70a78107917.jpg",
+    "static/media/scissors.svg": "/static/media/scissors.d99e1c817d6a7db11586b04ca06c3ebc.svg",
+    "static/media/insta.svg": "/static/media/insta.e71d0420c16357052d885c273c7f6811.svg",
+    "static/media/whatsapp.svg": "/static/media/whatsapp.ab0f5198f3ed1d07f1c9b8e2d5ae6bf5.svg",
+    "index.html": "/index.html",
+    "static/media/telephone.svg": "/static/media/telephone.97e838703b9247767c0bd8107cf0f673.svg",
+    "static/media/telegram.svg": "/static/media/telegram.5f9d98307dc1d78007d527d570b77908.svg",
+    "static/media/map.svg": "/static/media/map.c1665719d5fd5c9b0f2c647af3c3e60f.svg",
+    "static/media/close.svg": "/static/media/close.302d9e01e087a3b8fcfd.svg",
+    "static/media/plus.svg": "/static/media/plus.de581b2a87b5b8b3446e.svg",
+    "static/media/up.svg": "/static/media/up.9757911f0e79ac436045.svg",
+    "static/media/heart.svg": "/static/media/heart.71925c79c5ec2027f955.svg",
+    "main.faf57cf1.css.map": "/static/css/main.faf57cf1.css.map",
+    "main.e1413374.js.map": "/static/js/main.e1413374.js.map",
+    "787.e559f490.chunk.js.map": "/static/js/787.e559f490.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7c071482.css",
-    "static/js/main.6856974b.js"
+    "static/css/main.faf57cf1.css",
+    "static/js/main.e1413374.js"
   ]
 }
